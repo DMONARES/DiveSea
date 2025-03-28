@@ -1,16 +1,7 @@
-<script setup>
-	useSeoMeta({
-		title      : 'NUXT-TEMPLATE',
-		description: 'NUXT-TEMPLATE - description',
-		keywords   : 'NUXT-TEMPLATE - keywords',
-	});
-</script>
+<script setup></script>
 
 <template>
-	<div>
-	</div>
+	<div></div>
 </template>
 
-<style lang='scss'>
-
-</style>
+<style lang="scss" scoped></style>

@@ -1,64 +1,17 @@
+//DNsans
+@font-face {
+    font-family: 'DMsans';
+    src: url('@/assets/fonts/DMsans/DMsans18px-Bold.eot');
+    src: url('@/assets/fonts/DMsans/DMsans18px-Bold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/DMsans/DMsans18px-Bold.woff2') format('woff2'),
+        url('@/assets/fonts/DMsans/DMsans18px-Bold.woff') format('woff'),
+        url('@/assets/fonts/DMsans/DMsans_18px-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 // Inter
-@font-face {
-    font-family: 'Inter';
-    src: url('@/assets/fonts/Inter/Inter18pt-ExtraBold.eot');
-    src: url('@/assets/fonts/Inter/Inter18pt-ExtraBold.eot?#iefix') format('embedded-opentype'),
-        url('@/assets/fonts/Inter/Inter18pt-ExtraBold.woff2') format('woff2'),
-        url('@/assets/fonts/Inter/Inter18pt-ExtraBold.woff') format('woff'),
-        url('@/assets/fonts/Inter/Inter18pt-ExtraBold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('@/assets/fonts/Inter/Inter18pt-Bold.eot');
-    src: url('@/assets/fonts/Inter/Inter18pt-Bold.eot?#iefix') format('embedded-opentype'),
-        url('@/assets/fonts/Inter/Inter18pt-Bold.woff2') format('woff2'),
-        url('@/assets/fonts/Inter/Inter18pt-Bold.woff') format('woff'),
-        url('@/assets/fonts/Inter/Inter18pt-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('@/assets/fonts/Inter/Inter18pt-ExtraLight.eot');
-    src: url('@/assets/fonts/Inter/Inter18pt-ExtraLight.eot?#iefix') format('embedded-opentype'),
-        url('@/assets/fonts/Inter/Inter18pt-ExtraLight.woff2') format('woff2'),
-        url('@/assets/fonts/Inter/Inter18pt-ExtraLight.woff') format('woff'),
-        url('@/assets/fonts/Inter/Inter18pt-ExtraLight.ttf') format('truetype');
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('@/assets/fonts/Inter/Inter18pt-Black.eot');
-    src: url('@/assets/fonts/Inter/Inter18pt-Black.eot?#iefix') format('embedded-opentype'),
-        url('@/assets/fonts/Inter/Inter18pt-Black.woff2') format('woff2'),
-        url('@/assets/fonts/Inter/Inter18pt-Black.woff') format('woff'),
-        url('@/assets/fonts/Inter/Inter18pt-Black.ttf') format('truetype');
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('@/assets/fonts/Inter/Inter18pt-Light.eot');
-    src: url('@/assets/fonts/Inter/Inter18pt-Light.eot?#iefix') format('embedded-opentype'),
-        url('@/assets/fonts/Inter/Inter18pt-Light.woff2') format('woff2'),
-        url('@/assets/fonts/Inter/Inter18pt-Light.woff') format('woff'),
-        url('@/assets/fonts/Inter/Inter18pt-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
 @font-face {
     font-family: 'Inter';
     src: url('@/assets/fonts/Inter/Inter18pt-Medium.eot');
@@ -73,36 +26,188 @@
 
 @font-face {
     font-family: 'Inter';
-    src: url('@/assets/fonts/Inter/Inter18pt-Regular.eot');
-    src: url('@/assets/fonts/Inter/Inter18pt-Regular.eot?#iefix') format('embedded-opentype'),
-        url('@/assets/fonts/Inter/Inter18pt-Regular.woff2') format('woff2'),
-        url('@/assets/fonts/Inter/Inter18pt-Regular.woff') format('woff'),
-        url('@/assets/fonts/Inter/Inter18pt-Regular.ttf') format('truetype');
-    font-weight: normal;
+    src: url('@/assets/fonts/Inter/Inter18pt-Bold.eot');
+    src: url('@/assets/fonts/Inter/Inter18pt-Bold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Inter/Inter18pt-Bold.woff2') format('woff2'),
+        url('@/assets/fonts/Inter/Inter18pt-Bold.woff') format('woff'),
+        url('@/assets/fonts/Inter/Inter18pt-Bold.ttf') format('truetype');
+    font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
 
+//Manrope
 @font-face {
-    font-family: 'Inter';
-    src: url('@/assets/fonts/Inter/Inter18pt-SemiBold.eot');
-    src: url('@/assets/fonts/Inter/Inter18pt-SemiBold.eot?#iefix') format('embedded-opentype'),
-        url('@/assets/fonts/Inter/Inter18pt-SemiBold.woff2') format('woff2'),
-        url('@/assets/fonts/Inter/Inter18pt-SemiBold.woff') format('woff'),
-        url('@/assets/fonts/Inter/Inter18pt-SemiBold.ttf') format('truetype');
+    font-family: 'Manrope';
+    src: url('@/assets/fonts/Manrope/Manrope-SemiBold.eot');
+    src: url('@/assets/fonts/Manrope/Manrope-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Manrope/Manrope-SemiBold.woff2') format('woff2'),
+        url('@/assets/fonts/Manrope/Manrope-SemiBold.woff') format('woff'),
+        url('@/assets/fonts/Manrope/Manrope-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Inter';
-    src: url('@/assets/fonts/Inter/Inter18pt-Thin.eot');
-    src: url('@/assets/fonts/Inter/Inter18pt-Thin.eot?#iefix') format('embedded-opentype'),
-        url('@/assets/fonts/Inter/Inter18pt-Thin.woff2') format('woff2'),
-        url('@/assets/fonts/Inter/Inter18pt-Thin.woff') format('woff'),
-        url('@/assets/fonts/Inter/Inter18pt-Thin.ttf') format('truetype');
-    font-weight: 100;
+    font-family: 'Manrope';
+    src: url('@/assets/fonts/Manrope/Manrope-ExtraBold.eot');
+    src: url('@/assets/fonts/Manrope/Manrope-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Manrope/Manrope-ExtraBold.woff2') format('woff2'),
+        url('@/assets/fonts/Manrope/Manrope-ExtraBold.woff') format('woff'),
+        url('@/assets/fonts/Manrope/Manrope-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
     font-style: normal;
     font-display: swap;
 }
+
+//Outfit
+@font-face {
+    font-family: 'Outfit';
+    src: url('@/assets/fonts/Outfit/Outfit-Regular.eot');
+    src: url('@/assets/fonts/Outfit/Outfit-Regular.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Outfit/Outfit-Regular.woff2') format('woff2'),
+        url('@/assets/fonts/Outfit/Outfit-Regular.woff') format('woff'),
+        url('@/assets/fonts/Outfit/Outfit-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Outfit';
+    src: url('@/assets/fonts/Outfit/Outfit-Medium.eot');
+    src: url('@/assets/fonts/Outfit/Outfit-Medium.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Outfit/Outfit-Medium.woff2') format('woff2'),
+        url('@/assets/fonts/Outfit/Outfit-Medium.woff') format('woff'),
+        url('@/assets/fonts/Outfit/Outfit-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Outfit';
+    src: url('@/assets/fonts/Outfit/Outfit-SemiBold.eot');
+    src: url('@/assets/fonts/Outfit/Outfit-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Outfit/Outfit-SemiBold.woff2') format('woff2'),
+        url('@/assets/fonts/Outfit/Outfit-SemiBold.woff') format('woff'),
+        url('@/assets/fonts/Outfit/Outfit-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+//Poppins
+@font-face {
+    font-family: 'Poppins';
+    src: url('@/assets/fonts/Poppins/Poppins-Regular.eot');
+    src: url('@/assets/fonts/Poppins/Poppins-Regular.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Poppins/Poppins-Regular.woff2') format('woff2'),
+        url('@/assets/fonts/Poppins/Poppins-Regular.woff') format('woff'),
+        url('@/assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('@/assets/fonts/Poppins/Poppins-Medium.eot');
+    src: url('@/assets/fonts/Poppins/Poppins-Medium.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Poppins/Poppins-Medium.woff2') format('woff2'),
+        url('@/assets/fonts/Poppins/Poppins-Medium.woff') format('woff'),
+        url('@/assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('@/assets/fonts/Poppins/Poppins-SemiBold.eot');
+    src: url('@/assets/fonts/Poppins/Poppins-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Poppins/Poppins-SemiBold.woff2') format('woff2'),
+        url('@/assets/fonts/Poppins/Poppins-SemiBold.woff') format('woff'),
+        url('@/assets/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('@/assets/fonts/Poppins/Poppins-Bold.eot');
+    src: url('@/assets/fonts/Poppins/Poppins-Bold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Poppins/Poppins-Bold.woff2') format('woff2'),
+        url('@/assets/fonts/Poppins/Poppins-Bold.woff') format('woff'),
+        url('@/assets/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+//PublicSans
+@font-face {
+    font-family: 'PublicSans';
+    src: url('@/assets/fonts/PublicSans/PublicSans-SemiBold.eot');
+    src: url('@/assets/fonts/PublicSans/PublicSans-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/PublicSans/PublicSans-SemiBold.woff2') format('woff2'),
+        url('@/assets/fonts/PublicSans/PublicSans-SemiBold.woff') format('woff'),
+        url('@/assets/fonts/PublicSans/PublicSans-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PublicSans';
+    src: url('@/assets/fonts/PublicSans/PublicSans-Bold.eot');
+    src: url('@/assets/fonts/PublicSans/PublicSans-Bold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/PublicSans/PublicSans-Bold.woff2') format('woff2'),
+        url('@/assets/fonts/PublicSans/PublicSans-Bold.woff') format('woff'),
+        url('@/assets/fonts/PublicSans/PublicSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+//Roboto
+@font-face {
+    font-family: 'Roboto';
+    src: url('@/assets/fonts/Roboto/Roboto-Regular.eot');
+    src: url('@/assets/fonts/Roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Roboto/Roboto-Regular.woff2') format('woff2'),
+        url('@/assets/fonts/Roboto/Roboto-Regular.woff') format('woff'),
+        url('@/assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('@/assets/fonts/Roboto/Roboto-Bold.eot');
+    src: url('@/assets/fonts/Roboto/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Roboto/Roboto-Bold.woff2') format('woff2'),
+        url('@/assets/fonts/Roboto/Roboto-Bold.woff') format('woff'),
+        url('@/assets/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+//Urbanist
+@font-face {
+    font-family: 'Urbanist';
+    src: url('@/assets/fonts/Urbanist/Urbanist-Bold.eot');
+    src: url('@/assets/fonts/Urbanist/Urbanist-Bold.eot?#iefix') format('embedded-opentype'),
+        url('@/assets/fonts/Urbanist/Urbanist-Bold.woff2') format('woff2'),
+        url('@/assets/fonts/Urbanist/Urbanist-Bold.woff') format('woff'),
+        url('@/assets/fonts/Urbanist/Urbanist-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+
