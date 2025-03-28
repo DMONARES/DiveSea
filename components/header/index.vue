@@ -37,7 +37,7 @@
 	.header__navigation-link
 	{
 		font-size: 1.125rem; // 18px
-		color: $gray;
+		color: $grey;
 
 		@include transition();
 		&.router-link-active { color: $black; }

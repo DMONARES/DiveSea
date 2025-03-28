@@ -1,0 +1,57 @@
+<template>
+	<svg
+		width="20.169678"
+		height="20.169678"
+		viewBox="0 0 20.1697 20.1697"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+	>
+		<defs>
+			<pattern
+				id="pattern_1_39610"
+				patternContentUnits="objectBoundingBox"
+				width="1.000000"
+				height="1.000000"
+			>
+				<use
+					xlink:href="#image1_3961_0"
+					transform="matrix(0.007813,0,0,0.007813,0,0)"
+				/>
+			</pattern>
+			<image
+				id="image1_3961_0"
+				width="128.000000"
+				height="128.000000"
+				xlink:href="data:image/png;base64,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"
+			/>
+		</defs>
+		<mask
+			id="mask1_3961"
+			mask-type="alpha"
+			maskUnits="userSpaceOnUse"
+			x="0.000000"
+			y="0.000000"
+			width="20.169678"
+			height="20.169678"
+		>
+			<rect
+				id="image 23"
+				width="20.169767"
+				height="20.169767"
+				fill="url(#pattern_1_39610)"
+				fill-opacity="1.000000"
+			/>
+		</mask>
+		<g mask="url(#mask1_3961)">
+			<rect
+				id="Rectangle 65"
+				x="-3.629883"
+				width="23.800327"
+				height="23.800327"
+				fill="#9596A6"
+				fill-opacity="1.000000"
+			/>
+		</g>
+	</svg>
+</template>

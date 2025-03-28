@@ -31,7 +31,7 @@
 		border-radius: 50%;
 		background: conic-gradient(
 			from 180deg at 50% 50%,
-			$lightGray 0deg,
+			$lightGrey 0deg,
 			$black 360deg
 		);
 		animation: spin 2s infinite linear;

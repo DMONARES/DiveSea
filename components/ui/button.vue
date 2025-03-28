@@ -1,63 +1,74 @@
 <script setup>
-	const props = defineProps({
-		variant: String, // default, border
-		size: String, // default, xl
-		disabled: Boolean,
-	});
+defineProps({
+	disabled: {
+		type: Boolean,
+		default: false,
+	},
+	transpatent: {
+		type: Boolean,
+		default: false,
+	},
+	lilFont: {
+		type: Boolean,
+		default: false,
+	},
+});
 </script>
 
 <template>
 	<button
 		class="ui-button"
-		:class="{
-			'border': variant === 'border',
-			'xl': size === 'xl',
-		}"
 		:disabled="disabled"
+		:class="{
+			'ui-button--transpatent': transpatent,
+			'ui-button--lil-font': lilFont,
+		}"
 	>
 		<slot />
 	</button>
 </template>
 
-<style lang='scss'>
-	.ui-button
-	{
-		// base styles
-		cursor: pointer;
-		border: none;
-		padding: 12px 24px;
-		border: 1px solid transparent;
-		border-radius: 4px;
-		background-color: $black;
-		color: $white;
-		font-size: 1rem;
+<style lang="scss">
+.ui-button {
+	// base styles
 
-		@include transition();
+	//button
+	display: block;
+	padding: 18px 30px;
+	background-color: $black;
+	border: 1.5px solid $black;
+	border-radius: 23px;
+	transition: 0.3s ease-in-out;
+	cursor: pointer;
 
-		// effects
-		&:disabled
-		{
-			pointer-events: none;
-			opacity: .7;
-		}
-		&:hover { opacity: .8; }
+	//font
+	font-family: $primaryFont;
+	font-size: 16.27px;
+	font-weight: 500;
+	line-height: 24px;
+	text-transform: capitalize;
+	color: $white;
 
-		// sizes
-		&.xl { padding: 20px 64px; }
-
-		// variants
-		&.border
-		{
-			background-color: transparent;
-			border-color: $black;
-			color: $black;
-
-			&:hover
-			{
-				opacity: 1;
-				background-color: $black;
-				color: $white;
-			}
-		}
+	// effects
+	&--transpatent {
+		background-color: transparent;
+		color: $black;
 	}
+	&--lil-font {
+		font-family: $outfitFont;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 130%;
+		padding: 14px 50px 30px 20px;
+		border-radius: 12.4px;
+	}
+	&:disabled {
+		pointer-events: none;
+		cursor: not-allowed;
+		opacity: 0.7;
+	}
+	&:hover {
+		opacity: 0.8;
+	}
+}
 </style>

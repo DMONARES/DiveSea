@@ -44,7 +44,7 @@
 	.ui-accordion
 	{
 		border-bottom: 2px solid $black;
-		@include transition();
+		transition: .3s ease-in-out;
 
 		&.active
 		{
@@ -89,7 +89,7 @@
 			height: 1px;
 			border-radius: 2px;
 
-			@include transition();
+			transition: .3s ease-in-out;
 			&:last-child { transform: rotate(90deg) translate(-1px, 0px); }
 		}
 

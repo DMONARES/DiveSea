@@ -51,14 +51,14 @@
 	}
 
 	.ui-checkbox__checkbox {
-		border: 2px solid $lightGray;
+		border: 2px solid $black;
 		width: 24px;
 		height: 24px;
 
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		@include transition();
+		transition: .3s ease-in-out;
 
 		&.active
 		{

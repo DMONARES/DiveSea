@@ -1,9 +1,11 @@
 // цвета
-$black: #282C34;
-$gray: #82868E;
-$lightGray: #E8E8E7;
-$red: #DC1020;
-$white: #ffffff;
+$black: #141416;
+$grey: #676767;
+$lightGrey: #C5C5C5;
+$red: #E23333;
+$white: #FFFFFF;
+$green: #10C352;
+
 
 // Разрешения
 $tablet : 768px;
@@ -11,4 +13,11 @@ $laptop: 1024px;
 $desktop: 1366px;
 
 // шрифты
-$firstFont: 'Inter', sans-serif;
+$primaryFont: 'Poppins', sans-serif;
+$secondaryFont: 'Inter', sans-serif;
+$dmsansFont: 'DMsans', sans-serif;
+$manropeFont: 'Manrope', sans-serif;
+$outfitFont: 'Outfit', sans-serif;
+$publicSansFont: 'PublicSans', sans-serif;
+$robotoFont: 'Roboto', sans-serif;
+$urbanistFont: 'Urbanist', sans-serif;
