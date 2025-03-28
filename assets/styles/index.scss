@@ -1,0 +1,54 @@
+@import url('@/assets/styles/base/_fonts.scss');
+@import url('@/assets/styles/base/_global.scss');
+
+*, *::after, *::before
+{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	scroll-behavior: smooth;
+	font-family: $firstFont;
+	color: $black;
+}
+
+body
+{
+	&:has(.huge-preloader) { overflow: hidden; }
+}
+
+a { text-decoration: none; }
+
+.container
+{
+	max-width: 1448px;
+	margin: 0 auto;
+	padding: 0 16px;
+
+	@include mq($tablet) { padding: 0 32px; }
+}
+
+// transition -----------
+.v-enter-active,
+.v-leave-active { transition: opacity 0.2s ease; }
+
+.v-enter-from,
+.v-leave-to { opacity: 0; }
+
+// toaster
+.v-toast { z-index: 999999!important; padding: 10px!important; }
+
+.v-toast__item
+{
+	min-height: 0!important;
+	border-radius: 0!important;
+	padding: 10px 20px;
+
+	.v-toast__icon { display: none!important; }
+	.v-toast__text
+	{
+		padding: 0!important;
+		color: $white!important;
+	}
+
+	&--error { background-color: $red!important; }
+}
