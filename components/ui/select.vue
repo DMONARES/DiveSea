@@ -39,9 +39,7 @@ const handleInput = (event) => {
 			inputValue.value = formattedValue;
 			emit("update:modelValue", formattedValue);
 		} else {
-			// Prevent non-numeric input
 			event.preventDefault();
-			// Restore previous valid value
 			inputValue.value = props.modelValue;
 		}
 	} else {
@@ -49,9 +47,7 @@ const handleInput = (event) => {
 			inputValue.value = value;
 			emit("update:modelValue", value);
 		} else {
-			// Prevent non-numeric input
 			event.preventDefault();
-			// Restore previous valid value
 			inputValue.value = props.modelValue;
 		}
 	}
@@ -201,16 +197,27 @@ $inputBg: #efefef;
 		width: 100%;
 		max-height: 200px;
 		overflow-y: auto;
-		background: #fff;
+		background: $white;
 		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 		border-radius: 8px;
 		z-index: 1000;
 	}
 	&__option {
+		position: relative;
 		padding: 10px 15px;
 		transition: 0.3s;
 		&:hover {
 			background: #f0f0f0;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 2%;
+			width: 95%;
+			height: 1px;
+			background-color: $inputBg;
 		}
 	}
 	&__error-text {
