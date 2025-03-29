@@ -1,7 +1,9 @@
 <script setup>
+import { ref, useSlots, defineProps, defineEmits } from "vue";
+
 const props = defineProps({
 	type: { type: String, default: "text" },
-	value: { type: String, required: true },
+	modelValue: { type: String, required: true },
 	label: { type: String, default: "" },
 	placeholder: { type: String, default: "" },
 	errorText: { type: String, default: "" },
@@ -10,19 +12,17 @@ const props = defineProps({
 	isPhone: { type: Boolean, default: false },
 	elementType: { type: String, default: "input" },
 });
-const emit = defineEmits(["update:value", "triggerIcon"]);
 
-// vars
+const emit = defineEmits(["update:modelValue", "triggerIcon"]);
+
 const focus = ref(false);
 const inputRef = ref(null);
 
-// functions
 const focusInput = () => {
 	if (inputRef.value) inputRef.value.focus();
 };
-const updateValue = (value) => emit("update:value", value);
+const updateValue = (value) => emit("update:modelValue", value);
 
-// check hasSlot
 const slots = useSlots();
 const hasSlotContent =
 	slots.hasOwnProperty("default") && slots.default().length > 0;
@@ -32,7 +32,7 @@ const hasSlotContent =
 	<div
 		class="ui-input"
 		:class="{
-			active: focus || value,
+			active: focus || modelValue,
 			disabled: disabled,
 			error: error,
 		}"
@@ -49,7 +49,7 @@ const hasSlotContent =
 				class="ui-input__input"
 				ref="inputRef"
 				:type="elementType === 'input' ? type : undefined"
-				:value="value"
+				:value="modelValue"
 				:placeholder="placeholder"
 				:disabled="disabled"
 				@focus="focus = true"
@@ -65,7 +65,7 @@ const hasSlotContent =
 				v-maska
 				data-maska="+7 (###) ###-##-##"
 				:type="type"
-				:value="value"
+				:value="modelValue"
 				:placeholder="placeholder"
 				:disabled="disabled"
 				@focus="focus = true"
@@ -75,16 +75,16 @@ const hasSlotContent =
 			<div
 				v-if="hasSlotContent"
 				class="ui-input__icon"
-				:class="{'ui-input__icon--area': elementType === 'textarea'}"
+				:class="{ 'ui-input__icon--area': elementType === 'textarea' }"
 				@click="emit('triggerIcon')"
 			>
 				<slot />
 			</div>
 		</div>
 
-		<span v-if="errorText" class="ui-input__error-text">{{
-			errorText
-		}}</span>
+		<span v-if="errorText" class="ui-input__error-text">
+			{{ errorText }}
+		</span>
 	</div>
 </template>
 

@@ -1,5 +1,10 @@
 <script setup>
+import { ref } from 'vue';
 
+const artworkName = ref('');
+const areaText= ref('');
+const ex = ref('');
+const beautifulCastle = ref('');
 </script>
 
 <template>
@@ -14,14 +19,16 @@
 		<UiButton style="margin-bottom: 10px;" :lilFont="true" :transpatent="true">lilFont transpatent Button</UiButton>
 
 		<h2 style="font-size: 24px; margin: 20px 0;">Inputs</h2>
-		<uiInput placeholder="ArtWork Name" label="Name">
+		<uiInput v-model="artworkName" placeholder="ArtWork Name" label="Name" style="margin-bottom: 10px;">
 			<IconsEdit/>
 		</uiInput>
-		<uiInput elementType="textarea" placeholder="ArtWork Name" label="Name">
+		<uiInput v-model="areaText" elementType="textarea" placeholder="ArtWork Name" label="Name" style="margin-bottom: 10px;">
 			<IconsEdit/>
 		</uiInput>
-		<!-- <uiInput placeholder="Search Art Work / Creator" :error="true" style="margin: 20px 0;"/> -->
-		<!-- <uiInput placeholder="Search Art Work / Creator" type="search" style="margin: 20px 0;"/> -->
+		<uiInput v-model="ex" placeholder="Ex - 100 x 100" label="Size" style="margin-bottom: 10px;" />
+		<uiInput v-model="beautifulCastle" placeholder="Beautiful Castle, Monkeys ETC" label="Tags" style="margin-bottom: 10px;">
+			<IconsEdit/>
+		</uiInput>
 	</div>
 </template>
 
