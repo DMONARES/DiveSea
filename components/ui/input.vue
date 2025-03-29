@@ -124,7 +124,6 @@ $inputBg: #efefef;
 	line-height: 124.5%;
 	color: $black;
 	transition: 0.3s ease-in-out;
-	cursor: pointer;
 }
 
 .ui-input__input {
