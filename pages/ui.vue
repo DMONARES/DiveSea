@@ -14,9 +14,14 @@
 		<UiButton style="margin-bottom: 10px;" :lilFont="true" :transpatent="true">lilFont transpatent Button</UiButton>
 
 		<h2 style="font-size: 24px; margin: 20px 0;">Inputs</h2>
-		<uiInput placeholder="Search Art Work / Creator" />
-		<uiInput placeholder="Search Art Work / Creator" :error="true" style="margin: 20px 0;"/>
-		<uiInput placeholder="Search Art Work / Creator" type="search" style="margin: 20px 0;"/>
+		<uiInput placeholder="ArtWork Name" label="Name">
+			<IconsEdit/>
+		</uiInput>
+		<uiInput elementType="textarea" placeholder="ArtWork Name" label="Name">
+			<IconsEdit/>
+		</uiInput>
+		<!-- <uiInput placeholder="Search Art Work / Creator" :error="true" style="margin: 20px 0;"/> -->
+		<!-- <uiInput placeholder="Search Art Work / Creator" type="search" style="margin: 20px 0;"/> -->
 	</div>
 </template>
 

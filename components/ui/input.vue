@@ -8,6 +8,7 @@ const props = defineProps({
 	error: { type: Boolean, default: false },
 	disabled: { type: Boolean, default: false },
 	isPhone: { type: Boolean, default: false },
+	elementType: { type: String, default: "input" },
 });
 const emit = defineEmits(["update:value", "triggerIcon"]);
 
@@ -41,18 +42,22 @@ const hasSlotContent =
 		</label>
 
 		<div class="ui-input__wr">
-			<input
+			<!-- Input -->
+			<component
 				v-if="!isPhone"
+				:is="elementType"
 				class="ui-input__input"
 				ref="inputRef"
-				:type="type"
+				:type="elementType === 'input' ? type : undefined"
 				:value="value"
 				:placeholder="placeholder"
 				:disabled="disabled"
 				@focus="focus = true"
 				@blur="focus = false"
 				@input="updateValue($event.target.value)"
-			/>
+			></component>
+
+			<!-- Phone -->
 			<input
 				v-else
 				class="ui-input__input"
@@ -70,6 +75,7 @@ const hasSlotContent =
 			<div
 				v-if="hasSlotContent"
 				class="ui-input__icon"
+				:class="{'ui-input__icon--area': elementType === 'textarea'}"
 				@click="emit('triggerIcon')"
 			>
 				<slot />
@@ -83,10 +89,13 @@ const hasSlotContent =
 </template>
 
 <style lang="scss">
+$placeholder: #9596a6;
+$inputBg: #efefef;
 .ui-input {
 	&.active {
 		.ui-input__input {
 			border-color: $black;
+			background-color: transparent;
 		}
 	}
 
@@ -108,9 +117,11 @@ const hasSlotContent =
 .ui-input__label {
 	width: max-content;
 	display: block;
-	margin-bottom: 5px;
-	font-size: 1rem;
-	font-weight: 500;
+	margin-bottom: 20px;
+	font-family: $primaryFont;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 124.5%;
 	color: $black;
 	transition: 0.3s ease-in-out;
 	cursor: pointer;
@@ -119,11 +130,11 @@ const hasSlotContent =
 .ui-input__input {
 	// default
 	width: 100%;
-	padding: 10px 32px 10px 15px;
-	border: 2px solid $grey;
+	padding: 18px 81px 18px 27px;
+	border: 1.5px solid transparent;
 	outline: none;
-	border-radius: 4px;
-	background-color: $white;
+	border-radius: 11px;
+	background-color: $inputBg;
 	color: $black;
 	font-size: 1rem;
 	transition: 0.3s ease-in-out;
@@ -131,9 +142,13 @@ const hasSlotContent =
 	// effects
 	&:hover {
 		border-color: $black;
+		background-color: transparent;
 	}
 	&::placeholder {
-		color: $grey;
+		color: $placeholder;
+		font-size: 13.45px;
+		font-weight: 400;
+		line-height: 124.5%;
 	}
 	&:disabled {
 		pointer-events: none;
@@ -149,17 +164,22 @@ const hasSlotContent =
 }
 
 .ui-input__icon {
-	cursor: pointer;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
-	right: 10px;
+	right: 27px;
 	line-height: 0;
 	overflow: hidden;
+	pointer-events: none;
+
+	&--area {
+		top: 18px;
+		transform: translateY(0);
+	}
 
 	svg {
-		width: 16px;
-		height: 16px;
+		width: 20px;
+		height: 20px;
 	}
 }
 </style>
