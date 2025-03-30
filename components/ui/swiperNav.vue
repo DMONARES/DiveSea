@@ -1,23 +1,37 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+
 defineProps({
 	disabled: {
 		type: Boolean,
 		default: false,
 	},
-})
+});
+
+const prevButton = ref(null);
+const nextButton = ref(null);
+
+onMounted(() => {
+	const swiper = document.querySelector('.hero-swiper')?.swiper;
+	if (swiper) {
+		prevButton.value.addEventListener('click', () => swiper.slidePrev());
+		nextButton.value.addEventListener('click', () => swiper.slideNext());
+	}
+});
 </script>
 
 <template>
 	<div class="swiper-nav">
-		<button class="swiper-nav__button swiper-nav__button--prev" :disabled="true">
+		<button ref="prevButton" class="swiper-nav__button swiper-nav__button--prev">
 			<iconsSliderNav class="swiper-nav__icon swiper-nav__icon--prev" />
 		</button>
 		<span class="swiper-nav__span"></span>
-		<button class="swiper-nav__button swiper-nav__button--next" :disabled="false">
+		<button ref="nextButton" class="swiper-nav__button swiper-nav__button--next">
 			<iconsSliderNav class="swiper-nav__icon swiper-nav__icon--next" />
 		</button>
 	</div>
 </template>
+
 
 <style lang="scss" scoped>
 .swiper-nav {
@@ -30,7 +44,7 @@ defineProps({
 	justify-content: space-between;
 	background-color: $white;
 	border-radius: 17.25px;
-	box-shadow: 0px 43.12px 34.49px -25.87px rgba(15, 15, 15, 0.3);
+	box-shadow: 0px 43.12px 34.49px -28.87px rgba(15, 15, 15, 0.3);
 
 	&__button {
 		padding: 21px;

@@ -1,9 +1,13 @@
 <script setup></script>
 
 <template>
-	<main>
+	<main class="main">
 		<Hero />
 	</main>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.main {
+	overflow: hidden;
+}
+</style>
