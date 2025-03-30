@@ -33,6 +33,14 @@ const infoList = [
 onMounted(() => {
 	if (swiperInstance.value) {
 		const swiper = swiperInstance.value;
+		// Настройка навигации
+		swiper.navigation.init();
+		swiper.navigation.update();
+
+		// Обработка изменения размера окна
+		window.addEventListener("resize", () => {
+			swiper.update();
+		});
 	}
 });
 </script>
@@ -40,8 +48,11 @@ onMounted(() => {
 <template>
 	<div class="hero">
 		<IconsDecorDots class="slider__dots" />
+		<IconsDecorArrow class="slider__decor-arrow" />
 		<div class="hero__content">
-			<h1 class="hero__title">Discover And Create NFTs</h1>
+			<h1 class="hero__title">
+				Discover And Create NFTs <span class="hero__title-span"></span>
+			</h1>
 			<p class="hero__description">
 				Discover, Create and Sell NFTs On Our NFT Marketplace With Over
 				Thousands Of NFTs And Get a <span>$20 bonus</span>.
@@ -70,7 +81,6 @@ onMounted(() => {
 		<div class="hero__slider slider-wrapper">
 			<!-- slider -->
 			<div class="slider">
-				<!-- <IconsDecorDots class="slider__dots" /> -->
 				<Swiper
 					:modules="[Navigation]"
 					:space-between="38"
@@ -83,14 +93,17 @@ onMounted(() => {
 						320: {
 							slidesPerView: 1,
 							spaceBetween: 20,
+							slidesPerGroup: 1,
 						},
 						640: {
-							slidesPerView: 1.2,
+							slidesPerView: 1,
 							spaceBetween: 30,
+							slidesPerGroup: 1,
 						},
 						1024: {
 							slidesPerView: 1.2,
 							spaceBetween: 38,
+							slidesPerGroup: 1,
 						},
 					}"
 					class="hero-swiper"
@@ -128,14 +141,40 @@ onMounted(() => {
 		align-items: start;
 		gap: 15px;
 		z-index: 100;
+
+		@media (max-width: 1200px) {
+			max-width: 400px;
+			gap: 10px;
+		}
 	}
 	&__title {
+		position: relative;
 		font-size: 75px;
 		font-weight: 600;
 		line-height: 120%;
 		letter-spacing: -3px;
 		text-transform: capitalize;
 		color: $black;
+
+		@media (max-width: 1200px) {
+			font-size: 53.34px;
+			line-height: 120%;
+			letter-spacing: -2.13px;
+		}
+
+		&-span {
+			content: "";
+			position: absolute;
+			top: -20px;
+			left: 0;
+			width: 35%;
+			height: 1px;
+			background-color: $lightGrey;
+
+			@media (max-width: 1200px) {
+				top: -10px;
+			}
+		}
 	}
 	&__description {
 		margin-bottom: 30px;
@@ -147,6 +186,13 @@ onMounted(() => {
 		letter-spacing: 0px;
 		color: $grey;
 
+		@media (max-width: 1200px) {
+			margin-bottom: 20px;
+			font-size: 12.8px;
+			font-weight: 600;
+			line-height: 19.91px;
+		}
+
 		span {
 			color: $black;
 			font-weight: 600;
@@ -157,18 +203,30 @@ onMounted(() => {
 		display: flex;
 		align-items: center;
 		gap: 23px;
+
+		@media (max-width: 1200px) {
+			margin-bottom: 50px;
+		}
 	}
 	&__info {
 		&-list {
 			display: flex;
 			align-items: center;
 			gap: 65px;
+
+			@media (max-width: 1200px) {
+				gap: 45px;
+			}
 		}
 		&-item {
 			display: flex;
 			flex-direction: column;
 			align-items: start;
 			gap: 6px;
+
+			@media (max-width: 1200px) {
+				gap: 4px;
+			}
 		}
 		&-title {
 			color: $black;
@@ -176,6 +234,11 @@ onMounted(() => {
 			font-size: 36.77px;
 			font-weight: 600;
 			line-height: 45.96px;
+
+			@media (max-width: 1200px) {
+				font-size: 26.15px;
+				line-height: 32.69px;
+			}
 		}
 		&-description {
 			color: $grey;
@@ -183,6 +246,11 @@ onMounted(() => {
 			font-size: 12.26px;
 			font-weight: 500;
 			line-height: 18.39px;
+
+			@media (max-width: 1200px) {
+				font-size: 8.72px;
+				line-height: 13.08px;
+			}
 		}
 	}
 
@@ -199,12 +267,26 @@ onMounted(() => {
 			right: 0;
 			z-index: -1;
 		}
+		&__decor-arrow {
+			position: absolute;
+			top: 0;
+			right: 10%;
+			z-index: -1;
+
+			@media (max-width: 950px) {
+				display: none;
+			}
+		}
 		&__navigation {
 			position: absolute;
 			bottom: 23px;
 			left: 23%;
 			transform: translateX(-50%);
 			z-index: 100;
+
+			@media (max-width: 1200px) {
+				bottom: -8px;
+			}
 		}
 	}
 }
@@ -217,6 +299,12 @@ onMounted(() => {
 	padding-left: 10px;
 	overflow: visible;
 	margin-left: 30px;
+
+	@media (max-width: 1200px) {
+		max-width: 300px;
+		padding-top: 50px;
+		margin-left: 15px;
+	}
 }
 
 .slider-mask-left {
@@ -228,6 +316,11 @@ onMounted(() => {
 	background: linear-gradient(to right, white, white);
 	z-index: 10;
 	pointer-events: none;
+
+	@media (max-width: 1200px) {
+		left: -200%;
+		width: 200%;
+	}
 }
 
 .hero-swiper {
@@ -237,6 +330,10 @@ onMounted(() => {
 :deep(.swiper-slide-active) {
 	transform: translateY(-100px);
 	transition: transform 0.5s ease;
+
+	@media (max-width: 1200px) {
+		transform: translateY(-50px);
+	}
 }
 
 .slide {
@@ -245,6 +342,11 @@ onMounted(() => {
 	border-radius: 25px;
 	overflow: hidden;
 	transition: transform 0.5s ease;
+
+	@media (max-width: 1200px) {
+		max-width: 300px;
+		max-height: 300px;
+	}
 
 	&__img {
 		width: 100%;
