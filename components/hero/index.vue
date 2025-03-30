@@ -75,6 +75,22 @@ onMounted(() => {
 					</li>
 				</ul>
 			</div>
+			<div class="hero__rating">
+				<div class="hero__rating-right">
+					<IconsStar />
+					<IconsTrustpilot />
+				</div>
+				<div class="hero__rating-left">
+					<div class="hero__rating-stars">
+						<IconsRating />
+						<IconsRating />
+						<IconsRating />
+						<IconsRating />
+						<IconsRating />
+					</div>
+					<span>4900+</span>
+				</div>
+			</div>
 		</div>
 
 		<!-- slider wrapper -->
@@ -133,6 +149,14 @@ onMounted(() => {
 	gap: 50px;
 	position: relative;
 
+	@media (max-width: 850px) {
+		flex-direction: column;
+		align-items: start;
+		padding-top: 90px;
+		padding-left: 32px;
+		gap: 70px;
+	}
+
 	&__content {
 		margin-top: 10px;
 		max-width: 568px;
@@ -145,6 +169,9 @@ onMounted(() => {
 		@media (max-width: 1200px) {
 			max-width: 400px;
 			gap: 10px;
+		}
+		@media (max-width: 850px) {
+			max-width: unset;
 		}
 	}
 	&__title {
@@ -161,9 +188,13 @@ onMounted(() => {
 			line-height: 120%;
 			letter-spacing: -2.13px;
 		}
+		@media (max-width: 850px) {
+			font-size: 47.4px;
+			line-height: 120%;
+			letter-spacing: -1.9px;
+		}
 
 		&-span {
-			content: "";
 			position: absolute;
 			top: -20px;
 			left: 0;
@@ -189,8 +220,11 @@ onMounted(() => {
 		@media (max-width: 1200px) {
 			margin-bottom: 20px;
 			font-size: 12.8px;
-			font-weight: 600;
 			line-height: 19.91px;
+		}
+		@media (max-width: 850px) {
+			font-size: 11.38px;
+			line-height: 17.7px;
 		}
 
 		span {
@@ -207,8 +241,16 @@ onMounted(() => {
 		@media (max-width: 1200px) {
 			margin-bottom: 50px;
 		}
+		@media (max-width: 850px) {
+			margin-bottom: 25px;
+		}
 	}
 	&__info {
+		display: block;
+
+		@media (max-width: 850px) {
+			display: none;
+		}
 		&-list {
 			display: flex;
 			align-items: center;
@@ -254,6 +296,43 @@ onMounted(() => {
 		}
 	}
 
+	&__rating {
+		display: none;
+
+		@media (max-width: 850px) {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+		&-right {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+
+			svg:first-child {
+				translate: 0 -3px;
+			}
+		}
+		&-left {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			span {
+				color: $grey;
+				font-family: $urbanistFont;
+				font-size: 12.81px;
+				font-weight: 500;
+				line-height: 19.22px;
+			}
+		}
+		&-stars {
+			display: flex;
+			align-items: center;
+			gap: 3px;
+		}
+	}
+
 	//slider
 	&__slider {
 		position: relative;
@@ -266,6 +345,11 @@ onMounted(() => {
 			top: 0;
 			right: 0;
 			z-index: -1;
+
+			@media (max-width: 850px) {
+				bottom: 0;
+				top: unset;
+			}
 		}
 		&__decor-arrow {
 			position: absolute;
