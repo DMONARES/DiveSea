@@ -16,7 +16,7 @@ const searchText = ref("");
 	<div style="margin: 50px">
 		<h1 style="font-size: 40px; margin-bottom: 50px;">UI</h1>
 
-		<!-- <h2 style="font-size: 24px; margin-bottom: 20px;">Buttons</h2>
+		<h2 style="font-size: 24px; margin-bottom: 20px;">Buttons</h2>
 		<UiButton class="btn" style="margin-bottom: 10px;">Default Button</UiButton>
 		<UiButton class="btn" style="margin-bottom: 10px;" :disabled="true">Disabled Button</UiButton>
 		<UiButton class="btn" style="margin-bottom: 10px;" :transpatent="true">Transparent Button</UiButton>
@@ -50,7 +50,7 @@ const searchText = ref("");
 			label="Royalty"
 			style="margin-bottom: 10px"
 			type="royalty"
-		/> -->
+		/>
 
 		<h2 style="font-size: 24px; margin-bottom: 20px;">Search</h2>
 		<UiSearch v-model="searchText" placeholder="Search Art Work / Creator" />

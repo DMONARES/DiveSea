@@ -26,9 +26,9 @@ const updateValue = (value) => emit("update:modelValue", value);
 		}"
 	>
 		<div class="ui-search__wr">
-			<div class="ui-search__icon" @click="emit('triggerIcon')">
+			<button type="submit" class="ui-search__icon" @click="emit('triggerIcon')">
 				<IconsSearch />
-			</div>
+			</button>
 			<input
 				class="ui-search__input"
 				ref="inputRef"
@@ -119,7 +119,7 @@ $inputBg: #efefef;
 		left: 20px;
 		line-height: 0;
 		overflow: hidden;
-		pointer-events: none;
+		cursor: pointer;
 
 		&--area {
 			top: 18px;
