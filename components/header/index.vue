@@ -147,6 +147,7 @@ function toggleMenu() {
 
 	@media (max-width: 850px) {
 		padding: 20px 0;
+		border-bottom: 1px solid $lightGrey;
 	}
 
 	&__left {
