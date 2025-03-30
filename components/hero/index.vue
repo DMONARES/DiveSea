@@ -2,10 +2,17 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation, Autoplay } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import { onMounted, ref } from "vue";
 
-const slides = ["/img/nfts/1.png", "/img/nfts/2.png", "/img/nfts/3.png"];
+const slides = [
+	"/img/nfts/1.png",
+	"/img/nfts/2.png",
+	"/img/nfts/3.png",
+	"/img/nfts/4.png",
+	"/img/nfts/5.png",
+	"/img/nfts/6.png",
+];
 const swiperInstance = ref(null);
 
 const infoList = [
@@ -32,6 +39,7 @@ onMounted(() => {
 
 <template>
 	<div class="hero">
+		<IconsDecorDots class="slider__dots" />
 		<div class="hero__content">
 			<h1 class="hero__title">Discover And Create NFTs</h1>
 			<p class="hero__description">
@@ -59,19 +67,31 @@ onMounted(() => {
 		</div>
 
 		<!-- slider wrapper -->
-		<div class="slider-wrapper">
+		<div class="hero__slider slider-wrapper">
 			<!-- slider -->
-			<div class="hero__slider slider">
-				<IconsDecorDots class="slider__dots" />
+			<div class="slider">
+				<!-- <IconsDecorDots class="slider__dots" /> -->
 				<Swiper
-					:modules="[Navigation, Autoplay]"
-					:slides-per-view="1.2"
+					:modules="[Navigation]"
 					:space-between="38"
-					:loop="true"
-					:autoplay="{ delay: 33000 }"
-					:navigation="{
-						nextEl: '.swiper-nav__button--next',
-						prevEl: '.swiper-nav__button--prev',
+					:loop="false"
+					:slides-per-view="1"
+					:slides-per-group="1"
+					:speed="500"
+					:watch-overflow="true"
+					:breakpoints="{
+						320: {
+							slidesPerView: 1,
+							spaceBetween: 20,
+						},
+						640: {
+							slidesPerView: 1.2,
+							spaceBetween: 30,
+						},
+						1024: {
+							slidesPerView: 1.2,
+							spaceBetween: 38,
+						},
 					}"
 					class="hero-swiper"
 					@swiper="swiperInstance = $event"
@@ -210,13 +230,7 @@ onMounted(() => {
 	pointer-events: none;
 }
 
-.hero__slider {
-	position: relative;
-	width: 100%;
-}
-
 .hero-swiper {
-	border-radius: 25px;
 	overflow: visible;
 }
 
@@ -231,15 +245,14 @@ onMounted(() => {
 	border-radius: 25px;
 	overflow: hidden;
 	transition: transform 0.5s ease;
-}
 
-.slide__img {
-	width: 100%;
-	height: auto;
-	border-radius: 25px;
-	object-fit: cover;
+	&__img {
+		width: 100%;
+		height: auto;
+		border-radius: 25px;
+		object-fit: cover;
+	}
 }
-
 :deep(.swiper-slide-active) .slide__img {
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
