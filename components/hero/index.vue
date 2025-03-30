@@ -16,8 +16,8 @@ const infoList = [
 </script>
 
 <template>
-	<section class="hero">
-		<MyContainer>
+	<MyContainer>
+		<div class="hero">
 			<div class="hero__content">
 				<h1 class="hero__title">Discover And Create NFTs</h1>
 				<p class="hero__description">
@@ -45,9 +45,13 @@ const infoList = [
 			</div>
 
 			<!-- slider -->
-			<div class="hero__slider"></div>
-		</MyContainer>
-	</section>
+			<div class="hero__slider slider">
+				<IconsDecorDots class="slider__dots" />
+				<HeroSlide />
+				<UiSwiperNav class="slider__navigation" />
+			</div>
+		</div>
+	</MyContainer>
 </template>
 
 <style lang="scss" scoped>
@@ -119,6 +123,28 @@ const infoList = [
 			font-size: 12.26px;
 			font-weight: 500;
 			line-height: 18.39px;
+		}
+	}
+
+	//slider
+	&__slider {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+	.slider {
+		&__dots {
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: -1;
+		}
+		&__navigation {
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
 		}
 	}
 }
