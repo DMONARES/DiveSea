@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { onMounted, ref } from "vue";
 
 const slides = [
 	"/img/nfts/1.png",
@@ -33,11 +32,9 @@ const infoList = [
 onMounted(() => {
 	if (swiperInstance.value) {
 		const swiper = swiperInstance.value;
-		// Настройка навигации
 		swiper.navigation.init();
 		swiper.navigation.update();
 
-		// Обработка изменения размера окна
 		window.addEventListener("resize", () => {
 			swiper.update();
 		});

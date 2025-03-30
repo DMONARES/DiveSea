@@ -3,6 +3,7 @@
 <template>
 	<main class="main">
 		<Hero />
+		<Recommend />
 	</main>
 </template>
 

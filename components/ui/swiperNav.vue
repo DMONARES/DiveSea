@@ -1,8 +1,12 @@
 <script setup>
-defineProps({
+const props = defineProps({
 	disabled: {
 		type: Boolean,
 		default: false,
+	},
+	swiperClass: {
+		type: String,
+		default: ".swiper", // Класс по умолчанию
 	},
 });
 
@@ -12,24 +16,34 @@ const isBeginning = ref(true);
 const isEnd = ref(false);
 
 onMounted(() => {
-	const swiper = document.querySelector(".hero-swiper")?.swiper;
-	if (swiper) {
-		isBeginning.value = swiper.isBeginning;
-		isEnd.value = swiper.isEnd;
+	// Важно: используем nextTick, чтобы убедиться, что Swiper полностью инициализирован
+	nextTick(() => {
+		const swiper = document.querySelector(props.swiperClass)?.swiper;
 
-		prevButton.value.addEventListener("click", () => swiper.slidePrev());
-		nextButton.value.addEventListener("click", () => swiper.slideNext());
-
-		swiper.on("slideChange", () => {
+		if (swiper) {
 			isBeginning.value = swiper.isBeginning;
 			isEnd.value = swiper.isEnd;
-		});
 
-		swiper.on("init", () => {
-			isBeginning.value = swiper.isBeginning;
-			isEnd.value = swiper.isEnd;
-		});
-	}
+			prevButton.value.addEventListener("click", () =>
+				swiper.slidePrev()
+			);
+			nextButton.value.addEventListener("click", () =>
+				swiper.slideNext()
+			);
+
+			swiper.on("slideChange", () => {
+				isBeginning.value = swiper.isBeginning;
+				isEnd.value = swiper.isEnd;
+			});
+
+			swiper.on("init", () => {
+				isBeginning.value = swiper.isBeginning;
+				isEnd.value = swiper.isEnd;
+			});
+		} else {
+			console.warn(`Swiper с селектором ${props.swiperClass} не найден`);
+		}
+	});
 });
 </script>
 
