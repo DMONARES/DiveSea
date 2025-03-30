@@ -59,16 +59,16 @@ onMounted(() => {
 		</div>
 
 		<!-- slider wrapper -->
-		<div class="slider-wrapper">
+		<div class="hero__slider slider-wrapper">
 			<!-- slider -->
-			<div class="hero__slider slider">
+			<div class="slider">
 				<IconsDecorDots class="slider__dots" />
 				<Swiper
 					:modules="[Navigation, Autoplay]"
 					:slides-per-view="1.2"
 					:space-between="38"
 					:loop="true"
-					:autoplay="{ delay: 33000 }"
+					:autoplay="{ delay: 3000 }"
 					:navigation="{
 						nextEl: '.swiper-nav__button--next',
 						prevEl: '.swiper-nav__button--prev',
@@ -210,13 +210,7 @@ onMounted(() => {
 	pointer-events: none;
 }
 
-.hero__slider {
-	position: relative;
-	width: 100%;
-}
-
 .hero-swiper {
-	border-radius: 25px;
 	overflow: visible;
 }
 
@@ -231,15 +225,14 @@ onMounted(() => {
 	border-radius: 25px;
 	overflow: hidden;
 	transition: transform 0.5s ease;
-}
 
-.slide__img {
-	width: 100%;
-	height: auto;
-	border-radius: 25px;
-	object-fit: cover;
+	&__img {
+		width: 100%;
+		height: auto;
+		border-radius: 25px;
+		object-fit: cover;
+	}
 }
-
 :deep(.swiper-slide-active) .slide__img {
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
