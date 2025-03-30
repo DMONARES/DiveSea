@@ -4,7 +4,6 @@ const searchText = ref("");
 <template>
 	<MyContainer>
 		<header class="header">
-			<!-- left -->
 			<div class="header__left">
 				<div class="header__logo">
 					<nuxt-link to="/">
@@ -36,8 +35,7 @@ const searchText = ref("");
 					</ul>
 				</nav>
 			</div>
-			<!-- right -->
-			<div class="header__left">
+			<div class="header__right">
 				<div class="header__search">
 					<UiSearch
 						v-model="searchText"
@@ -58,25 +56,47 @@ const searchText = ref("");
 	align-items: center;
 	justify-content: space-between;
 	padding: 45px 0;
+
+	@media (max-width: 1200px) {
+		padding: 32px 0;
+	}
 	&__left {
 		display: flex;
 		align-items: center;
 		gap: 57px;
+
+		@media (max-width: 1200px) {
+			gap: 40px;
+		}
 	}
 	&__right {
 		display: flex;
 		align-items: center;
 		gap: 30px;
+
+		@media (max-width: 1200px) {
+			gap: 20px;
+		}
 	}
 	&__logo {
+		a {
+			svg {
+				@media (max-width: 1200px) {
+					max-width: 38px;
+					max-height: 38px;
+				}
+			}
+		}
 	}
 	&__nav {
 		&-list {
 			display: flex;
 			align-items: center;
 			gap: 53px;
-		}
-		&-item {
+
+			@media (max-width: 1200px) {
+				gap: 38px;
+			}
 		}
 		&-link {
 			font-family: $secondaryFont;
@@ -86,6 +106,11 @@ const searchText = ref("");
 			color: $grey;
 			text-transform: uppercase;
 
+			@media (max-width: 1200px) {
+				font-size: 12.68px;
+				line-height: 19.02px;
+			}
+
 			&.nuxt-link-active {
 				color: $black;
 			}
@@ -93,10 +118,6 @@ const searchText = ref("");
 				color: $black;
 			}
 		}
-	}
-	&__search {
-	}
-	&__button {
 	}
 }
 </style>

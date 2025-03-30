@@ -49,6 +49,12 @@ defineProps({
 	text-transform: capitalize;
 	color: $white;
 
+	@media (max-width: 1200px) {
+		padding: 11px 17px;
+		font-size: 11.5px;
+		line-height: 17.25px;
+	}
+
 	// effects
 	&--transpatent {
 		background-color: transparent;

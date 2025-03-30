@@ -26,7 +26,11 @@ const updateValue = (value) => emit("update:modelValue", value);
 		}"
 	>
 		<div class="ui-search__wr">
-			<button type="submit" class="ui-search__icon" @click="emit('triggerIcon')">
+			<button
+				type="submit"
+				class="ui-search__icon"
+				@click="emit('triggerIcon')"
+			>
 				<IconsSearch />
 			</button>
 			<input
@@ -51,6 +55,13 @@ const updateValue = (value) => emit("update:modelValue", value);
 $placeholder: #9596a6;
 $inputBg: #efefef;
 .ui-search {
+	width: 350px;
+	max-height: 57px;
+
+	@media (max-width: 1200px) {
+		width: 250px;
+		max-height: 40px;
+	}
 	&.active {
 		&__input {
 			border-color: $black;
@@ -68,21 +79,10 @@ $inputBg: #efefef;
 		position: relative;
 	}
 
-	&__label {
-		width: max-content;
-		display: block;
-		margin-bottom: 20px;
-		font-family: $primaryFont;
-		font-size: 20px;
-		font-weight: 600;
-		line-height: 124.5%;
-		color: $black;
-		transition: 0.3s ease-in-out;
-	}
-
 	&__input {
 		// default
 		width: 100%;
+		max-height: 57px;
 		padding: 18px 27px 18px 60px;
 		border: 1.5px solid transparent;
 		outline: none;
@@ -91,6 +91,13 @@ $inputBg: #efefef;
 		color: $black;
 		font-size: 1rem;
 		transition: 0.3s ease-in-out;
+
+		@media (max-width: 1200px) {
+			padding: 13px 16px 13px 45px;
+			font-size: 11.17px;
+			line-height: 117.5%;
+			max-height: 40px;
+		}
 
 		// effects
 		&:hover {
@@ -121,14 +128,18 @@ $inputBg: #efefef;
 		overflow: hidden;
 		cursor: pointer;
 
-		&--area {
-			top: 18px;
-			transform: translateY(0);
+		@media (max-width: 1200px) {
+			left: 16px;
 		}
 
 		svg {
 			width: 20px;
 			height: 20px;
+
+			@media (max-width: 1200px) {
+				width: 15px;
+				height: 15px;
+			}
 		}
 	}
 }
@@ -136,6 +147,6 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
-	-webkit-appearance:none;
+	-webkit-appearance: none;
 }
 </style>
