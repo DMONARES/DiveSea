@@ -165,7 +165,15 @@ onMounted(() => {
 									{{ sale.cost }}
 								</div>
 							</div>
-							<div class="recent__price-sale" :class="{'recent__price-sale--red': sale.sale.includes('-'), 'recent__price-sale--green': sale.sale.includes('+')}">
+							<div
+								class="recent__price-sale"
+								:class="{
+									'recent__price-sale--red':
+										sale.sale.includes('-'),
+									'recent__price-sale--green':
+										sale.sale.includes('+'),
+								}"
+							>
 								{{ sale.sale }}
 							</div>
 						</div>
@@ -177,8 +185,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-$red: #E23333;
-$green: #10C452;
+$red: #e23333;
+$green: #10c452;
 
 //recommend
 .recommend {
@@ -186,14 +194,37 @@ $green: #10C452;
 	padding: 90px 100px 90px;
 	margin-top: 150px;
 	background-color: #f1f1f1;
+
+	@media (max-width: 1200px) {
+		padding: 50px 80px 65px;
+		margin-top: 150px;
+	}
+
+	@media (max-width: 700px) {
+		padding: 57px 10px 55px;
+		margin-top: 150px;
+	}
+
 	&__title {
-		padding: 70px 0 100px;
+		padding-bottom: 100px;
 		margin: 0 auto;
 		font-size: 45px;
 		font-weight: 600;
 		line-height: 26.92px;
 		text-align: center;
 		color: $lightGrey;
+
+		@media (max-width: 1024px) {
+			padding-bottom: 70px;
+			font-size: 32px;
+			line-height: 19.14px;
+		}
+
+		@media (max-width: 700px) {
+			padding-bottom: 60px;
+			font-size: 30px;
+			line-height: 26.92px;
+		}
 	}
 	&__slide {
 		width: auto;
@@ -203,7 +234,15 @@ $green: #10C452;
 //slider
 .slider {
 	&__navigation {
-		margin: 115px auto;
+		margin: 115px auto 0;
+
+		@media (max-width: 1024px) {
+			margin: 80px auto 0;
+		}
+
+		@media (max-width: 700px) {
+			margin: 60px auto 0;
+		}
 	}
 }
 //slide
@@ -291,6 +330,17 @@ $green: #10C452;
 	border-radius: 23.48px;
 	background-color: $white;
 
+	@media (max-width: 1200px) {
+		bottom: -80px;
+		right: 70px;
+		max-width: 265px;
+		padding: 18px;
+	}
+
+	@media (max-width: 700px) {
+		display: none;
+	}
+
 	&__title {
 		margin-bottom: 27px;
 		font-size: 21px;
@@ -298,6 +348,13 @@ $green: #10C452;
 		line-height: 135%;
 		letter-spacing: 0.2px;
 		color: $black;
+
+		@media (max-width: 1200px) {
+			margin-bottom: 20px;
+			font-size: 14.93px;
+			line-height: 135%;
+			letter-spacing: 0.14px;
+		}
 	}
 	&__options {
 		position: absolute;
@@ -305,6 +362,11 @@ $green: #10C452;
 		right: 30px;
 		cursor: pointer;
 		z-index: 100;
+
+		@media (max-width: 1200px) {
+			top: 20px;
+			right: 20px;
+		}
 	}
 	&__list {
 		width: 100%;
@@ -323,6 +385,10 @@ $green: #10C452;
 		display: flex;
 		align-items: center;
 		gap: 22px;
+
+		@media (max-width: 1200px) {
+			gap: 15px;
+		}
 	}
 	&__img {
 		position: relative;
@@ -330,6 +396,11 @@ $green: #10C452;
 			width: 40px;
 			height: 40px;
 			border-radius: 50%;
+
+			@media (max-width: 1200px) {
+				width: 30px;
+				height: 30px;
+			}
 		}
 
 		&-counter {
@@ -348,6 +419,14 @@ $green: #10C452;
 			font-size: 11.52px;
 			font-weight: 700;
 			line-height: 150%;
+
+			@media (max-width: 1200px) {
+				width: 15px;
+				height: 15px;
+				font-size: 8.19px;
+				line-height: 150%;
+				letter-spacing: 0.07px;
+			}
 		}
 	}
 	&__owner {
@@ -360,12 +439,22 @@ $green: #10C452;
 		font-size: 15.36px;
 		font-weight: 500;
 		line-height: 140%;
+
+		@media (max-width: 1200px) {
+			font-size: 10.93px;
+			line-height: 140%;
+		}
 	}
 	&__nickname {
 		font-size: 12.48px;
 		font-weight: 400;
 		line-height: 150%;
 		color: $lightGrey;
+
+		@media (max-width: 1200px) {
+			font-size: 8.88px;
+			line-height: 150%;
+		}
 	}
 	&__right {
 	}
@@ -379,17 +468,31 @@ $green: #10C452;
 		display: flex;
 		align-items: center;
 		gap: 7px;
+
+		@media (max-width: 1200px) {
+			gap: 5px;
+		}
 	}
 	&__price-cost {
 		font-size: 15.36px;
 		font-weight: 600;
 		line-height: 140%;
 		color: $black;
+
+		@media (max-width: 1200px) {
+			font-size: 10.93px;
+			line-height: 140%;
+		}
 	}
 	&__price-sale {
 		font-size: 13.44px;
 		font-weight: 400;
 		line-height: 150%;
+
+		@media (max-width: 1200px) {
+			font-size: 9.56px;
+			line-height: 150%;
+		}
 
 		&--red {
 			color: $red;
