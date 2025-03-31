@@ -300,6 +300,9 @@ $border: #ebe9e9;
 		}
 	}
 	&__more {
+		max-width: max-content;
+		margin-left: auto;
+		position: relative;
 		display: flex;
 		align-items: center;
 		gap: 15px;
@@ -309,6 +312,24 @@ $border: #ebe9e9;
 		line-height: 39.92px;
 		letter-spacing: -0.09px;
 		color: $lightGrey;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: -5px;
+			left: 0;
+			width: 0%;
+			height: 1px;
+			background-color: $lightGrey;
+			transition: width 0.3s ease-in-out;
+		}
+
+		&:hover {
+			&::after {
+				width: 100%;
+				transition: width 0.3s ease-in-out;
+			}
+		}
 	}
 }
 
