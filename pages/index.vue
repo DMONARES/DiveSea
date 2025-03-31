@@ -4,6 +4,7 @@
 	<main class="main">
 		<Hero />
 		<Recommend />
+		<Collection />
 		<div class="margin-bottom" style="margin-bottom: 300px;"></div>
 	</main>
 </template>
