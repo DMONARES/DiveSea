@@ -1,5 +1,5 @@
 <script setup>
-import { useCollectionStore } from '~/stores/collection';
+import { useCollectionStore } from "~/stores/collection";
 
 const collectionStore = useCollectionStore();
 
@@ -7,7 +7,7 @@ const titles = collectionStore.titles;
 const items = collectionStore.items;
 
 const limitedItems = computed(() => {
-  return collectionStore.items.slice(0, 4);
+	return collectionStore.items.slice(0, 4);
 });
 </script>
 
@@ -41,7 +41,9 @@ const limitedItems = computed(() => {
 							v-for="(item, index) in limitedItems"
 							:key="'item-' + index"
 						>
-							<td class="collection__table-item collection-column">
+							<td
+								class="collection__table-item collection-column"
+							>
 								<div class="collection__table-item-user">
 									<nuxt-link to="/">
 										<img
@@ -115,9 +117,16 @@ const limitedItems = computed(() => {
 
 <style lang="scss" scoped>
 $border: #ebe9e9;
+* {
+	transition: 0.2s;
+}
 .collection {
 	margin-top: 240px;
 	padding: 0 95px;
+
+	@media (max-width: 1200px) {
+		padding: 0 65px;
+	}
 	&__title {
 		margin: 0 auto 90px;
 		max-width: max-content;
@@ -125,17 +134,21 @@ $border: #ebe9e9;
 		font-weight: 600;
 		line-height: 44.75px;
 		color: $black;
+
+		@media (max-width: 1200px) {
+			font-size: 32.03px;
+			line-height: 31.83px;
+		}
 	}
 	&__table {
 		margin-bottom: 85px;
 		width: 100%;
 		border-collapse: separate;
 		border-spacing: 0;
-		table-layout: fixed; /* Добавлено для равномерного распределения ширины */
+		table-layout: fixed;
 
 		&-header {
 			width: 100%;
-			margin-bottom: 50px;
 
 			&-item {
 				padding-bottom: 20px;
@@ -145,10 +158,18 @@ $border: #ebe9e9;
 				color: $lightGrey;
 				text-wrap: nowrap;
 				text-align: left;
-				
+
+				@media (max-width: 1200px) {
+					font-size: 15.65px;
+				}
+
 				&.collection-column {
-					width: 30%; /* Первая колонка шире остальных */
+					width: 30%;
 					padding-left: 50px;
+
+					@media (max-width: 1200px) {
+						padding-left: 30px;
+					}
 				}
 			}
 		}
@@ -162,10 +183,18 @@ $border: #ebe9e9;
 		}
 
 		&-item {
-			padding: 20px 10px; /* Добавлен горизонтальный отступ для всех ячеек */
-			
+			padding: 20px 10px;
+
+			@media (max-width: 1200px) {
+				padding: 20px 10px;
+			}
+
 			&.collection-column {
 				padding-left: 50px;
+
+				@media (max-width: 1200px) {
+					padding-left: 30px;
+				}
 			}
 
 			&-user {
@@ -173,11 +202,20 @@ $border: #ebe9e9;
 				align-items: center;
 				gap: 25px;
 
+				@media (max-width: 1200px) {
+					gap: 18px;
+				}
+
 				&-img {
 					width: 70px;
 					height: 70px;
 					border-radius: 50%;
 					object-fit: cover;
+
+					@media (max-width: 1200px) {
+						width: 50px;
+						height: 50px;
+					}
 				}
 				&-wr {
 					display: flex;
@@ -190,6 +228,11 @@ $border: #ebe9e9;
 					line-height: 140%;
 					color: $black;
 
+					@media (max-width: 1200px) {
+						font-size: 19.92px;
+						line-height: 140%;
+					}
+
 					&:hover {
 						text-decoration: underline;
 					}
@@ -199,6 +242,11 @@ $border: #ebe9e9;
 					font-weight: 400;
 					line-height: 150%;
 					color: $lightGrey;
+
+					@media (max-width: 1200px) {
+						font-size: 16.19px;
+						line-height: 150%;
+					}
 				}
 			}
 			&-volume {
@@ -209,12 +257,23 @@ $border: #ebe9e9;
 				font-weight: 600;
 				line-height: 140%;
 				color: $black;
+
+				@media (max-width: 1200px) {
+					gap: 2px;
+					font-size: 17.43px;
+					line-height: 140%;
+				}
 			}
 			&-sale {
 				font-size: 24.51px;
 				font-weight: 500;
 				line-height: 130%;
 				text-wrap: nowrap;
+
+				@media (max-width: 1200px) {
+					font-size: 17.43px;
+					line-height: 130%;
+				}
 
 				&--red {
 					color: rgb(255, 0, 0);
@@ -231,18 +290,34 @@ $border: #ebe9e9;
 				font-size: 24.51px;
 				font-weight: 600;
 				line-height: 140%;
+
+				@media (max-width: 1200px) {
+					gap: 2px;
+					font-size: 17.43px;
+					line-height: 140%;
+				}
 			}
 			&-owners {
 				font-size: 23.65px;
 				font-weight: 500;
 				line-height: 130%;
 				color: $black;
+
+				@media (max-width: 1200px) {
+					font-size: 16.82px;
+					line-height: 130%;
+				}
 			}
 			&-items {
 				font-size: 23.65px;
 				font-weight: 500;
 				line-height: 130%;
 				color: $black;
+
+				@media (max-width: 1200px) {
+					font-size: 16.82px;
+					line-height: 130%;
+				}
 			}
 		}
 	}
@@ -260,8 +335,13 @@ $border: #ebe9e9;
 		letter-spacing: -0.09px;
 		color: $lightGrey;
 
+		@media (max-width: 1200px) {
+			font-size: 12.57px;
+			line-height: 28.39px;
+		}
+
 		&::after {
-			content: '';
+			content: "";
 			position: absolute;
 			bottom: -5px;
 			left: 0;
@@ -283,5 +363,10 @@ $border: #ebe9e9;
 .etherium {
 	width: 30px;
 	height: 30px;
+
+	@media (max-width: 1200px) {
+		width: 20px;
+		height: 20px;
+	}
 }
 </style>
