@@ -57,6 +57,7 @@ defineProps({
 
 	// effects
 	&--transpatent {
+		height: 60px;
 		background-color: transparent;
 		color: $black;
 	}
