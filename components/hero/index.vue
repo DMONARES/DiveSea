@@ -4,30 +4,16 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
-const slides = [
-	"/img/nfts/1.png",
-	"/img/nfts/2.png",
-	"/img/nfts/3.png",
-	"/img/nfts/4.png",
-	"/img/nfts/5.png",
-	"/img/nfts/6.png",
-];
+import { useHeroStore } from '~/stores/heroSlides';
+
+const heroStore = useHeroStore();
+
+const slides = heroStore.slides;
+const infoList = heroStore.infoList;
+
 const swiperInstance = ref(null);
 
-const infoList = [
-	{
-		title: "430K+",
-		description: "Art Works",
-	},
-	{
-		title: "159K+",
-		description: "Creators",
-	},
-	{
-		title: "87K+",
-		description: "Collections",
-	},
-];
+
 
 onMounted(() => {
 	if (swiperInstance.value) {

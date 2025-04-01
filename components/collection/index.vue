@@ -1,67 +1,14 @@
 <script setup>
-const titles = [
-	{
-		title: "Collection",
-	},
-	{
-		title: "Volume",
-	},
-	{
-		title: "24h %",
-	},
-	{
-		title: "Floor Price",
-	},
-	{
-		title: "Owners",
-	},
-	{
-		title: "Items",
-	},
-];
+import { useCollectionStore } from '~/stores/collection';
 
-const items = [
-	{
-		img: "/img/mini/1.png",
-		name: "Alex Ca.",
-		nickname: "By Alex",
-		volume: "8,456",
-		sale: "+ 27.78%",
-		price: "3,5",
-		owners: "2.2K",
-		items: "500",
-	},
-	{
-		img: "/img/mini/2.jpeg",
-		name: "Alex Ca.",
-		nickname: "By Alex",
-		volume: "4,780",
-		sale: "+ 27.78%",
-		price: "7,9",
-		owners: "3.4K",
-		items: "900",
-	},
-	{
-		img: "/img/mini/1.png",
-		name: "Alex Ca.",
-		nickname: "By Alex",
-		volume: "8,456",
-		sale: "+ 27.78%",
-		price: "3,5",
-		owners: "2.2K",
-		items: "500",
-	},
-	{
-		img: "/img/mini/2.jpeg",
-		name: "Alex Ca.",
-		nickname: "By Alex",
-		volume: "4,780",
-		sale: "+ 27.78%",
-		price: "7,9",
-		owners: "3.4K",
-		items: "900",
-	},
-];
+const collectionStore = useCollectionStore();
+
+const titles = collectionStore.titles;
+const items = collectionStore.items;
+
+const limitedItems = computed(() => {
+  return collectionStore.items.slice(0, 4);
+});
 </script>
 
 <template>
@@ -91,7 +38,7 @@ const items = [
 					<tbody>
 						<tr
 							class="collection__table-row"
-							v-for="(item, index) in items"
+							v-for="(item, index) in limitedItems"
 							:key="'item-' + index"
 						>
 							<td class="collection__table-item collection-column">
