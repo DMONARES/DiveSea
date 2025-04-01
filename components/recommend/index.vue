@@ -4,15 +4,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
-import { useRecommendStore } from '~/stores/recommend';
+import { useRecommendStore } from "~/stores/recommend";
 
 const swiperInstancerecommend = ref(null);
 const recommendStore = useRecommendStore();
 
-
 const slides = recommendStore.slides;
-const sales = recommendStore.sales;
-
 
 onMounted(() => {
 	if (swiperInstancerecommend.value) {
@@ -45,35 +42,10 @@ onMounted(() => {
 			>
 				<SwiperSlide
 					v-for="(slide, index) in slides"
-					:key="'rec - ' + index"
+					:key="'rec-' + index"
 					class="recommend__slide slider__slide slide"
 				>
-					<!-- slide content -->
-					<div class="slide__wr">
-						<div class="slide__image">
-							<img :src="slide.img" alt="" class="slide__img" />
-							<div class="slide__timer">
-								{{ slide.timer }}
-							</div>
-						</div>
-						<div class="slide__title">{{ slide.title }}</div>
-						<div class="slide__content">
-							<div class="slide__content-price">
-								<div class="slide__content-current">
-									Current bid
-								</div>
-								<div class="slide__content-cost">
-									<IconsEthereum />
-									<div class="slide__content-cost-price">
-										{{ slide.price }}
-									</div>
-								</div>
-							</div>
-							<UiButton class="slide__content-button">
-								PLACE BID
-							</UiButton>
-						</div>
-					</div>
+					<NftCard :card="slide" />
 				</SwiperSlide>
 			</Swiper>
 			<UiSwiperNav
