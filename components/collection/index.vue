@@ -27,6 +27,7 @@ const limitedItems = computed(() => {
 								:key="'title-' + index"
 								:class="{
 									'collection-column': index === 0,
+									'mobile-hidden': index > 1,
 								}"
 							>
 								{{ title.title }}
@@ -45,12 +46,19 @@ const limitedItems = computed(() => {
 								class="collection__table-item collection-column"
 							>
 								<div class="collection__table-item-user">
-									<nuxt-link to="/">
+									<nuxt-link
+										to="/"
+										class="collection__table-item-user-link"
+									>
 										<img
 											:src="item.img"
 											alt=""
 											class="collection__table-item-user-img"
 										/>
+										<span
+											class="collection__table-item-user-count"
+											>{{ index + 1 }}</span
+										>
 									</nuxt-link>
 									<div class="collection__table-item-user-wr">
 										<nuxt-link to="/">
@@ -69,12 +77,27 @@ const limitedItems = computed(() => {
 								</div>
 							</td>
 							<td class="collection__table-item">
-								<div class="collection__table-item-volume">
-									<IconsEthereum class="etherium" />
-									{{ item.volume }}
+								<div
+									class="collection__table-item-volume-container"
+								>
+									<div class="collection__table-item-volume">
+										<IconsEthereum class="etherium" />
+										{{ item.volume }}
+									</div>
+									<div
+										class="collection__table-item-sale mobile-sale"
+										:class="{
+											'collection__table-item-sale--red':
+												item.sale.includes('-'),
+											'collection__table-item-sale--green':
+												item.sale.includes('+'),
+										}"
+									>
+										{{ item.sale }}
+									</div>
 								</div>
 							</td>
-							<td class="collection__table-item">
+							<td class="collection__table-item mobile-hidden">
 								<div
 									class="collection__table-item-sale"
 									:class="{
@@ -87,18 +110,18 @@ const limitedItems = computed(() => {
 									{{ item.sale }}
 								</div>
 							</td>
-							<td class="collection__table-item">
+							<td class="collection__table-item mobile-hidden">
 								<div class="collection__table-item-price">
 									<IconsEthereum class="etherium" />
 									{{ item.price }}
 								</div>
 							</td>
-							<td class="collection__table-item">
+							<td class="collection__table-item mobile-hidden">
 								<div class="collection__table-item-owners">
 									{{ item.owners }}
 								</div>
 							</td>
-							<td class="collection__table-item">
+							<td class="collection__table-item mobile-hidden">
 								<div class="collection__table-item-items">
 									{{ item.items }}
 								</div>
@@ -125,8 +148,15 @@ $border: #ebe9e9;
 	padding: 0 95px;
 
 	@media (max-width: 1200px) {
+		margin-top: 170px;
 		padding: 0 65px;
 	}
+
+	@media (max-width: 850px) {
+		margin-top: 80px;
+		padding: 0 30px;
+	}
+
 	&__title {
 		margin: 0 auto 90px;
 		max-width: max-content;
@@ -136,8 +166,14 @@ $border: #ebe9e9;
 		color: $black;
 
 		@media (max-width: 1200px) {
+			margin: 0 auto 65px;
 			font-size: 32.03px;
 			line-height: 31.83px;
+		}
+		@media (max-width: 850px) {
+			margin: 0 auto 40px;
+			font-size: 30px;
+			line-height: 44.75px;
 		}
 	}
 	&__table {
@@ -146,6 +182,13 @@ $border: #ebe9e9;
 		border-collapse: separate;
 		border-spacing: 0;
 		table-layout: fixed;
+
+		@media (max-width: 1200px) {
+			margin-bottom: 60px;
+		}
+		@media (max-width: 850px) {
+			margin-bottom: 40px;
+		}
 
 		&-header {
 			width: 100%;
@@ -170,15 +213,20 @@ $border: #ebe9e9;
 					@media (max-width: 1200px) {
 						padding-left: 30px;
 					}
+
+					@media (max-width: 850px) {
+						width: 60%;
+					}
+					@media (max-width: 850px) {
+						font-size: 14px;
+					}
 				}
 			}
 		}
 
 		&-row {
-			&:not(:last-child) {
-				.collection__table-item {
-					border-bottom: 1px solid $border;
-				}
+			.collection__table-item {
+				border-bottom: 1px solid $border;
 			}
 		}
 
@@ -205,8 +253,12 @@ $border: #ebe9e9;
 				@media (max-width: 1200px) {
 					gap: 18px;
 				}
+				&-link {
+					position: relative;
+				}
 
 				&-img {
+					position: relative;
 					width: 70px;
 					height: 70px;
 					border-radius: 50%;
@@ -215,6 +267,30 @@ $border: #ebe9e9;
 					@media (max-width: 1200px) {
 						width: 50px;
 						height: 50px;
+					}
+					@media (max-width: 850px) {
+						width: 40px;
+						height: 40px;
+					}
+				}
+				&-count {
+					position: absolute;
+					bottom: -3px;
+					right: -3px;
+					width: 20px;
+					height: 20px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					color: $black;
+					background-color: $white;
+					border-radius: 50%;
+					font-size: 11.56px;
+					font-weight: 700;
+					line-height: 150%;
+
+					@media (min-width: 850px) {
+						display: none;
 					}
 				}
 				&-wr {
@@ -230,7 +306,9 @@ $border: #ebe9e9;
 
 					@media (max-width: 1200px) {
 						font-size: 19.92px;
-						line-height: 140%;
+					}
+					@media (max-width: 850px) {
+						font-size: 15.41px;
 					}
 
 					&:hover {
@@ -245,9 +323,17 @@ $border: #ebe9e9;
 
 					@media (max-width: 1200px) {
 						font-size: 16.19px;
-						line-height: 150%;
+					}
+					@media (max-width: 850px) {
+						font-size: 12.52px;
 					}
 				}
+			}
+			&-volume-container {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 5px;
 			}
 			&-volume {
 				display: flex;
@@ -261,7 +347,9 @@ $border: #ebe9e9;
 				@media (max-width: 1200px) {
 					gap: 2px;
 					font-size: 17.43px;
-					line-height: 140%;
+				}
+				@media (max-width: 850px) {
+					font-size: 15.41px;
 				}
 			}
 			&-sale {
@@ -272,7 +360,9 @@ $border: #ebe9e9;
 
 				@media (max-width: 1200px) {
 					font-size: 17.43px;
-					line-height: 130%;
+				}
+				@media (max-width: 850px) {
+					font-size: 13.49px;
 				}
 
 				&--red {
@@ -280,6 +370,15 @@ $border: #ebe9e9;
 				}
 				&--green {
 					color: rgb(16, 195, 82);
+				}
+
+				&.mobile-sale {
+					display: none;
+
+					@media (max-width: 850px) {
+						display: block;
+						font-size: 15px;
+					}
 				}
 			}
 			&-price {
@@ -339,6 +438,12 @@ $border: #ebe9e9;
 			font-size: 12.57px;
 			line-height: 28.39px;
 		}
+		@media (max-width: 850px) {
+			margin: 0 auto;
+			gap: 10px;
+			font-size: 12.29px;
+			line-height: 27.76px;
+		}
 
 		&::after {
 			content: "";
@@ -357,6 +462,16 @@ $border: #ebe9e9;
 				transition: width 0.3s ease-in-out;
 			}
 		}
+
+		svg {
+			width: 15px;
+			height: 15px;
+
+			@media (max-width: 1200px) {
+				width: 10px;
+				height: 10px;
+			}
+		}
 	}
 }
 
@@ -367,6 +482,16 @@ $border: #ebe9e9;
 	@media (max-width: 1200px) {
 		width: 20px;
 		height: 20px;
+	}
+	@media (max-width: 1200px) {
+		width: 15px;
+		height: 15px;
+	}
+}
+
+.mobile-hidden {
+	@media (max-width: 850px) {
+		display: none;
 	}
 }
 </style>

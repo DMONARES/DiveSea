@@ -282,7 +282,7 @@ $green: #10c452;
 
 	@media (max-width: 1200px) {
 		bottom: -80px;
-		right: 70px;
+		right: 15px;
 		max-width: 265px;
 		padding: 18px;
 	}
