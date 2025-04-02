@@ -10,6 +10,7 @@ const swiperInstancerecommend = ref(null);
 const recommendStore = useRecommendStore();
 
 const slides = recommendStore.slides;
+const sales = recommendStore.sales;
 
 onMounted(() => {
 	if (swiperInstancerecommend.value) {

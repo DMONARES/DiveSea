@@ -1,26 +1,17 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
-import IconsCategory from "@/components/icons/category.vue";
-import IconsCollection from "@/components/icons/collection.vue";
-import IconsPrice from "@/components/icons/price.vue";
 import { useMarketplaceStore } from "~/stores/marketplace";
 
-const filters = [
-	{ name: "Category", icon: IconsCategory },
-	{ name: "Collection", icon: IconsCollection },
-	{ name: "Price", icon: IconsPrice },
-];
-
 const marketplaceStore = useMarketplaceStore();
-const cards = marketplaceStore.cards;
-
 const windowWidth = ref(window.innerWidth);
+const cardWidth = 252;
+const priceSortDirection = ref(null);
 
 const updateWidth = () => {
 	windowWidth.value = window.innerWidth;
 };
 
 onMounted(() => {
+	marketplaceStore.init();
 	window.addEventListener("resize", updateWidth);
 });
 
@@ -28,21 +19,38 @@ onUnmounted(() => {
 	window.removeEventListener("resize", updateWidth);
 });
 
-const cardWidth = 252;
-
 const visibleCards = computed(() => {
 	const columns = Math.floor(windowWidth.value / cardWidth);
-
-	if (windowWidth.value >= 1350) {
-		return cards.slice(0, 8);
-	} else if (windowWidth.value >= 1025) {
-		return cards.slice(0, 6);
-	} else if (windowWidth.value >= 768) {
-		return cards.slice(0, 6);
-	} else {
-		return cards.slice(0, 3);
-	}
+	return marketplaceStore.filteredCards.slice(0, columns * 2);
 });
+
+const togglePriceSort = () => {
+	if (priceSortDirection.value === null) {
+		priceSortDirection.value = "asc";
+	} else if (priceSortDirection.value === "asc") {
+		priceSortDirection.value = "desc";
+	} else {
+		priceSortDirection.value = null;
+	}
+	marketplaceStore.setPriceSort(priceSortDirection.value);
+};
+
+const resetFilters = () => {
+	priceSortDirection.value = null;
+	marketplaceStore.resetFilters();
+};
+
+const toggleCategoryFilter = (category) => {
+	marketplaceStore.toggleCategoryFilter(category);
+};
+
+const toggleCollectionFilter = (collection) => {
+	marketplaceStore.toggleCollectionFilter(collection);
+};
+
+const showAllItems = () => {
+	resetFilters();
+};
 </script>
 
 <template>
@@ -50,33 +58,69 @@ const visibleCards = computed(() => {
 		<h2 class="marketplace__title">Explore Marketplace</h2>
 		<div class="marketplace__filter">
 			<ul class="marketplace__filter-list">
-				<li class="marketplace__filter-item">
+				<li>
 					<UiButton
 						:transpatent="true"
-						class="marketplace__filter-button"
+						:isActive="marketplaceStore && !marketplaceStore.hasActiveFilters"
+						@click="showAllItems"
 					>
 						All
 					</UiButton>
 				</li>
-				<li
-					class="marketplace__filter-item"
-					v-for="(filter, index) in filters"
-					:key="'filter - ' + index"
-				>
+				<li>
 					<UiButton
+						v-if="marketplaceStore"
 						:transpatent="true"
-						class="marketplace__filter-button"
+						:isFilter="true"
+						:options="marketplaceStore.categories"
+						:selectedOptions="marketplaceStore.selectedCategories"
+						:multiSelect="true"
+						@toggle="toggleCategoryFilter"
 					>
-						<component :is="filter.icon" />
-						{{ filter.name }}
+						<IconsCategory />
+						Category
+					</UiButton>
+				</li>
+				<li>
+					<UiButton
+						v-if="marketplaceStore"
+						:transpatent="true"
+						:isFilter="true"
+						:options="marketplaceStore.collections"
+						:selectedOptions="marketplaceStore.selectedCollections"
+						:multiSelect="true"
+						@toggle="toggleCollectionFilter"
+					>
+						<IconsCollection />
+						Collection
+					</UiButton>
+				</li>
+				<li>
+					<UiButton
+						v-if="marketplaceStore"
+						:transpatent="true"
+						@click="togglePriceSort"
+						:isActive="priceSortDirection !== null"
+					>
+						<IconsPrice />
+						Price
+						<IconsArrowMore
+							v-if="priceSortDirection !== null"
+							:class="{
+								'rotate-180': priceSortDirection === 'desc',
+							}"
+						/>
+						<IconsClose
+							v-if="!priceSortDirection"
+						/>
 					</UiButton>
 				</li>
 			</ul>
 		</div>
 		<div class="marketplace__content">
 			<NftCard
-				v-for="(card, index) in visibleCards"
-				:key="'card - ' + index"
+				v-for="card in visibleCards"
+				:key="card.title"
 				:card="card"
 			/>
 		</div>
@@ -112,11 +156,8 @@ const visibleCards = computed(() => {
 			display: flex;
 			align-items: center;
 			gap: 20px;
-		}
-		&-button {
-			display: flex;
-			align-items: center;
-			gap: 10px;
+			flex-wrap: wrap;
+			justify-content: center;
 		}
 	}
 
@@ -140,7 +181,6 @@ const visibleCards = computed(() => {
 		}
 	}
 
-	// more
 	&__more {
 		max-width: max-content;
 		margin-left: auto;
@@ -193,6 +233,26 @@ const visibleCards = computed(() => {
 				height: 10px;
 			}
 		}
+	}
+}
+
+.rotate-180 {
+	transform: rotate(180deg);
+	transition: transform 0.3s ease;
+}
+
+.reset-button {
+	color: $lightGrey;
+	border-color: $lightGrey;
+
+	&:hover:not(:disabled) {
+		color: $lightGreen;
+		border-color: $lightGreen;
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
 	}
 }
 </style>
