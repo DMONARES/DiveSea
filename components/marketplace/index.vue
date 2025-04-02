@@ -1,22 +1,14 @@
 <script setup>
 import { useMarketplaceStore } from "~/stores/marketplace";
+import { useWindowSize } from '@vueuse/core';
 
 const marketplaceStore = useMarketplaceStore();
-const windowWidth = ref(window.innerWidth);
+const { width: windowWidth } = useWindowSize();
 const cardWidth = 252;
 const priceSortDirection = ref(null);
 
-const updateWidth = () => {
-	windowWidth.value = window.innerWidth;
-};
-
 onMounted(() => {
 	marketplaceStore.init();
-	window.addEventListener("resize", updateWidth);
-});
-
-onUnmounted(() => {
-	window.removeEventListener("resize", updateWidth);
 });
 
 const visibleCards = computed(() => {
