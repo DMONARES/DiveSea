@@ -65,6 +65,30 @@ export const useMarketplaceStore = defineStore("marketplace", {
 				category: "Gaming",
 				collection: "CryptoPunks",
 			},
+			{
+				timer: "02h 50m 22s",
+				img: "/img/nfts/6.png",
+				title: "Jazz Vibes",
+				price: 1.95,
+				category: "Music",
+				collection: "Azuki",
+			},
+			{
+				timer: "02h 10m 05s",
+				img: "/img/nfts/1.png",
+				title: "Abstract Art",
+				price: 2.2,
+				category: "Art",
+				collection: "BAYC",
+			},
+			{
+				timer: "01h 55m 38s",
+				img: "/img/nfts/2.png",
+				title: "Pixelated Punk",
+				price: 3.9,
+				category: "Gaming",
+				collection: "CryptoPunks",
+			},
 		],
 		filteredCards: [], // Инициализация пустым массивом
 		selectedCategories: [],
@@ -144,7 +168,7 @@ export const useMarketplaceStore = defineStore("marketplace", {
 			this.selectedCategories = [];
 			this.selectedCollections = [];
 			this.priceSort = null;
-			this.filteredCards = [...this.cards];
+			this.applyFilters();
 		},
 
 		init() {
