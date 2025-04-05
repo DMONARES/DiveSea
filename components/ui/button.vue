@@ -32,6 +32,18 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	bgColor: {
+		type: String,
+		default: "#141416",
+	},
+	fontColor: {
+		type: String,
+		default: "#FFFFFF",
+	},
+	borderColor: {
+		type: String,
+		default: "#141416",
+	},
 });
 
 const emit = defineEmits(["select", "click", "toggle"]);
@@ -84,6 +96,11 @@ const handleOutsideClick = (event) => {
 				'ui-button--active': isActive || selectedOptions.length > 0,
 				'ui-button--filter': isFilter,
 				'ui-button--open': isOpen,
+			}"
+			:style="{
+				backgroundColor: bgColor,
+				color: fontColor,
+				borderColor: borderColor,
 			}"
 			@click="toggleDropdown"
 		>
@@ -156,6 +173,10 @@ const handleOutsideClick = (event) => {
 		font-size: 11.5px;
 		line-height: 17.25px;
 	}
+	@media (max-width: 850px) {
+		font-size: 11.07px;
+		line-height: 13.84px;
+	}
 
 	&--transpatent {
 		background-color: transparent;
@@ -166,6 +187,21 @@ const handleOutsideClick = (event) => {
 		background-color: $lightGreen;
 		border-color: $lightGreen;
 		color: $black;
+	}
+
+	&--lil-font {
+		padding: 14px 34px 26px 20px;
+		font-family: $outfitFont;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 130%;
+		border-radius: 12.2px;
+		text-wrap: nowrap;
+
+		@media (max-width: 850px) {
+			padding: 12px 30px 22px 16px;
+			font-size: 10px;
+		}
 	}
 
 	&--filter {

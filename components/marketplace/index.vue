@@ -73,6 +73,8 @@ const showAllItems = () => {
 				<li>
 					<UiButton
 						:transpatent="true"
+						bgColor="#FFF"
+						fontColor="#141416"
 						:isActive="
 							marketplaceStore &&
 							!marketplaceStore.hasActiveFilters
@@ -90,6 +92,8 @@ const showAllItems = () => {
 						:options="marketplaceStore.categories"
 						:selectedOptions="marketplaceStore.selectedCategories"
 						:multiSelect="true"
+						bgColor="#FFF"
+						fontColor="#141416"
 						@toggle="toggleCategoryFilter"
 					>
 						<IconsCategory />
@@ -104,6 +108,8 @@ const showAllItems = () => {
 						:options="marketplaceStore.collections"
 						:selectedOptions="marketplaceStore.selectedCollections"
 						:multiSelect="true"
+						bgColor="#FFF"
+						fontColor="#141416"
 						@toggle="toggleCollectionFilter"
 					>
 						<IconsCollection />
@@ -114,6 +120,8 @@ const showAllItems = () => {
 					<UiButton
 						v-if="marketplaceStore"
 						:transpatent="true"
+						bgColor="#FFF"
+						fontColor="#141416"
 						@click="togglePriceSort"
 						:isActive="priceSortDirection !== null"
 					>
