@@ -50,9 +50,10 @@ function toggleMenu() {
 			<div class="header__left">
 				<div class="header__logo">
 					<nuxt-link to="/">
-						<icons-logo />
+						<icons-logo color="#000" />
 						<icons-dive-sea
 							v-if="isMobile"
+							color="#000"
 							class="header__logo-name"
 						/>
 					</nuxt-link>

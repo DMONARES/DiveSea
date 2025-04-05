@@ -13,6 +13,7 @@
 		<main>
 			<slot />
 		</main>
+		<Footer />
 	</div>
 
 	<Teleport to="body">
