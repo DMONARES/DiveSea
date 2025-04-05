@@ -132,8 +132,8 @@ const showAllItems = () => {
 		</div>
 		<div class="marketplace__content">
 			<NftCard
-				v-for="card in visibleCards"
-				:key="card.title"
+				v-for="(card, index) in visibleCards"
+				:key="card.name + index || 'card - ' + index"
 				:card="card"
 			/>
 		</div>
