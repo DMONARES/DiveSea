@@ -6,8 +6,8 @@
 		<Recommend />
 		<Collection />
 		<Marketplace />
+		<Questions />
 		<Banner />
-		<div class="margin-bottom" style="margin-bottom: 300px;"></div>
 	</main>
 </template>
 

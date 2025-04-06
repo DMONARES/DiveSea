@@ -27,9 +27,7 @@
 		</div>
 		<div class="banner__image-container">
 			<div class="banner__image">
-				<client-only>
-					<img src="/img/large/1.png" alt="" />
-				</client-only>
+				<img src="/img/large/1.png" alt="" />
 			</div>
 		</div>
 	</div>
