@@ -9,6 +9,9 @@ let animationFrame;
 const miniPlanetAngles = [0, 90, 180, 270];
 const largePlanetAngles = [45, 135, 225, 315];
 
+// Добавляем реактивную переменную для отслеживания ширины окна
+const windowWidth = ref(0);
+
 const planetsMini = [
 	{
 		id: 1,
@@ -79,6 +82,25 @@ const planetsLarge = [
 	},
 ];
 
+// Реактивные значения для адаптивных размеров орбит
+const miniOrbitRadius = computed(() => {
+	if (windowWidth.value <= 850) {
+		return 230; // Уменьшенное значение для мобильных устройств
+	} else if (windowWidth.value <= 1200) {
+		return 295; // Для планшетов
+	}
+	return 415; // Для десктопа
+});
+
+const largeOrbitRadius = computed(() => {
+	if (windowWidth.value <= 850) {
+		return 295; // Уменьшенное значение для мобильных устройств
+	} else if (windowWidth.value <= 1200) {
+		return 375; // Для планшетов
+	}
+	return 530; // Для десктопа
+});
+
 function animate() {
 	if (!isHovered.value && speed.value < 0.05) {
 		speed.value += 0.001;
@@ -111,6 +133,11 @@ function handleCardLeave() {
 	hoveredPlanet.value = null;
 }
 
+// Функция для обновления ширины окна
+function updateWindowWidth() {
+	windowWidth.value = window.innerWidth;
+}
+
 // Вычисляемое свойство для определения позиции информационной карточки
 const infoCardPosition = computed(() => {
 	if (!hoveredPlanet.value) return {};
@@ -125,7 +152,9 @@ const infoCardPosition = computed(() => {
 		(hoveredPlanet.value.angle + rotation.value) * (Math.PI / 180);
 
 	// Радиус орбиты
-	const radius = isLargeOrbit ? 530 : 415;
+	const radius = isLargeOrbit
+		? largeOrbitRadius.value
+		: miniOrbitRadius.value;
 
 	// Вычисляем позицию
 	const x = Math.cos(angleRad) * radius;
@@ -137,11 +166,18 @@ const infoCardPosition = computed(() => {
 });
 
 onMounted(() => {
+	// Инициализируем ширину окна
+	updateWindowWidth();
+
 	animate();
+
+	// Добавляем обработчик изменения размера окна
+	window.addEventListener("resize", updateWindowWidth);
 });
 
 onUnmounted(() => {
 	cancelAnimationFrame(animationFrame);
+	window.removeEventListener("resize", updateWindowWidth);
 });
 </script>
 
@@ -171,7 +207,9 @@ onUnmounted(() => {
 							transform:
 								'rotate(' +
 								(rotation + planet.angle) +
-								'deg) translate(415px) rotate(-' +
+								'deg) translate(' +
+								miniOrbitRadius +
+								'px) rotate(-' +
 								(rotation + planet.angle) +
 								'deg)',
 						}"
@@ -197,7 +235,9 @@ onUnmounted(() => {
 							transform:
 								'rotate(' +
 								(rotation + planet.angle) +
-								'deg) translate(530px) rotate(-' +
+								'deg) translate(' +
+								largeOrbitRadius +
+								'px) rotate(-' +
 								(rotation + planet.angle) +
 								'deg)',
 						}"
@@ -251,6 +291,14 @@ onUnmounted(() => {
 	padding: 480px 0;
 	overflow: visible;
 
+	@media (max-width: 1200px) {
+		padding: 380px 0;
+	}
+
+	@media (max-width: 850px) {
+		padding: 280px 0;
+	}
+
 	&__wrapper {
 		position: relative;
 		text-align: center;
@@ -260,6 +308,16 @@ onUnmounted(() => {
 	&__title {
 		font-size: 2.5rem;
 		font-weight: bold;
+
+		@media (max-width: 1200px) {
+			font-size: 32px;
+			line-height: 38.69px;
+		}
+
+		@media (max-width: 850px) {
+			font-size: 22.01px;
+			line-height: 26.61px;
+		}
 
 		span {
 			color: #aaa;
@@ -272,6 +330,16 @@ onUnmounted(() => {
 		color: #666;
 		font-weight: 500;
 		font-size: 1rem;
+
+		@media (max-width: 1200px) {
+			font-size: 12.8px;
+			line-height: 22.76px;
+		}
+
+		@media (max-width: 850px) {
+			font-size: 8.8px;
+			line-height: 15.65px;
+		}
 	}
 
 	&__center {
@@ -282,6 +350,16 @@ onUnmounted(() => {
 		width: 1060px;
 		height: 1060px;
 		pointer-events: none; /* Добавляем это, чтобы центр не блокировал события */
+
+		@media (max-width: 1200px) {
+			width: 750px;
+			height: 750px;
+		}
+
+		@media (max-width: 850px) {
+			width: 590px;
+			height: 590px;
+		}
 	}
 
 	/* Иконки орбит */
@@ -292,6 +370,14 @@ onUnmounted(() => {
 		transform: translate(-50%, -50%);
 		z-index: 1;
 		pointer-events: none; /* Орбиты не должны перехватывать события */
+
+		@media (max-width: 1200px) {
+			transform: translate(-50%, -50%) scale(0.71);
+		}
+
+		@media (max-width: 850px) {
+			transform: translate(-50%, -50%) scale(0.56);
+		}
 	}
 
 	/* Контейнеры орбит с фиксированными размерами */
@@ -306,12 +392,32 @@ onUnmounted(() => {
 			width: 830px;
 			height: 830px;
 			z-index: 10;
+
+			@media (max-width: 1200px) {
+				width: 590px;
+				height: 590px;
+			}
+
+			@media (max-width: 850px) {
+				width: 460px;
+				height: 460px;
+			}
 		}
 
 		&--large {
 			width: 1060px;
 			height: 1060px;
 			z-index: 9;
+
+			@media (max-width: 1200px) {
+				width: 750px;
+				height: 750px;
+			}
+
+			@media (max-width: 850px) {
+				width: 590px;
+				height: 590px;
+			}
 		}
 	}
 
@@ -327,6 +433,11 @@ onUnmounted(() => {
 		margin-left: -20px;
 		pointer-events: auto; /* Явно разрешаем события для планет */
 
+		@media (max-width: 850px) {
+			margin-top: -15px;
+			margin-left: -15px;
+		}
+
 		&-link {
 			display: block;
 			cursor: pointer;
@@ -334,6 +445,11 @@ onUnmounted(() => {
 			height: 40px;
 			position: relative;
 			z-index: 21;
+
+			@media (max-width: 850px) {
+				width: 30px;
+				height: 30px;
+			}
 
 			&:hover {
 				img {
@@ -350,6 +466,11 @@ onUnmounted(() => {
 			transition: transform 0.3s ease, filter 0.3s ease;
 			position: relative;
 			z-index: 22;
+
+			@media (max-width: 850px) {
+				width: 30px;
+				height: 30px;
+			}
 		}
 	}
 
@@ -371,6 +492,16 @@ onUnmounted(() => {
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 			transform: translate(-50%, -120%);
 
+			@media (max-width: 1200px) {
+				width: 160px;
+				padding: 12px;
+			}
+
+			@media (max-width: 850px) {
+				width: 140px;
+				padding: 10px;
+			}
+
 			&::after {
 				content: "";
 				position: absolute;
@@ -390,6 +521,11 @@ onUnmounted(() => {
 			font-size: 1rem;
 			font-weight: 600;
 			margin: 0 0 8px;
+
+			@media (max-width: 850px) {
+				font-size: 0.9rem;
+				margin: 0 0 6px;
+			}
 		}
 
 		&-price {
@@ -397,12 +533,22 @@ onUnmounted(() => {
 			font-weight: 700;
 			font-size: 0.9rem;
 			margin: 0 0 5px;
+
+			@media (max-width: 850px) {
+				font-size: 0.8rem;
+				margin: 0 0 4px;
+			}
 		}
 
 		&-creator {
 			color: #aaa;
 			font-size: 0.8rem;
 			margin: 0 0 10px;
+
+			@media (max-width: 850px) {
+				font-size: 0.7rem;
+				margin: 0 0 8px;
+			}
 		}
 
 		&-action {
@@ -417,6 +563,11 @@ onUnmounted(() => {
 			transition: opacity 0.2s ease;
 			text-decoration: none;
 			pointer-events: auto; // Разрешаем взаимодействие с кнопкой
+
+			@media (max-width: 850px) {
+				font-size: 0.7rem;
+				padding: 5px 0;
+			}
 
 			&:hover {
 				opacity: 0.9;
