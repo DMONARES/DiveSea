@@ -6,6 +6,7 @@
 		<Recommend />
 		<Collection />
 		<Marketplace />
+		<OrbitCommunity />
 		<Questions />
 		<Banner />
 	</main>
