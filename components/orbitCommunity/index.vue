@@ -1,6 +1,4 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
-
 const isHovered = ref(false);
 const hoveredPlanet = ref(null);
 const rotation = ref(0);
@@ -98,6 +96,17 @@ function handlePlanetHover(planet) {
 }
 
 function handlePlanetLeave() {
+	// Добавляем задержку, чтобы успеть навести на карточку
+	setTimeout(() => {
+		// Проверяем, не навели ли мы на карточку
+		if (!document.querySelector(".orbit__info-card:hover")) {
+			isHovered.value = false;
+			hoveredPlanet.value = null;
+		}
+	}, 100);
+}
+
+function handleCardLeave() {
 	isHovered.value = false;
 	hoveredPlanet.value = null;
 }
@@ -146,7 +155,6 @@ onUnmounted(() => {
 				who share a passion for one-of-a-kind digital.
 			</h4>
 			<UiButton>Join Our Community</UiButton>
-
 			<!-- Центр вращения -->
 			<div class="orbit__center">
 				<!-- Иконки орбит -->
@@ -210,6 +218,7 @@ onUnmounted(() => {
 					v-if="hoveredPlanet"
 					class="orbit__info-card"
 					:style="infoCardPosition"
+					@mouseleave="handleCardLeave"
 				>
 					<div class="orbit__info-card-content">
 						<h3 class="orbit__info-card-title">
@@ -232,7 +241,6 @@ onUnmounted(() => {
 		</div>
 	</div>
 </template>
-
 <style scoped lang="scss">
 .orbit {
 	position: relative;
@@ -240,13 +248,13 @@ onUnmounted(() => {
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	padding: 80px 0;
+	padding: 480px 0;
 	overflow: visible;
 
 	&__wrapper {
 		position: relative;
 		text-align: center;
-		z-index: 2;
+		z-index: 5;
 	}
 
 	&__title {
@@ -266,7 +274,6 @@ onUnmounted(() => {
 		font-size: 1rem;
 	}
 
-	/* Центр вращения */
 	&__center {
 		position: absolute;
 		top: 50%;
@@ -274,6 +281,7 @@ onUnmounted(() => {
 		transform: translate(-50%, -50%);
 		width: 1060px;
 		height: 1060px;
+		pointer-events: none; /* Добавляем это, чтобы центр не блокировал события */
 	}
 
 	/* Иконки орбит */
@@ -282,7 +290,8 @@ onUnmounted(() => {
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		z-index: -1;
+		z-index: 1;
+		pointer-events: none; /* Орбиты не должны перехватывать события */
 	}
 
 	/* Контейнеры орбит с фиксированными размерами */
@@ -290,36 +299,41 @@ onUnmounted(() => {
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		/* Эти контейнеры нужны лишь для определения центра орбиты */
 		transform: translate(-50%, -50%);
+		pointer-events: none;
 
 		&--mini {
 			width: 830px;
 			height: 830px;
+			z-index: 10;
 		}
 
 		&--large {
 			width: 1060px;
 			height: 1060px;
+			z-index: 9;
 		}
 	}
 
-	/* Планеты — позиционируем их относительно центра контейнера орбиты */
+	/* Планеты */
 	&__planet {
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		z-index: 20; // Значительно выше, чем у орбит
+		z-index: 20;
 		transition: transform 0.1s linear;
 		transform-origin: center;
-		margin-top: -20px; /* Половина высоты изображения */
-		margin-left: -20px; /* Половина ширины изображения */
+		margin-top: -20px;
+		margin-left: -20px;
+		pointer-events: auto; /* Явно разрешаем события для планет */
 
 		&-link {
 			display: block;
 			cursor: pointer;
 			width: 40px;
 			height: 40px;
+			position: relative;
+			z-index: 21;
 
 			&:hover {
 				img {
@@ -334,6 +348,8 @@ onUnmounted(() => {
 			height: 40px;
 			object-fit: contain;
 			transition: transform 0.3s ease, filter 0.3s ease;
+			position: relative;
+			z-index: 22;
 		}
 	}
 
@@ -342,8 +358,8 @@ onUnmounted(() => {
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		z-index: 30; // Выше, чем планеты
-		pointer-events: none;
+		z-index: 30;
+		pointer-events: auto;
 
 		&-content {
 			position: relative;
