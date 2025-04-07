@@ -1,20 +1,34 @@
 <script setup>
 import { useMarketplaceStore } from "~/stores/marketplace";
 import { useWindowSize } from "@vueuse/core";
-import { ref, computed, watchEffect, onMounted } from "vue";
+import { ref, computed, watchEffect, onMounted, onBeforeUnmount } from "vue";
 
 const marketplaceStore = useMarketplaceStore();
 const { width: windowWidth } = useWindowSize();
 const cardWidth = 252;
 const priceSortDirection = ref(null);
 
+const props = defineProps({
+	title: {
+		type: String,
+		default: "Explore Marketplace",
+	},
+	allButton: {
+		type: Boolean,
+		default: true,
+	},
+	lazyLoading: {
+		type: Boolean,
+		default: false,
+	},
+});
+
 onMounted(() => {
 	marketplaceStore.init();
 });
 
+// Режим обычного отображения карточек (на главной странице)
 const cardCountLimit = ref(0);
-
-// Функция для вычисления количества колонок по ширине окна
 const getColumnsByWidth = (width) => {
 	if (width <= 768) return 1;
 	if (width <= 1024) return 2;
@@ -22,20 +36,28 @@ const getColumnsByWidth = (width) => {
 	return 4;
 };
 
-// Переменные для количества колонок и лимита карточек
-const columns = ref(0);
-
 watchEffect(() => {
-	const width = windowWidth.value;
-	columns.value = getColumnsByWidth(width);
-	const rows = columns.value === 1 ? 3 : 2;
-	cardCountLimit.value = columns.value * rows;
+	if (!props.lazyLoading) {
+		const width = windowWidth.value;
+		const columns = getColumnsByWidth(width);
+		const rows = columns === 1 ? 3 : 2;
+		cardCountLimit.value = columns * rows;
+	}
 });
 
-const visibleCards = computed(() =>
-	marketplaceStore.filteredCards.slice(0, cardCountLimit.value)
-);
+// Режим lazyLoading: начальное значение – 8 карточек
+const lazyCount = ref(8);
 
+// Вычисляем карточки для отображения – в обычном режиме используем cardCountLimit, в lazy режиме – lazyCount
+const visibleCards = computed(() => {
+	if (props.lazyLoading) {
+		return marketplaceStore.filteredCards.slice(0, lazyCount.value);
+	} else {
+		return marketplaceStore.filteredCards.slice(0, cardCountLimit.value);
+	}
+});
+
+// Функция для сортировки и фильтров
 const togglePriceSort = () => {
 	if (priceSortDirection.value === null) {
 		priceSortDirection.value = "asc";
@@ -63,15 +85,54 @@ const toggleCollectionFilter = (collection) => {
 const showAllItems = () => {
 	resetFilters();
 };
+
+// Если lazyLoading включен, реализуем подгрузку новых карточек
+let observer = null;
+const loadMoreRef = ref(null);
+
+const loadMore = () => {
+	if (lazyCount.value < marketplaceStore.filteredCards.length) {
+		lazyCount.value += 8; // можно регулировать число подгружаемых карточек
+	}
+};
+
+onMounted(() => {
+	if (props.lazyLoading) {
+		observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						loadMore();
+					}
+				});
+			},
+			{
+				root: null,
+				rootMargin: "0px",
+				threshold: 0.1,
+			}
+		);
+		if (loadMoreRef.value) {
+			observer.observe(loadMoreRef.value);
+		}
+	}
+});
+
+onBeforeUnmount(() => {
+	if (observer && loadMoreRef.value) {
+		observer.unobserve(loadMoreRef.value);
+	}
+});
 </script>
 
 <template>
-	<div class="marketplace marketplace__container">
-		<h2 class="marketplace__title">Explore Marketplace</h2>
+	<section class="marketplace marketplace__container">
+		<h2 class="marketplace__title">{{ title }}</h2>
 		<div class="marketplace__filter">
 			<ul class="marketplace__filter-list">
 				<li>
 					<UiButton
+						v-if="allButton"
 						:transpatent="true"
 						bgColor="#FFF"
 						fontColor="#141416"
@@ -145,11 +206,18 @@ const showAllItems = () => {
 				:card="card"
 			/>
 		</div>
-		<nuxt-link class="marketplace__more" to="/">
+		<nuxt-link
+			class="marketplace__more"
+			to="/"
+			v-if="allButton && !lazyLoading"
+		>
 			Explore All
 			<IconsArrowMore />
 		</nuxt-link>
-	</div>
+		<div v-if="lazyLoading" ref="loadMoreRef" class="load-more">
+			<Loader />
+		</div>
+	</section>
 </template>
 
 <style lang="scss" scoped>

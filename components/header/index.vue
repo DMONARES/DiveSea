@@ -5,7 +5,7 @@ const isMenuOpen = ref(false);
 const navLinks = [
 	{
 		name: "Discover",
-		link: "/",
+		link: "/discover",
 	},
 	{
 		name: "Creators",
