@@ -225,13 +225,22 @@ const bestsellers = [
 </template>
 
 <style lang="scss" scoped>
+* {
+	transition: all 0.3s ease;
+}
 .unleash {
 	position: relative;
 	margin-top: 100px;
 	margin-bottom: 210px;
 	padding: 0 96px;
 	padding-top: 75px;
-	// border-top: 1px solid $lightGrey;
+
+	@media (max-width: 1200px) {
+		margin-top: 70px;
+		margin-bottom: 150px;
+		padding: 0 70px;
+		padding-top: 50px;
+	}
 
 	&::before {
 		content: "";
@@ -248,7 +257,16 @@ const bestsellers = [
 		display: flex;
 		align-items: center;
 		gap: 100px;
-		// justify-content: space-between;
+		flex-direction: row;
+
+		@media (max-width: 1200px) {
+			gap: 70px;
+		}
+		@media (max-width: 850px) {
+			flex-direction: column;
+			gap: 30px;
+			align-items: start;
+		}
 	}
 	&__left {
 		max-width: 500px;
@@ -258,12 +276,26 @@ const bestsellers = [
 		align-items: flex-start;
 		gap: 45px;
 
+		@media (max-width: 1200px) {
+			max-width: 350px;
+			gap: 30px;
+		}
+
 		&-title {
 			font-size: 45px;
 			font-weight: 600;
 			line-height: 54.4px;
 			text-transform: capitalize;
 			color: $lightGrey;
+
+			@media (max-width: 1200px) {
+				font-size: 32px;
+				line-height: 38.69px;
+			}
+			@media (max-width: 850px) {
+				font-size: 30px;
+				line-height: 37.11px;
+			}
 
 			span {
 				color: $black;
@@ -274,21 +306,38 @@ const bestsellers = [
 			flex-direction: column;
 			gap: 12px;
 			align-items: flex-start;
+
+			@media (max-width: 1200px) {
+				gap: 8px;
+			}
 		}
 		&-item {
 			display: flex;
 			align-items: center;
 			gap: 12px;
 
+			@media (max-width: 1200px) {
+				gap: 8px;
+			}
+
 			&-text {
 				font-size: 16px;
 				font-weight: 400;
 				line-height: 32px;
 				color: $grey;
+
+				@media (max-width: 1200px) {
+					font-size: 11.38px;
+					line-height: 22.76px;
+				}
 			}
 
 			&:last-child {
 				margin-bottom: 25px;
+
+				@media (max-width: 1200px) {
+					margin-bottom: 20px;
+				}
 			}
 		}
 		&-link {
@@ -329,6 +378,7 @@ const bestsellers = [
 		width: 100%;
 		display: flex;
 		align-items: center;
+
 		&-mini {
 			position: absolute;
 			top: -43px;
@@ -346,10 +396,25 @@ const bestsellers = [
 				rgb(252, 252, 253) -0.957%,
 				rgba(252, 252, 253, 0.6) 100%
 			);
+
+			@media (max-width: 1200px) {
+				padding: 8px;
+				gap: 8px;
+				right: 2%;
+			}
+			@media (max-width: 1100px) {
+				display: none;
+			}
+
 			&-check {
 				display: flex;
 				align-items: center;
 				gap: 15px;
+
+				@media (max-width: 1200px) {
+					gap: 8px;
+				}
+
 				&-image {
 					position: relative;
 
@@ -358,6 +423,11 @@ const bestsellers = [
 						height: 40px;
 						border-radius: 50%;
 						overflow: hidden;
+
+						@media (max-width: 1200px) {
+							width: 28px;
+							height: 28px;
+						}
 					}
 
 					&-icon {
@@ -379,6 +449,11 @@ const bestsellers = [
 					line-height: 22.79px;
 					color: grey;
 
+					@media (max-width: 1200px) {
+						font-size: 13.29px;
+						line-height: 22.79px;
+					}
+
 					span {
 						color: $black;
 					}
@@ -387,12 +462,22 @@ const bestsellers = [
 					font-size: 12px;
 					font-weight: 600;
 					line-height: 19px;
+
+					@media (max-width: 1200px) {
+						font-size: 11.39px;
+						line-height: 18.99px;
+					}
 				}
 				&-date {
 					font-weight: 500;
 					font-size: 12px;
 					line-height: 19px;
 					color: $grey;
+
+					@media (max-width: 1200px) {
+						font-size: 11.39px;
+						line-height: 18.99px;
+					}
 				}
 			}
 			&-image {
@@ -404,10 +489,21 @@ const bestsellers = [
 		&-bestsellers {
 			max-width: 330px;
 			width: 100%;
-			margin-left: 150px;
+			margin-left: 50%;
 			padding: 25px 20px;
 			border-radius: 14px;
 			box-shadow: 8.82px 8.82px 44.12px 0px rgba(20, 20, 22, 0.1);
+
+			@media (max-width: 1440px) {
+				margin-left: 25%;
+			}
+			@media (max-width: 1200px) {
+				max-width: 230px;
+				padding: 18px 13px;
+			}
+			@media (max-width: 850px) {
+				display: none;
+			}
 
 			&-title {
 				margin-bottom: 24px;
@@ -415,11 +511,20 @@ const bestsellers = [
 				font-weight: 600;
 				line-height: 135%;
 				letter-spacing: 0.18px;
+
+				@media (max-width: 1200px) {
+					font-size: 13.18px;
+					letter-spacing: 0.13px;
+				}
 			}
 			&-list {
 				display: flex;
 				flex-direction: column;
 				gap: 15px;
+
+				@media (max-width: 1200px) {
+					gap: 10px;
+				}
 			}
 			&-item {
 				width: 100%;
@@ -427,11 +532,20 @@ const bestsellers = [
 				align-items: center;
 				gap: 15px;
 
+				@media (max-width: 1200px) {
+					gap: 12px;
+				}
+
 				&-image {
 					position: relative;
 					width: 50px;
 					height: 50px;
 					border-radius: 50%;
+
+					@media (max-width: 1200px) {
+						width: 35px;
+						height: 35px;
+					}
 
 					span {
 						position: absolute;
@@ -449,6 +563,15 @@ const bestsellers = [
 						color: $white;
 						background-color: $black;
 						z-index: 10;
+
+						@media (max-width: 1200px) {
+							top: -2px;
+							right: -2px;
+							width: 14px;
+							height: 14px;
+							font-size: 10px;
+							line-height: 14px;
+						}
 					}
 				}
 				&-user {
@@ -460,12 +583,22 @@ const bestsellers = [
 						font-size: 14px;
 						font-weight: 500;
 						line-height: 24px;
+
+						@media (max-width: 1200px) {
+							font-size: 12px;
+							line-height: 18px;
+						}
 					}
 					&-tag {
 						font-size: 12px;
 						font-weight: 400;
 						line-height: 20px;
 						color: $grey;
+
+						@media (max-width: 1200px) {
+							font-size: 10px;
+							line-height: 14px;
+						}
 					}
 				}
 				&-button {
@@ -481,6 +614,13 @@ const bestsellers = [
 					cursor: pointer;
 					transition: all 0.3s ease;
 
+					@media (max-width: 1200px) {
+						padding: 5px 10px;
+						font-size: 12px;
+						line-height: 16px;
+						border: 1.5px solid $lightGrey;
+					}
+
 					&.unfollow {
 						background-color: $lightGrey;
 					}
@@ -493,7 +633,7 @@ const bestsellers = [
 .recent {
 	position: absolute;
 	bottom: -115px;
-	left: -43px;
+	left: 21%;
 	max-width: 365px;
 	width: 100%;
 	padding: 25px;
@@ -502,6 +642,10 @@ const bestsellers = [
 	box-shadow: 8.82px 8.82px 44.12px 0px rgba(20, 20, 22, 0.1);
 	z-index: 100;
 
+	@media (max-width: 1440px) {
+		left: -3px;
+	}
+
 	@media (max-width: 1200px) {
 		bottom: -80px;
 		right: 15px;
@@ -509,7 +653,7 @@ const bestsellers = [
 		padding: 18px;
 	}
 
-	@media (max-width: 700px) {
+	@media (max-width: 1060px) {
 		display: none;
 	}
 
