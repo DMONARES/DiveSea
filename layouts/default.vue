@@ -1,10 +1,33 @@
 <script setup>
-	// if page loading
-	const nuxtApp = useNuxtApp();
-	const loading = ref(false);
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useNuxtApp } from "#app";
 
-	nuxtApp.hook("page:start", () => loading.value = true);
-	nuxtApp.hook("page:finish", () => loading.value = false);
+const nuxtApp = useNuxtApp();
+const loading = ref(false);
+
+nuxtApp.hook("page:start", () => (loading.value = true));
+nuxtApp.hook("page:finish", () => (loading.value = false));
+
+// Логика отображения кнопки "Вверх"
+// Кнопка становится видимой (opacity: 1) при прокрутке более 200px
+const showScroll = ref(false);
+
+const checkScroll = () => {
+	showScroll.value = window.scrollY > 200;
+};
+
+onMounted(() => {
+	window.addEventListener("scroll", checkScroll);
+});
+
+onBeforeUnmount(() => {
+	window.removeEventListener("scroll", checkScroll);
+});
+
+// Функция для плавной прокрутки наверх
+const scrollToTop = () => {
+	window.scrollTo({ top: 0, behavior: "smooth" });
+};
 </script>
 
 <template>
@@ -19,7 +42,42 @@
 	<Teleport to="body">
 		<HugePreloader v-if="loading" />
 	</Teleport>
+
+	<button
+		class="scroll-top"
+		:class="{ visible: showScroll }"
+		@click="scrollToTop"
+	>
+		<IconsArrowRight />
+	</button>
 </template>
 
-<style lang='scss'>
+<style lang="scss">
+.scroll-top {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background-color: $black;
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	z-index: 1000;
+	transition: opacity 0.3s;
+	opacity: 0;
+	pointer-events: none;
+
+	svg {
+		rotate: -90deg;
+		z-index: 100;
+	}
+}
+
+.scroll-top.visible {
+	opacity: 1;
+	pointer-events: auto;
+}
 </style>
