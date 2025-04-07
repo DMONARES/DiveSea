@@ -5,7 +5,11 @@ const swiperInstancerecommend = ref(null);
 const recommendStore = useRecommendStore();
 
 const sales = recommendStore.sales;
+const followingStatus = ref({});
 
+const toggleFollow = (index) => {
+	followingStatus.value[index] = !followingStatus.value[index];
+};
 
 const items = [
 	{
@@ -25,6 +29,45 @@ const items = [
 	},
 	{
 		text: "Join Our Community",
+	},
+];
+
+const bestsellers = [
+	{
+		name: "Alex Ca.",
+		tag: "@Alexy",
+		count: 1,
+		img: "/img/mini/1.png",
+	},
+	{
+		name: "Juliya Sa.",
+		tag: "@JuliyaS",
+		count: 2,
+		img: "/img/mini/2.jpeg",
+	},
+	{
+		name: "Juliya Sa.",
+		tag: "@JuliyaS",
+		count: 2,
+		img: "/img/mini/1.png",
+	},
+	{
+		name: "Trevor Pu.",
+		tag: "@TrevorP",
+		count: 2,
+		img: "/img/mini/2.jpeg",
+	},
+	{
+		name: "Jailyn Cr.",
+		tag: "@TrevorP",
+		count: 3,
+		img: "/img/mini/1.png",
+	},
+	{
+		name: "Alex Ca.",
+		tag: "@Alexy",
+		count: 4,
+		img: "/img/mini/2.jpeg",
 	},
 ];
 </script>
@@ -57,8 +100,10 @@ const items = [
 					<div class="unleash__right-mini-check">
 						<IconsDot />
 						<div class="unleash__right-mini-check-image">
-							<img src="#" alt="" />
-							<IconsVerified />
+							<img src="/img/mini/1.png" alt="" />
+							<IconsVerified
+								class="unleash__right-mini-check-image-icon"
+							/>
 						</div>
 					</div>
 					<div class="unleash__right-mini-info">
@@ -73,7 +118,7 @@ const items = [
 						</div>
 					</div>
 					<div class="unleash__right-mini-image">
-						<img src="#" alt="" />
+						<img src="/img/nfts/1.png" alt="" />
 					</div>
 				</div>
 
@@ -82,34 +127,51 @@ const items = [
 						Best Sellers
 					</div>
 					<ul class="unleash__right-bestsellers-list">
-						<li class="unleash__right-bestsellers-item">
-							<img
-								src="#"
-								alt=""
-								class="unleash__right-bestsellers-item-image"
-							/>
+						<li
+							class="unleash__right-bestsellers-item"
+							v-for="(bestseller, index) in bestsellers"
+							:key="'bestseller - ' + index"
+						>
+							<div class="unleash__right-bestsellers-item-image">
+								<img
+									:src="bestseller.img"
+									alt=""
+									class="unleash__right-bestsellers-item-image"
+								/>
+								<span
+									class="unleash__right-bestsellers-item-counter"
+									>{{ bestseller.count }}</span
+								>
+							</div>
 							<div class="unleash__right-bestsellers-item-user">
 								<div
 									class="unleash__right-bestsellers-item-user-name"
 								>
-									Alex Ca.
+									{{ bestseller.name }}
 								</div>
 								<div
 									class="unleash__right-bestsellers-item-user-tag"
 								>
-									@Alexy
+									{{ bestseller.tag }}
 								</div>
 							</div>
-							<div class="unleash__right-bestsellers-item-button">
-								Follow
-							</div>
+							<button
+								class="unleash__right-bestsellers-item-button"
+								:class="{ unfollow: followingStatus[index] }"
+								@click="toggleFollow(index)"
+							>
+								{{
+									followingStatus[index]
+										? "Unfollow"
+										: "Follow"
+								}}
+							</button>
 						</li>
 					</ul>
 				</div>
 
 				<div class="unleash__right-recent recent">
 					<div class="recent__title">Recent Viewed</div>
-					<IconsOptions class="recent__options" />
 					<ul class="recent__list">
 						<li
 							class="recent__item"
@@ -163,16 +225,282 @@ const items = [
 </template>
 
 <style lang="scss" scoped>
+.unleash {
+	position: relative;
+	margin-top: 100px;
+	margin-bottom: 210px;
+	padding: 0 96px;
+	padding-top: 75px;
+	// border-top: 1px solid $lightGrey;
 
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 90%;
+		height: 1px;
+		background-color: $lightGrey;
+	}
+
+	&__content {
+		display: flex;
+		align-items: center;
+		gap: 100px;
+		// justify-content: space-between;
+	}
+	&__left {
+		max-width: 500px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 45px;
+
+		&-title {
+			font-size: 45px;
+			font-weight: 600;
+			line-height: 54.4px;
+			text-transform: capitalize;
+			color: $lightGrey;
+
+			span {
+				color: $black;
+			}
+		}
+		&-list {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			align-items: flex-start;
+		}
+		&-item {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+
+			&-text {
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 32px;
+				color: $grey;
+			}
+
+			&:last-child {
+				margin-bottom: 25px;
+			}
+		}
+		&-link {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			padding: 18px 30px;
+			background-color: $black;
+			border: 1.5px solid $black;
+			border-radius: 23px;
+			transition: 0.3s ease-in-out;
+			cursor: pointer;
+			font-family: $primaryFont;
+			font-size: 16.27px;
+			font-weight: 500;
+			line-height: 24px;
+			text-transform: capitalize;
+			color: $white;
+			position: relative;
+
+			@media (max-width: 1200px) {
+				padding: 11px 17px;
+				font-size: 11.5px;
+				line-height: 17.25px;
+			}
+			@media (max-width: 850px) {
+				font-size: 11.07px;
+				line-height: 13.84px;
+			}
+
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
+	&__right {
+		position: relative;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		&-mini {
+			position: absolute;
+			top: -43px;
+			right: 0;
+			padding: 11px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			background-color: $white;
+			border-radius: 13px;
+			box-shadow: 0px 18.99px 28.48px 0px rgba(70, 70, 70, 0.1);
+			backdrop-filter: blur(30.38px);
+			background: linear-gradient(
+				225.57deg,
+				rgb(252, 252, 253) -0.957%,
+				rgba(252, 252, 253, 0.6) 100%
+			);
+			&-check {
+				display: flex;
+				align-items: center;
+				gap: 15px;
+				&-image {
+					position: relative;
+
+					img {
+						width: 40px;
+						height: 40px;
+						border-radius: 50%;
+						overflow: hidden;
+					}
+
+					&-icon {
+						position: absolute;
+						top: -5px;
+						right: -5px;
+					}
+				}
+			}
+			&-info {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+
+				&-name {
+					font-family: Poppins;
+					font-size: 13.29px;
+					font-weight: 500;
+					line-height: 22.79px;
+					color: grey;
+
+					span {
+						color: $black;
+					}
+				}
+				&--price {
+					font-size: 12px;
+					font-weight: 600;
+					line-height: 19px;
+				}
+				&-date {
+					font-weight: 500;
+					font-size: 12px;
+					line-height: 19px;
+					color: $grey;
+				}
+			}
+			&-image {
+				max-width: 60px;
+				max-height: 60px;
+				margin-left: 5px;
+			}
+		}
+		&-bestsellers {
+			max-width: 330px;
+			width: 100%;
+			margin-left: 150px;
+			padding: 25px 20px;
+			border-radius: 14px;
+			box-shadow: 8.82px 8.82px 44.12px 0px rgba(20, 20, 22, 0.1);
+
+			&-title {
+				margin-bottom: 24px;
+				font-size: 18.53px;
+				font-weight: 600;
+				line-height: 135%;
+				letter-spacing: 0.18px;
+			}
+			&-list {
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+			}
+			&-item {
+				width: 100%;
+				display: flex;
+				align-items: center;
+				gap: 15px;
+
+				&-image {
+					position: relative;
+					width: 50px;
+					height: 50px;
+					border-radius: 50%;
+
+					span {
+						position: absolute;
+						top: -5px;
+						right: -5px;
+						width: 21px;
+						height: 21px;
+						border-radius: 50%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 12px;
+						font-weight: 600;
+						line-height: 20px;
+						color: $white;
+						background-color: $black;
+						z-index: 10;
+					}
+				}
+				&-user {
+					display: flex;
+					flex-direction: column;
+					align-items: flex-start;
+
+					&-name {
+						font-size: 14px;
+						font-weight: 500;
+						line-height: 24px;
+					}
+					&-tag {
+						font-size: 12px;
+						font-weight: 400;
+						line-height: 20px;
+						color: $grey;
+					}
+				}
+				&-button {
+					margin-left: auto;
+					padding: 8px 14px;
+					border: 2px solid $lightGrey;
+					border-radius: 12px;
+					font-family: $dmsansFont;
+					font-size: 14px;
+					font-weight: 700;
+					line-height: 16px;
+					background-color: transparent;
+					cursor: pointer;
+					transition: all 0.3s ease;
+
+					&.unfollow {
+						background-color: $lightGrey;
+					}
+				}
+			}
+		}
+	}
+}
+//recent
 .recent {
-	// position: absolute;
-	// bottom: -115px;
-	// right: 100px;
+	position: absolute;
+	bottom: -115px;
+	left: -43px;
 	max-width: 365px;
 	width: 100%;
 	padding: 25px;
 	border-radius: 23.48px;
 	background-color: $white;
+	box-shadow: 8.82px 8.82px 44.12px 0px rgba(20, 20, 22, 0.1);
+	z-index: 100;
 
 	@media (max-width: 1200px) {
 		bottom: -80px;
@@ -198,18 +526,6 @@ const items = [
 			font-size: 14.93px;
 			line-height: 135%;
 			letter-spacing: 0.14px;
-		}
-	}
-	&__options {
-		position: absolute;
-		top: 30px;
-		right: 30px;
-		cursor: pointer;
-		z-index: 100;
-
-		@media (max-width: 1200px) {
-			top: 20px;
-			right: 20px;
 		}
 	}
 	&__list {
