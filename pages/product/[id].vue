@@ -11,6 +11,7 @@ const product = recommendStore.slides.find(item => String(item.id) === String(pr
 
 <template>
   <main>
+	<UiBack />
     <NftCardDetail :product="product" />
   </main>
 </template>
