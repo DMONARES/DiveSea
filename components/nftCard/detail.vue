@@ -141,6 +141,7 @@ defineProps({
 			padding: 26px;
 		}
 		@media (max-width: 950px) {
+			max-width: max-content;
 			flex-direction: column;
 			align-items: center;
 			gap: 20px;
@@ -162,7 +163,7 @@ defineProps({
 				max-width: 400px;
 				max-height: 400px;
 			}
-			@media (max-width: 950px) {
+			@media (max-width: 750px) {
 				max-width: 280px;
 				max-height: 280px;
 			}
@@ -206,7 +207,7 @@ defineProps({
 					font-size: 36.3px;
 					line-height: 22.63px;
 				}
-				@media (max-width: 950px) {
+				@media (max-width: 750px) {
 					font-size: 15.64px;
 					line-height: 22.59px;
 				}
@@ -221,7 +222,7 @@ defineProps({
 					font-size: 13.51px;
 					line-height: 20.72px;
 				}
-				@media (max-width: 950px) {
+				@media (max-width: 750px) {
 					font-size: 13.03px;
 					line-height: 19.98px;
 				}
@@ -285,7 +286,7 @@ defineProps({
 						font-size: 12.57px;
 						line-height: 19px;
 					}
-					@media (max-width: 1200px) {
+					@media (max-width: 750px) {
 						font-size: 9.01px;
 						line-height: 14px;
 					}
@@ -300,7 +301,7 @@ defineProps({
 						font-size: 18.18px;
 						line-height: 27.88px;
 					}
-					@media (max-width: 950px) {
+					@media (max-width: 750px) {
 						font-size: 13.03px;
 						line-height: 19.98px;
 					}
@@ -342,7 +343,7 @@ defineProps({
 						font-size: 12.7px;
 						line-height: 15.63px;
 					}
-					@media (max-width: 950px) {
+					@media (max-width: 750px) {
 						font-size: 10.55px;
 						line-height: 12.98px;
 					}
@@ -358,7 +359,7 @@ defineProps({
 						font-size: 23.46px;
 						line-height: 35px;
 					}
-					@media (max-width: 950px) {
+					@media (max-width: 750px) {
 						font-size: 19.48px;
 						line-height: 29px;
 					}
@@ -371,7 +372,7 @@ defineProps({
 							width: 22px;
 							height: 35px;
 						}
-						@media (max-width: 950px) {
+						@media (max-width: 750px) {
 							width: 15px;
 							height: 23px;
 						}
@@ -392,7 +393,7 @@ defineProps({
 						font-size: 13.68px;
 						line-height: 21.5px;
 					}
-					@media (max-width: 950px) {
+					@media (max-width: 750px) {
 						font-size: 11.36px;
 						line-height: 17.85px;
 					}
