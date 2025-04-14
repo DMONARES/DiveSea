@@ -5,6 +5,16 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
 import { useRecommendStore } from "~/stores/recommend";
+const props = defineProps({
+	title: {
+		type: String,
+		default: "Weekly - Top NFT",
+	},
+	recent: {
+		type: Boolean,
+		default: true,
+	},
+});
 
 const swiperInstancerecommend = ref(null);
 const recommendStore = useRecommendStore();
@@ -27,7 +37,7 @@ onMounted(() => {
 
 <template>
 	<div class="recommend">
-		<h2 class="recommend__title">Weekly - Top NFT</h2>
+		<h2 class="recommend__title">{{ title }}</h2>
 
 		<!-- slider -->
 		<div class="recommend__slider-wr">
@@ -56,7 +66,7 @@ onMounted(() => {
 		</div>
 
 		<!-- Recent Viewed -->
-		<div class="recommend__recent recent">
+		<div v-if="recent" class="recommend__recent recent">
 			<div class="recent__title">Recent Viewed</div>
 			<IconsOptions class="recent__options" />
 			<ul class="recent__list">

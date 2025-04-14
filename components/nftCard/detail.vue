@@ -156,6 +156,7 @@ defineProps({
 		}
 
 		img {
+			width: 100%;
 			max-width: 560px;
 			max-height: 560px;
 
