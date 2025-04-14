@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-	<div class="slide__wr">
+	<nuxt-link :to="`/product/${card.id}`" class="slide__wr">
 		<div class="slide__image">
 			<img :src="card.img" alt="" class="slide__img" />
 			<div class="slide__timer">
@@ -28,7 +28,7 @@ defineProps({
 			</div>
 			<UiButton class="slide__content-button"> PLACE BID </UiButton>
 		</div>
-	</div>
+	</nuxt-link>
 </template>
 
 <style lang="scss" scoped>

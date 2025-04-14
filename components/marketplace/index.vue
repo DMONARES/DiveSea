@@ -214,9 +214,6 @@ onBeforeUnmount(() => {
 			Explore All
 			<IconsArrowMore />
 		</nuxt-link>
-		<div v-if="lazyLoading" ref="loadMoreRef" class="load-more">
-			<Loader />
-		</div>
 	</section>
 </template>
 
