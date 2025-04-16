@@ -1,4 +1,9 @@
 <script setup>
+import IconsInstaBl from "@/components/icons/instaBl.vue";
+import IconsLinkedinBl from "@/components/icons/linkedinBl.vue";
+import IconsFacebookBl from "@/components/icons/facebookBl.vue";
+import IconsTwitterBl from "@/components/icons/twitterBl.vue";
+
 const stats = [
 	{
 		title: "86 ETH",
@@ -11,6 +16,24 @@ const stats = [
 	{
 		title: "587",
 		subtitle: "Followings",
+	},
+];
+const links = [
+	{
+		link: "/",
+		icon: IconsInstaBl,
+	},
+	{
+		link: "/",
+		icon: IconsLinkedinBl,
+	},
+	{
+		link: "/",
+		icon: IconsFacebookBl,
+	},
+	{
+		link: "/",
+		icon: IconsTwitterBl,
 	},
 ];
 </script>
@@ -40,6 +63,16 @@ const stats = [
 				mind-bending concepts,
 			</p>
 		</div>
+		<div class="proifle-info__social">
+			<nuxt-link
+				v-for="(link, index) in links"
+				:key="'link - ' + index"
+				:to="link.link"
+				class="proifle-info__social-item"
+			>
+				<component :is="link.icon" />
+			</nuxt-link>
+		</div>
 	</div>
 </template>
 
@@ -50,7 +83,7 @@ const stats = [
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 100px;
+	gap: 30px;
 
 	@media (max-width: 1200px) {
 		max-width: 260px;
@@ -59,7 +92,13 @@ const stats = [
 	}
 
 	&__statistic {
+		margin-bottom: 70px;
 		width: 100%;
+
+		@media (max-width: 1200px) {
+			margin-bottom: 50px;
+		}
+
 		&-list {
 			display: flex;
 			align-items: center;
@@ -101,6 +140,17 @@ const stats = [
 		}
 	}
 	&__bio {
+		padding-bottom: 85px;
+		border-bottom: 1px solid $lightGrey;
+
+		@media (max-width: 1200px) {
+			padding-bottom: 60px;
+		}
+
+		@media (max-width: 850px) {
+			padding-bottom: 65px;
+		}
+
 		&-title {
 			margin-bottom: 5px;
 			font-family: $publicSansFont;
@@ -133,6 +183,13 @@ const stats = [
 			@media (max-width: 850px) {
 				font-size: 10.62px;
 			}
+		}
+	}
+	&__social {
+		display: flex;
+		align-items: center;
+		gap: 65px;
+		&-item {
 		}
 	}
 }
