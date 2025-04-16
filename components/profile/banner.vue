@@ -20,6 +20,7 @@ const product = recommendStore.slides.find((item) => item.poster);
 	overflow: hidden;
 
 	img {
+		width: 100%;
 		margin: 0 auto;
 		border-radius: 20px;
 		overflow: hidden;
