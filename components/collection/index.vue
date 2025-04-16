@@ -2,9 +2,12 @@
 import { useCollectionStore } from "~/stores/collection";
 
 const collectionStore = useCollectionStore();
+const recommendStore = useRecommendStore();
 
 const titles = collectionStore.titles;
 const items = collectionStore.items;
+
+const userLinks = recommendStore.slides.find((item) => String(item.nickname));
 
 const limitedItems = computed(() => {
 	return collectionStore.items.slice(0, 4);
@@ -47,7 +50,7 @@ const limitedItems = computed(() => {
 							>
 								<div class="collection__table-item-user">
 									<nuxt-link
-										to="/"
+										:to="`/profile/${userLinks.nickname}`"
 										class="collection__table-item-user-link"
 									>
 										<img
@@ -61,18 +64,22 @@ const limitedItems = computed(() => {
 										>
 									</nuxt-link>
 									<div class="collection__table-item-user-wr">
-										<nuxt-link to="/">
+										<nuxt-link
+											:to="`/profile/${userLinks.nickname}`"
+										>
 											<div
 												class="collection__table-item-user-name"
 											>
 												{{ item.name }}
 											</div>
 										</nuxt-link>
-										<div
+										<nuxt-link
+											:to="`/profile/${userLinks.nickname}`"
+											:data-text="item.nickname"
 											class="collection__table-item-user-nickname"
 										>
 											{{ item.nickname }}
-										</div>
+										</nuxt-link>
 									</div>
 								</div>
 							</td>
@@ -299,6 +306,7 @@ $border: #ebe9e9;
 					align-items: start;
 				}
 				&-name {
+					position: relative;
 					font-size: 28.01px;
 					font-weight: 500;
 					line-height: 140%;
@@ -311,8 +319,20 @@ $border: #ebe9e9;
 						font-size: 15.41px;
 					}
 
-					&:hover {
-						text-decoration: underline;
+					&::after {
+						content: "";
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						height: 2px;
+						width: 0;
+						background-color: $black;
+						transition: 0.3s ease;
+					}
+
+					&:hover::after {
+						width: 100%;
+						transition: 0.3s ease;
 					}
 				}
 				&-nickname {
@@ -320,12 +340,59 @@ $border: #ebe9e9;
 					font-weight: 400;
 					line-height: 150%;
 					color: $lightGrey;
+					position: relative;
+					display: inline-block;
+					transition: color 0.3s ease;
 
 					@media (max-width: 1200px) {
 						font-size: 16.19px;
 					}
 					@media (max-width: 850px) {
 						font-size: 12.52px;
+					}
+
+					&::after {
+						content: attr(data-text);
+						position: absolute;
+						left: 0;
+						top: 0;
+						width: 100%;
+						height: 100%;
+						z-index: 100;
+						background: linear-gradient(
+							270deg,
+							#00f0ff,
+							#ff00b5,
+							#00f0ff,
+							#94589e,
+							#ff00b5,
+							#00f0ff
+						);
+						background-size: 600% 100%;
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+						background-clip: text;
+						color: transparent;
+						opacity: 0;
+						transition: opacity 0.5s ease;
+						pointer-events: none;
+						animation: shimmer 6s ease-in-out infinite alternate;
+					}
+
+					&:hover::after {
+						opacity: 1;
+					}
+
+					&:hover {
+						color: transparent;
+					}
+				}
+				@keyframes shimmer {
+					0% {
+						background-position: 0% 50%;
+					}
+					100% {
+						background-position: 100% 50%;
 					}
 				}
 			}
