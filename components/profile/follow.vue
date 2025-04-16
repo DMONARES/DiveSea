@@ -28,7 +28,6 @@ const user = recommendStore.slides.find((item) => item);
 	max-width: 370px;
 	width: 100%;
 	margin-top: -120px;
-	margin-left: 50px;
 	padding-bottom: 40px;
 	border-bottom: 1px solid $lightGrey;
 	position: relative;
