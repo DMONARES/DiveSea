@@ -30,14 +30,19 @@ const handleInput = (event) => {
 		const numericValue = value.replace(/%/g, "");
 
 		if (/^\d*$/.test(numericValue)) {
-			const formattedValue = numericValue
-				? numericValue.endsWith("%")
-					? numericValue
-					: `${numericValue}%`
-				: "";
+			const number = parseInt(numericValue, 10);
 
-			inputValue.value = formattedValue;
-			emit("update:modelValue", formattedValue);
+			if (!isNaN(number) && number <= 20) {
+				const formattedValue = `${number}%`;
+				inputValue.value = formattedValue;
+				emit("update:modelValue", formattedValue);
+			} else if (numericValue === "") {
+				inputValue.value = "";
+				emit("update:modelValue", "");
+			} else {
+				event.preventDefault();
+				inputValue.value = props.modelValue;
+			}
 		} else {
 			event.preventDefault();
 			inputValue.value = props.modelValue;
@@ -211,7 +216,7 @@ $inputBg: #efefef;
 		}
 
 		&::after {
-			content: '';
+			content: "";
 			position: absolute;
 			bottom: 0;
 			left: 2%;

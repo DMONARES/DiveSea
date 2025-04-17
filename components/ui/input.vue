@@ -11,6 +11,8 @@ const props = defineProps({
 	disabled: { type: Boolean, default: false },
 	isPhone: { type: Boolean, default: false },
 	elementType: { type: String, default: "input" },
+	isSizeInput: { type: Boolean, default: false }, // новое
+	maxNumber: { type: Number, default: 500 }, // новое
 });
 
 const emit = defineEmits(["update:modelValue", "triggerIcon"]);
@@ -26,6 +28,84 @@ const updateValue = (value) => emit("update:modelValue", value);
 const slots = useSlots();
 const hasSlotContent =
 	slots.hasOwnProperty("default") && slots.default().length > 0;
+
+const internalValue = ref(props.modelValue);
+const showMaxError = ref(false);
+
+watch(
+	() => props.modelValue,
+	(val) => {
+		internalValue.value = val;
+	}
+);
+
+const formattedValue = computed({
+	get() {
+		if (!props.isSizeInput) return internalValue.value;
+		const digits = parseInt(internalValue.value, 10);
+		if (!digits) return "";
+		const clamped = Math.min(digits, props.maxNumber);
+		return `${clamped} x ${clamped}`;
+	},
+	set(val) {
+		if (!props.isSizeInput) {
+			internalValue.value = val;
+			updateValue(val);
+			return;
+		}
+
+		const digits = val.replace(/\D/g, "");
+		if (!digits) {
+			internalValue.value = "";
+			updateValue("");
+			showMaxError.value = false;
+			return;
+		}
+
+		const parsed = parseInt(digits, 10);
+		if (parsed > props.maxNumber) {
+			showMaxError.value = true;
+			internalValue.value = props.maxNumber.toString();
+			updateValue(props.maxNumber.toString());
+		} else {
+			showMaxError.value = false;
+			internalValue.value = parsed.toString();
+			updateValue(parsed.toString());
+		}
+	},
+});
+
+const showInvalidCharError = ref(false);
+let invalidCharTimer = null;
+
+const handleKeydown = (event) => {
+	if (props.isSizeInput) {
+		const allowedKeys = [
+			"Backspace",
+			"Delete",
+			"ArrowLeft",
+			"ArrowRight",
+			"Tab",
+			"Home",
+			"End",
+			"Enter",
+		];
+		const isDigit = /\d/.test(event.key);
+
+		if (!isDigit && !allowedKeys.includes(event.key)) {
+			event.preventDefault();
+
+			// Показать сообщение
+			showInvalidCharError.value = true;
+
+			// Скрыть через 2 секунды
+			clearTimeout(invalidCharTimer);
+			invalidCharTimer = setTimeout(() => {
+				showInvalidCharError.value = false;
+			}, 2000);
+		}
+	}
+};
 </script>
 
 <template>
@@ -49,13 +129,14 @@ const hasSlotContent =
 				class="ui-input__input"
 				ref="inputRef"
 				:type="elementType === 'input' ? type : undefined"
-				:value="modelValue"
+				:value="formattedValue"
 				:placeholder="placeholder"
 				:disabled="disabled"
 				@focus="focus = true"
 				@blur="focus = false"
-				@input="updateValue($event.target.value)"
-			></component>
+				@input="formattedValue = $event.target.value"
+				@keydown="handleKeydown"
+			/>
 
 			<!-- Phone -->
 			<input
@@ -84,6 +165,12 @@ const hasSlotContent =
 
 		<span v-if="errorText" class="ui-input__error-text">
 			{{ errorText }}
+		</span>
+		<span v-if="showMaxError" class="ui-input__error-text">
+			Максимум {{ maxNumber }}px
+		</span>
+		<span v-if="showInvalidCharError" class="ui-input__error-text">
+			Можно вводить только цифры
 		</span>
 	</div>
 </template>

@@ -128,14 +128,32 @@ const handleOutsideClick = (event) => {
 						class="ui-button__dropdown-checkbox"
 						v-if="multiSelect"
 					>
-						<input
-							type="checkbox"
-							:checked="
-								selectedOptions &&
-								selectedOptions.includes(option)
-							"
-							@click.stop
-						/>
+						<label class="custom-checkbox">
+							<input
+								type="checkbox"
+								:checked="
+									selectedOptions &&
+									selectedOptions.includes(option)
+								"
+								@click.stop
+							/>
+							<span class="checkmark">
+								<svg
+									class="checkmark-svg"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 16 16"
+									fill="none"
+								>
+									<path
+										d="M1 8L5 12L15 4"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							</span>
+						</label>
 					</span>
 					{{ option }}
 				</li>
@@ -184,8 +202,8 @@ const handleOutsideClick = (event) => {
 	}
 
 	&--active {
-		background-color: $lightGreen;
-		border-color: $lightGreen;
+		background-color: $lightPurple;
+		border-color: $lightPurple;
 		color: $black;
 	}
 
@@ -271,7 +289,7 @@ const handleOutsideClick = (event) => {
 		gap: 10px;
 
 		&:hover {
-			background-color: $lightGreen;
+			background-color: $lightPurple;
 		}
 
 		&:last-child {
@@ -280,8 +298,12 @@ const handleOutsideClick = (event) => {
 		}
 
 		&--active {
-			background-color: $lightGreen;
+			background-color: $purple;
 			font-weight: 500;
+
+			&:hover {
+				background-color: $purple;
+			}
 		}
 	}
 
@@ -289,6 +311,80 @@ const handleOutsideClick = (event) => {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+}
+.custom-checkbox {
+	position: relative;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+
+	input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+		position: absolute;
+	}
+
+	.checkmark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 20px;
+		width: 20px;
+		border: 2px solid #000;
+		border-radius: 50%;
+		background-color: transparent;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.checkmark-svg {
+			width: 12px;
+			height: 12px;
+			stroke: #000;
+			stroke-width: 2;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			fill: none;
+			opacity: 0;
+			stroke-dasharray: 16;
+			stroke-dashoffset: 16;
+			transition: opacity 0.2s ease-in-out;
+			animation: draw-check 0.3s ease forwards;
+			animation-play-state: paused;
+		}
+	}
+
+	input:checked + .checkmark .checkmark-svg {
+		opacity: 1;
+		animation-play-state: running;
+	}
+
+	input:not(:checked) + .checkmark .checkmark-svg {
+		opacity: 0;
+		animation: erase-check 0.3s ease forwards;
+	}
+}
+
+// Анимация прорисовки галочки
+@keyframes draw-check {
+	from {
+		stroke-dashoffset: 16;
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+// Анимация скрытия галочки
+@keyframes erase-check {
+	from {
+		stroke-dashoffset: 0;
+	}
+	to {
+		stroke-dashoffset: 16;
 	}
 }
 </style>

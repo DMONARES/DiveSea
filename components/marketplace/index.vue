@@ -194,7 +194,7 @@ onBeforeUnmount(() => {
 								'rotate-180': priceSortDirection === 'desc',
 							}"
 						/>
-						<IconsClose v-if="!priceSortDirection" />
+						<IconsClose v-if="!priceSortDirection" class="close" />
 					</UiButton>
 				</li>
 			</ul>
@@ -367,13 +367,17 @@ onBeforeUnmount(() => {
 	border-color: $lightGrey;
 
 	&:hover:not(:disabled) {
-		color: $lightGreen;
-		border-color: $lightGreen;
+		color: $lightPurple;
+		border-color: $lightPurple;
 	}
 
 	&:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
+}
+.close {
+	width: 16px;
+	height: 16px;
 }
 </style>
