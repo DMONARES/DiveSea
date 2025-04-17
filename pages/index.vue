@@ -2,14 +2,14 @@
 
 <template>
 	<main class="main">
-		<Hero />
-		<Recommend />
-		<Collection />
-		<Marketplace />
+		<!-- <Hero /> -->
+		<!-- <Recommend /> -->
+		 <!-- <Collection /> -->
+		<!-- <Marketplace /> -->
 		<Unleash />
-		<OrbitCommunity />
-		<Questions />
-		<Banner />
+		<!-- <OrbitCommunity /> -->
+		<!-- <Questions /> -->
+		<!--<Banner /> -->
 	</main>
 </template>
 

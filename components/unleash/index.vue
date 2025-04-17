@@ -1,10 +1,9 @@
 <script setup>
-import { useRecommendStore } from "~/stores/recommend";
+import { useProductsStore } from "~/stores/products";
 
 const swiperInstancerecommend = ref(null);
-const recommendStore = useRecommendStore();
+const productsStore = useProductsStore();
 
-const sales = recommendStore.sales;
 const followingStatus = ref({});
 
 const toggleFollow = (index) => {
@@ -12,64 +11,17 @@ const toggleFollow = (index) => {
 };
 
 const items = [
-	{
-		text: "Best Seller All Around World",
-	},
-	{
-		text: "$2M+ Transections Every Day",
-	},
-	{
-		text: "Secure Transactions",
-	},
-	{
-		text: "Exclusive Collections From Sellers",
-	},
-	{
-		text: "Easy Buying and Selling",
-	},
-	{
-		text: "Join Our Community",
-	},
+	{ text: "Best Seller All Around World" },
+	{ text: "$2M+ Transections Every Day" },
+	{ text: "Secure Transactions" },
+	{ text: "Exclusive Collections From Sellers" },
+	{ text: "Easy Buying and Selling" },
+	{ text: "Join Our Community" },
 ];
 
-const bestsellers = [
-	{
-		name: "Alex Ca.",
-		tag: "@Alexy",
-		count: 1,
-		img: "/img/mini/1.png",
-	},
-	{
-		name: "Juliya Sa.",
-		tag: "@JuliyaS",
-		count: 2,
-		img: "/img/mini/2.jpeg",
-	},
-	{
-		name: "Juliya Sa.",
-		tag: "@JuliyaS",
-		count: 2,
-		img: "/img/mini/1.png",
-	},
-	{
-		name: "Trevor Pu.",
-		tag: "@TrevorP",
-		count: 2,
-		img: "/img/mini/2.jpeg",
-	},
-	{
-		name: "Jailyn Cr.",
-		tag: "@TrevorP",
-		count: 3,
-		img: "/img/mini/1.png",
-	},
-	{
-		name: "Alex Ca.",
-		tag: "@Alexy",
-		count: 4,
-		img: "/img/mini/2.jpeg",
-	},
-];
+
+const bestsellers = computed(() => productsStore.products.slice(0, 6));
+const sales = computed(() => productsStore.products.slice(0, 2));
 </script>
 
 <template>
@@ -83,7 +35,7 @@ const bestsellers = [
 					<li
 						class="unleash__left-item"
 						v-for="(item, index) in items"
-						:key="'item - ' + index"
+						:key="'item-' + index"
 					>
 						<IconsCheckedList />
 						<p class="unleash__left-item-text">{{ item.text }}</p>
@@ -130,29 +82,30 @@ const bestsellers = [
 						<li
 							class="unleash__right-bestsellers-item"
 							v-for="(bestseller, index) in bestsellers"
-							:key="'bestseller - ' + index"
+							:key="'bestseller-' + index"
 						>
 							<div class="unleash__right-bestsellers-item-image">
 								<img
-									:src="bestseller.img"
+									:src="bestseller.miniImage"
 									alt=""
 									class="unleash__right-bestsellers-item-image"
 								/>
 								<span
 									class="unleash__right-bestsellers-item-counter"
-									>{{ bestseller.count }}</span
 								>
+									{{ index + 1 }}
+								</span>
 							</div>
 							<div class="unleash__right-bestsellers-item-user">
 								<div
 									class="unleash__right-bestsellers-item-user-name"
 								>
-									{{ bestseller.name }}
+									{{ bestseller.creatorName }}
 								</div>
 								<div
 									class="unleash__right-bestsellers-item-user-tag"
 								>
-									{{ bestseller.tag }}
+									@{{ bestseller.nickname }}
 								</div>
 							</div>
 							<button
@@ -180,17 +133,17 @@ const bestsellers = [
 						>
 							<div class="recent__left">
 								<div class="recent__img">
-									<img :src="sale.img" alt="" />
-									<span class="recent__img-counter">{{
-										sale.count
-									}}</span>
+									<img :src="sale.miniImage" alt="" />
+									<span class="recent__img-counter">
+										{{ index + 1 }}
+									</span>
 								</div>
 								<div class="recent__owner">
 									<div class="recent__name">
-										{{ sale.name }}
+										{{ sale.nftName }}
 									</div>
 									<div class="recent__nickname">
-										{{ sale.nickname }}
+										@{{ sale.nickname }}
 									</div>
 								</div>
 							</div>
@@ -200,7 +153,7 @@ const bestsellers = [
 									<div class="recent__price-top">
 										<IconsEthereum />
 										<div class="recent__price-cost">
-											{{ sale.cost }}
+											{{ sale.price }}
 										</div>
 									</div>
 									<div

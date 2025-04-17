@@ -1,16 +1,19 @@
 <script setup>
-import { useCollectionStore } from "~/stores/collection";
+import { useProductsStore } from "~/stores/products";
 
-const collectionStore = useCollectionStore();
-const recommendStore = useRecommendStore();
+const productsStore = useProductsStore();
 
-const titles = collectionStore.titles;
-const items = collectionStore.items;
-
-const userLinks = recommendStore.slides.find((item) => String(item.nickname));
+const titles = [
+	{ title: "Collection" },
+	{ title: "Volume" },
+	{ title: "24h %" },
+	{ title: "Floor Price" },
+	{ title: "Owners" },
+	{ title: "Items" },
+];
 
 const limitedItems = computed(() => {
-	return collectionStore.items.slice(0, 4);
+	return productsStore.products.slice(0, 4);
 });
 </script>
 
@@ -50,31 +53,32 @@ const limitedItems = computed(() => {
 							>
 								<div class="collection__table-item-user">
 									<nuxt-link
-										:to="`/profile/${userLinks.nickname}`"
+										:to="`/profile/${item.nickname}`"
 										class="collection__table-item-user-link"
 									>
 										<img
-											:src="item.img"
+											:src="item.miniImage"
 											alt=""
 											class="collection__table-item-user-img"
 										/>
 										<span
 											class="collection__table-item-user-count"
-											>{{ index + 1 }}</span
 										>
+											{{ index + 1 }}
+										</span>
 									</nuxt-link>
 									<div class="collection__table-item-user-wr">
 										<nuxt-link
-											:to="`/profile/${userLinks.nickname}`"
+											:to="`/profile/${item.nickname}`"
 										>
 											<div
 												class="collection__table-item-user-name"
 											>
-												{{ item.name }}
+												{{ item.creatorName }}
 											</div>
 										</nuxt-link>
 										<nuxt-link
-											:to="`/profile/${userLinks.nickname}`"
+											:to="`/profile/${item.nickname}`"
 											:data-text="item.nickname"
 											class="collection__table-item-user-nickname"
 										>
@@ -83,6 +87,7 @@ const limitedItems = computed(() => {
 									</div>
 								</div>
 							</td>
+
 							<td class="collection__table-item">
 								<div
 									class="collection__table-item-volume-container"
@@ -104,6 +109,7 @@ const limitedItems = computed(() => {
 									</div>
 								</div>
 							</td>
+
 							<td class="collection__table-item mobile-hidden">
 								<div
 									class="collection__table-item-sale"
@@ -117,17 +123,20 @@ const limitedItems = computed(() => {
 									{{ item.sale }}
 								</div>
 							</td>
+
 							<td class="collection__table-item mobile-hidden">
 								<div class="collection__table-item-price">
 									<IconsEthereum class="etherium" />
 									{{ item.price }}
 								</div>
 							</td>
+
 							<td class="collection__table-item mobile-hidden">
 								<div class="collection__table-item-owners">
 									{{ item.owners }}
 								</div>
 							</td>
+
 							<td class="collection__table-item mobile-hidden">
 								<div class="collection__table-item-items">
 									{{ item.items }}
@@ -137,6 +146,7 @@ const limitedItems = computed(() => {
 					</tbody>
 				</table>
 			</div>
+
 			<nuxt-link class="collection__more" to="/">
 				Explore All
 				<IconsArrowMore />

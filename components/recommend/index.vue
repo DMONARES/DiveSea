@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
-import { useRecommendStore } from "~/stores/recommend";
+import { useProductsStore } from "~/stores/products";
 const props = defineProps({
 	title: {
 		type: String,
@@ -17,12 +17,11 @@ const props = defineProps({
 });
 
 const swiperInstancerecommend = ref(null);
-const recommendStore = useRecommendStore();
-
-const slides = recommendStore.slides;
-const sales = recommendStore.sales;
+const productsStore = useProductsStore();
 
 onMounted(() => {
+	productsStore.init(); // инициализация, если используешь filteredProducts
+
 	if (swiperInstancerecommend.value) {
 		const swiper = swiperInstancerecommend.value;
 		swiper.navigation.init();
@@ -52,11 +51,11 @@ onMounted(() => {
 				@swiper="swiperInstancerecommend = $event"
 			>
 				<SwiperSlide
-					v-for="(slide, index) in slides"
+					v-for="(product, index) in productsStore.filteredProducts"
 					:key="'rec-' + index"
 					class="recommend__slide slider__slide slide"
 				>
-					<NftCard :card="slide" />
+					<NftCard :card="product" />
 				</SwiperSlide>
 			</Swiper>
 			<UiSwiperNav
@@ -65,27 +64,27 @@ onMounted(() => {
 			/>
 		</div>
 
-		<!-- Recent Viewed -->
+		<!-- Recent Viewed (оставим как есть, если не хочешь переделывать) -->
 		<div v-if="recent" class="recommend__recent recent">
 			<div class="recent__title">Recent Viewed</div>
 			<IconsOptions class="recent__options" />
 			<ul class="recent__list">
 				<li
 					class="recent__item"
-					v-for="(sale, index) in sales"
-					:key="index"
+					v-for="(sale, index) in productsStore.products.slice(0, 3)"
+					:key="'sale-' + index"
 				>
 					<div class="recent__left">
 						<div class="recent__img">
-							<img :src="sale.img" alt="" />
-							<span class="recent__img-counter">{{
-								sale.count
-							}}</span>
+							<img :src="sale.miniImage" alt="" />
+							<span class="recent__img-counter">
+								{{ index + 1 }}
+							</span>
 						</div>
 						<div class="recent__owner">
-							<div class="recent__name">{{ sale.name }}</div>
+							<div class="recent__name">{{ sale.ownerName }}</div>
 							<div class="recent__nickname">
-								{{ sale.nickname }}
+								@{{ sale.nickname }}
 							</div>
 						</div>
 					</div>
@@ -95,7 +94,7 @@ onMounted(() => {
 							<div class="recent__price-top">
 								<IconsEthereum />
 								<div class="recent__price-cost">
-									{{ sale.cost }}
+									{{ sale.price }}
 								</div>
 							</div>
 							<div

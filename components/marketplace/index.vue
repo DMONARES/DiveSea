@@ -1,9 +1,8 @@
 <script setup>
-import { useMarketplaceStore } from "~/stores/marketplace";
+import { useProductsStore } from "~/stores/products";
 import { useWindowSize } from "@vueuse/core";
-import { ref, computed, watchEffect, onMounted, onBeforeUnmount } from "vue";
 
-const marketplaceStore = useMarketplaceStore();
+const productsStore = useProductsStore();
 const { width: windowWidth } = useWindowSize();
 const cardWidth = 252;
 const priceSortDirection = ref(null);
@@ -24,7 +23,7 @@ const props = defineProps({
 });
 
 onMounted(() => {
-	marketplaceStore.init();
+	productsStore.init();
 });
 
 // Режим обычного отображения карточек (на главной странице)
@@ -48,12 +47,11 @@ watchEffect(() => {
 // Режим lazyLoading: начальное значение – 8 карточек
 const lazyCount = ref(8);
 
-// Вычисляем карточки для отображения – в обычном режиме используем cardCountLimit, в lazy режиме – lazyCount
 const visibleCards = computed(() => {
 	if (props.lazyLoading) {
-		return marketplaceStore.filteredCards.slice(0, lazyCount.value);
+		return productsStore.filteredProducts.slice(0, lazyCount.value);
 	} else {
-		return marketplaceStore.filteredCards.slice(0, cardCountLimit.value);
+		return productsStore.filteredProducts.slice(0, cardCountLimit.value);
 	}
 });
 
@@ -66,33 +64,33 @@ const togglePriceSort = () => {
 	} else {
 		priceSortDirection.value = null;
 	}
-	marketplaceStore.setPriceSort(priceSortDirection.value);
+	productsStore.setPriceSort(priceSortDirection.value);
 };
 
 const resetFilters = () => {
 	priceSortDirection.value = null;
-	marketplaceStore.resetFilters();
+	productsStore.resetFilters();
 };
 
 const toggleCategoryFilter = (category) => {
-	marketplaceStore.toggleCategoryFilter(category);
+	productsStore.toggleCategoryFilter(category);
 };
 
 const toggleCollectionFilter = (collection) => {
-	marketplaceStore.toggleCollectionFilter(collection);
+	productsStore.toggleCollectionFilter(collection);
 };
 
 const showAllItems = () => {
 	resetFilters();
 };
 
-// Если lazyLoading включен, реализуем подгрузку новых карточек
+// Lazy loading
 let observer = null;
 const loadMoreRef = ref(null);
 
 const loadMore = () => {
-	if (lazyCount.value < marketplaceStore.filteredCards.length) {
-		lazyCount.value += 8; // можно регулировать число подгружаемых карточек
+	if (lazyCount.value < productsStore.filteredProducts.length) {
+		lazyCount.value += 8;
 	}
 };
 
@@ -137,8 +135,7 @@ onBeforeUnmount(() => {
 						bgColor="#FFF"
 						fontColor="#141416"
 						:isActive="
-							marketplaceStore &&
-							!marketplaceStore.hasActiveFilters
+							productsStore && !productsStore.hasActiveFilters
 						"
 						@click="showAllItems"
 					>
@@ -147,11 +144,11 @@ onBeforeUnmount(() => {
 				</li>
 				<li>
 					<UiButton
-						v-if="marketplaceStore"
+						v-if="productsStore"
 						:transpatent="true"
 						:isFilter="true"
-						:options="marketplaceStore.categories"
-						:selectedOptions="marketplaceStore.selectedCategories"
+						:options="productsStore.categories"
+						:selectedOptions="productsStore.selectedCategories"
 						:multiSelect="true"
 						bgColor="#FFF"
 						fontColor="#141416"
@@ -163,11 +160,11 @@ onBeforeUnmount(() => {
 				</li>
 				<li>
 					<UiButton
-						v-if="marketplaceStore"
+						v-if="productsStore"
 						:transpatent="true"
 						:isFilter="true"
-						:options="marketplaceStore.collections"
-						:selectedOptions="marketplaceStore.selectedCollections"
+						:options="productsStore.collections"
+						:selectedOptions="productsStore.selectedCollections"
 						:multiSelect="true"
 						bgColor="#FFF"
 						fontColor="#141416"
@@ -179,7 +176,7 @@ onBeforeUnmount(() => {
 				</li>
 				<li>
 					<UiButton
-						v-if="marketplaceStore"
+						v-if="productsStore"
 						:transpatent="true"
 						bgColor="#FFF"
 						fontColor="#141416"
@@ -202,10 +199,17 @@ onBeforeUnmount(() => {
 		<div class="marketplace__content">
 			<NftCard
 				v-for="(card, index) in visibleCards"
-				:key="card.name + index || 'card - ' + index"
+				:key="card.nftName + index || 'card-' + index"
 				:card="card"
 			/>
 		</div>
+		<!-- Lazy loading placeholder (внизу страницы) -->
+		<div
+			v-if="lazyLoading"
+			ref="loadMoreRef"
+			class="marketplace__observer"
+		/>
+
 		<nuxt-link
 			class="marketplace__more"
 			to="/"
