@@ -18,11 +18,9 @@ const activeTab = ref(props.tabs[0]?.name || "");
 				:key="tab.name"
 				@click="activeTab = tab.name"
 				class="ui-tabs__header-title"
-				:class="[
-					activeTab === tab.name
-						? 'ui-tabs__header-title--active'
-						: 'ui-tabs__header-title',
-				]"
+				:class="{
+					'ui-tabs__header-title--active': activeTab === tab.name,
+				}"
 			>
 				<component :is="tab.icon" :is-active="activeTab === tab.name" />
 				{{ tab.label }}
@@ -39,7 +37,10 @@ const activeTab = ref(props.tabs[0]?.name || "");
 		</div>
 
 		<div class="ui-tabs__content">
-			<slot />
+			<!-- Используем v-for по tab.name и v-show -->
+			<template v-for="tab in tabs" :key="tab.name">
+				<slot :name="tab.name" v-if="$slots[tab.name] && activeTab === tab.name" />
+			</template>
 		</div>
 	</div>
 </template>

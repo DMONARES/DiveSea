@@ -39,7 +39,7 @@ defineProps({
 										Created by
 									</div>
 									<nuxt-link
-										to="/"
+										:to="`/profile/${product.nickname}`"
 										class="product-detail__content-info-user-name"
 									>
 										{{ product.creatorName }}
@@ -62,7 +62,7 @@ defineProps({
 										Owned by
 									</div>
 									<nuxt-link
-										to="/"
+										:to="`/profile/${product.nickname}`"
 										class="product-detail__content-info-user-name"
 									>
 										{{ product.ownerName }}

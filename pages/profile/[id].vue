@@ -1,26 +1,26 @@
 <script setup>
 import { useProductsStore } from "~/stores/products";
-import { useRoute } from "vue-router";
 
 const route = useRoute();
-const userUrl = route.params.nickname;
+const userUrl = computed(() => route.params.id || route.params.is);
 
 const productsStore = useProductsStore();
 
-const product = productsStore.products.find(
-	(item) => String(item.creatorName) === String(userUrl)
+// Фильтруем карточки по nickname
+const cards = computed(() =>
+	productsStore.products.filter(
+		(item) => String(item.nickname) === String(userUrl.value)
+	)
 );
-const cards = productsStore.filteredProducts; // Здесь можно использовать filteredProducts или products
 
 // Устанавливаем Title для страницы
-const title = route.params.nickname || route.path.split("/").pop();
+const title = computed(() => userUrl.value || route.path.split("/").pop());
 useHead(() => ({
-	title: "Профиль пользователя — " + title,
+	title: "Профиль пользователя — " + title.value,
 }));
 
 import IconsCollectionTab from "@/components/icons/collection-tab.vue";
 import IconsActivityTab from "@/components/icons/activity-tab.vue";
-
 const tabList = [
 	{ name: "collection", label: "Collection", icon: IconsCollectionTab },
 	{ name: "activity", label: "Activity", icon: IconsActivityTab },
@@ -32,19 +32,19 @@ const tabList = [
 		<ProfileBanner class="profile__banner" />
 		<div class="profile__content section">
 			<div class="profile__content-info">
-				<ProfileFollow />
+				<ProfileFollow :nickname="userUrl" />
 				<ProfileInfo />
 			</div>
 			<div class="profile__content-tabs">
 				<UiTabs :tabs="tabList">
-					<template #collection> </template>
-					<template #activity>
+					<template #collection>
 						<NftCard
 							v-for="(card, index) in cards"
 							:key="'card - ' + index"
 							:card="card"
 						/>
 					</template>
+					<template #activity> йцу </template>
 				</UiTabs>
 			</div>
 		</div>

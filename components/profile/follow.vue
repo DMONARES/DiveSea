@@ -1,9 +1,27 @@
 <script setup>
 import { useProductsStore } from "~/stores/products";
+import { computed } from "vue";
+
+const props = defineProps({
+	nickname: {
+		type: String,
+		default: "",
+	},
+});
 
 const productsStore = useProductsStore();
 
-const user = productsStore.products.find((item) => item);
+const user = computed(() => {
+	if (!props.nickname) {
+		return productsStore.products[0] || {};
+	}
+
+	const foundUser = productsStore.products.find(
+		(item) => String(item.nickname) === String(props.nickname)
+	);
+
+	return foundUser || productsStore.products[0] || {};
+});
 </script>
 
 <template>
