@@ -8,13 +8,13 @@ defineProps({
 </script>
 
 <template>
-	<nuxt-link :to="`/product/${card.id}`" class="slide__wr">
-		<div class="slide__image">
+	<div class="slide__wr">
+		<nuxt-link :to="`/product/${card.id}`" class="slide__image">
 			<img :src="card.img" alt="" class="slide__img" />
 			<div class="slide__timer">
 				{{ card.timer }}
 			</div>
-		</div>
+		</nuxt-link>
 		<div class="slide__title">{{ card.title }}</div>
 		<div class="slide__content">
 			<div class="slide__content-price">
@@ -28,7 +28,7 @@ defineProps({
 			</div>
 			<UiButton class="slide__content-button"> PLACE BID </UiButton>
 		</div>
-	</nuxt-link>
+	</div>
 </template>
 
 <style lang="scss" scoped>

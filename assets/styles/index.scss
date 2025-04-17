@@ -1,8 +1,9 @@
-@import url('@/assets/styles/base/_fonts.scss');
-@import url('@/assets/styles/base/_global.scss');
+@import url("@/assets/styles/base/_fonts.scss");
+@import url("@/assets/styles/base/_global.scss");
 
-*, *::after, *::before
-{
+*,
+*::after,
+*::before {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
@@ -11,44 +12,86 @@
 	color: $black;
 }
 
-body
-{
-	&:has(.huge-preloader) { overflow: hidden; }
+body {
+	&:has(.huge-preloader) {
+		overflow: hidden;
+	}
 }
 
-a { text-decoration: none; }
+a {
+	text-decoration: none;
+}
 
-.container
-{
+.container {
 	max-width: 1448px;
 	margin: 0 auto;
 	padding: 0 16px;
 
-	@include mq($tablet) { padding: 0 32px; }
+	@include mq($tablet) {
+		padding: 0 32px;
+	}
 }
 
 // transition -----------
 .v-enter-active,
-.v-leave-active { transition: opacity 0.2s ease; }
+.v-leave-active {
+	transition: opacity 0.2s ease;
+}
 
 .v-enter-from,
-.v-leave-to { opacity: 0; }
+.v-leave-to {
+	opacity: 0;
+}
 
 // toaster
-.v-toast { z-index: 999999!important; padding: 10px!important; }
+.v-toast {
+	z-index: 999999 !important;
+	padding: 10px !important;
+}
 
-.v-toast__item
-{
-	min-height: 0!important;
-	border-radius: 0!important;
+.v-toast__item {
+	min-height: 0 !important;
+	border-radius: 0 !important;
 	padding: 10px 20px;
 
-	.v-toast__icon { display: none!important; }
-	.v-toast__text
-	{
-		padding: 0!important;
-		color: $white!important;
+	.v-toast__icon {
+		display: none !important;
+	}
+	.v-toast__text {
+		padding: 0 !important;
+		color: $white !important;
 	}
 
-	&--error { background-color: $red!important; }
+	&--error {
+		background-color: $red !important;
+	}
+}
+
+::selection {
+	background-color: #000;
+	color: #fff;
+}
+
+/* толщина скроллбара */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* фон трека (дорожки) */
+::-webkit-scrollbar-track {
+	background: #f0f0f0;
+}
+
+/* сам бегунок */
+::-webkit-scrollbar-thumb {
+	background-color: #999;
+	border-radius: 10px;
+	border: 2px solid #f0f0f0;
+}
+html {
+	scroll-behavior: smooth;
+}
+* {
+	-webkit-tap-highlight-color: transparent;
+	transition: all 0.2s ease-in-out;
 }
