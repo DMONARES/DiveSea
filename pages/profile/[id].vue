@@ -1,16 +1,18 @@
 <script setup>
-import { useRecommendStore } from "~/stores/recommend";
+import { useProductsStore } from "~/stores/products";
+import { useRoute } from "vue-router";
 
 const route = useRoute();
 const userUrl = route.params.nickname;
 
-const recommendStore = useRecommendStore();
+const productsStore = useProductsStore();
 
-const product = recommendStore.slides.find(
-	(item) => String(item.nickname) === String(userUrl)
+const product = productsStore.products.find(
+	(item) => String(item.creatorName) === String(userUrl)
 );
-const cards = recommendStore.slides;
-//Устанавливаем Title для страницы
+const cards = productsStore.filteredProducts; // Здесь можно использовать filteredProducts или products
+
+// Устанавливаем Title для страницы
 const title = route.params.nickname || route.path.split("/").pop();
 useHead(() => ({
 	title: "Профиль пользователя — " + title,
@@ -34,10 +36,14 @@ const tabList = [
 				<ProfileInfo />
 			</div>
 			<div class="profile__content-tabs">
-				 <UiTabs :tabs="tabList">
+				<UiTabs :tabs="tabList">
 					<template #collection> </template>
 					<template #activity>
-						<NftCard v-for="(card, index) in cards" :key="'card - ' + index" :card="cards.card" />
+						<NftCard
+							v-for="(card, index) in cards"
+							:key="'card - ' + index"
+							:card="card"
+						/>
 					</template>
 				</UiTabs>
 			</div>

@@ -1,9 +1,9 @@
 <script setup>
-import { useRecommendStore } from "~/stores/recommend";
+import { useProductsStore } from "~/stores/products";
 
-const recommendStore = useRecommendStore();
+const productsStore = useProductsStore();
 
-const user = recommendStore.slides.find((item) => item);
+const user = productsStore.products.find((item) => item);
 </script>
 
 <template>

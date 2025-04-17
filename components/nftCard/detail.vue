@@ -9,15 +9,15 @@ defineProps({
 		<section class="product-detail">
 			<div class="product-detail__wrapper">
 				<div class="product-detail__img">
-					<img :src="product.img" alt="" />
+					<img :src="product.nftImage" alt="" />
 				</div>
 				<div class="product-detail__content">
 					<div class="product-detail__content-head">
 						<h1 class="product-detail__content-head-title">
-							{{ product.title }}
+							{{ product.nftName }}
 						</h1>
 						<p class="product-detail__content-head-description">
-							{{ product.description }}
+							{{ product.nftDescription }}
 						</p>
 					</div>
 					<div class="product-detail__content-info">
