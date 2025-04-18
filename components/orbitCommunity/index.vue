@@ -507,7 +507,6 @@ onUnmounted(() => {
 			position: relative;
 			width: 180px;
 			background: rgba(20, 20, 30, 0.85);
-			backdrop-filter: blur(5px);
 			border-radius: 12px;
 			padding: 15px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);

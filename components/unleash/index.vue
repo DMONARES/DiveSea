@@ -52,7 +52,7 @@ const sales = computed(() => productsStore.products.slice(0, 2));
 						<IconsDot />
 						<div class="unleash__right-mini-check-image">
 							<img
-								src="/img/mini/1.webp"
+								src="/img/owners/1.webp"
 								alt="NFT"
 								loading="lazy"
 							/>
@@ -73,7 +73,7 @@ const sales = computed(() => productsStore.products.slice(0, 2));
 						</div>
 					</div>
 					<div class="unleash__right-mini-image">
-						<img src="/img/nfts/1.webp" alt="NFT" loading="lazy" />
+						<img src="/img/nfts/5.webp" alt="NFT" loading="lazy" />
 					</div>
 				</div>
 
@@ -89,7 +89,7 @@ const sales = computed(() => productsStore.products.slice(0, 2));
 						>
 							<div class="unleash__right-bestsellers-item-image">
 								<img
-									:src="bestseller.miniImage"
+									:src="bestseller.ownerAva"
 									:alt="bestseller.nftName"
 									class="unleash__right-bestsellers-item-image"
 									loading="lazy"
@@ -442,9 +442,17 @@ const sales = computed(() => productsStore.products.slice(0, 2));
 				}
 			}
 			&-image {
-				max-width: 60px;
-				max-height: 60px;
+				width: 60px;
+				height: 60px;
 				margin-left: 5px;
+				overflow: hidden;
+				border-radius: 8px;
+
+				img {
+					width: 60px;
+					height: 60px;
+					object-fit: cover;
+				}
 			}
 		}
 		&-bestsellers {

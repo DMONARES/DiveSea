@@ -422,7 +422,4 @@ onMounted(() => {
 		object-fit: cover;
 	}
 }
-:deep(.swiper-slide-active) .slide__img {
-	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
 </style>
