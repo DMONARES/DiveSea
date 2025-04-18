@@ -7,7 +7,7 @@
 	{
 		width: 100%;
 		height: 100%;
-		background: $lightgrey;
+		background: $lightGrey;
 		animation: skeleton-loading 1.5s infinite ease;
 	}
 

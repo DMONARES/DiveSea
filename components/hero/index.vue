@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
-import { useHeroStore } from '~/stores/heroSlides';
+import { useHeroStore } from "~/stores/heroSlides";
 
 const heroStore = useHeroStore();
 
@@ -13,18 +13,18 @@ const infoList = heroStore.infoList;
 
 const swiperInstance = ref(null);
 
-
-
 onMounted(() => {
-	if (swiperInstance.value) {
-		const swiper = swiperInstance.value;
-		swiper.navigation.init();
-		swiper.navigation.update();
+	nextTick(() => {
+		if (swiperInstance.value) {
+			const swiper = swiperInstance.value;
+			swiper.navigation.init();
+			swiper.navigation.update();
 
-		window.addEventListener("resize", () => {
-			swiper.update();
-		});
-	}
+			window.addEventListener("resize", () => {
+				swiper.update();
+			});
+		}
+	});
 });
 </script>
 
@@ -113,7 +113,12 @@ onMounted(() => {
 						:key="index"
 						class="slide"
 					>
-						<img :src="slide" class="slide__img" alt="NFT Image" loading="lazy" />
+						<img
+							:src="slide"
+							class="slide__img"
+							alt="NFT Image"
+							loading="lazy"
+						/>
 					</SwiperSlide>
 				</Swiper>
 				<UiSwiperNav class="slider__navigation" />
@@ -416,10 +421,15 @@ onMounted(() => {
 	}
 
 	&__img {
+		min-height: 400px;
 		width: 100%;
 		height: auto;
 		border-radius: 25px;
 		object-fit: cover;
+
+		@media (max-width: 1200px) {
+			min-height: 280px;
+		}
 	}
 }
 </style>
