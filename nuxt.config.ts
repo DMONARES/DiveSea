@@ -1,13 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	compatibilityDate: '2024-11-01',
+	compatibilityDate: "2024-11-01",
 	devtools: { enabled: true },
 
-	modules: [
-		'@pinia/nuxt',
-		'@nuxtjs/tailwindcss',
-		"@nuxtjs/color-mode",
-	],
+	modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss", "@nuxtjs/color-mode"],
 
 	colorMode: {
 		classSuffix: "",
@@ -33,17 +29,30 @@ export default defineNuxtConfig({
 	// },
 
 	// css base configuration
-	css: ['@/assets/styles/index.scss'],
+	css: ["@/assets/styles/index.scss"],
 
 	vite: {
 		css: {
 			preprocessorOptions: {
 				scss: {
-					api: 'modern',
-					silenceDeprecations: ['import', 'global-builtin', 'legacy-js-api'],
+					api: "modern",
+					silenceDeprecations: [
+						"import",
+						"global-builtin",
+						"legacy-js-api",
+					],
 					additionalData: `@use "@/assets/styles/base/_variables.scss" as *;  @use "@/assets/styles/base/_mixins.scss" as *;`,
 				},
 			},
 		},
+		build: {
+			minify: "terser",
+			terserOptions: {
+				compress: {
+					drop_console: true,
+					drop_debugger: true,
+				},
+			},
+		},
 	},
-})
+});
