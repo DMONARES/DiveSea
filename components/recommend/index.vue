@@ -76,7 +76,7 @@ onMounted(() => {
 				>
 					<div class="recent__left">
 						<div class="recent__img">
-							<img :src="sale.miniImage" alt="" />
+							<img :src="sale.miniImage" :alt="sale.nftName" loading="lazy" />
 							<span class="recent__img-counter">
 								{{ index + 1 }}
 							</span>

@@ -10,7 +10,7 @@ defineProps({
 <template>
 	<div class="slide__wr">
 		<nuxt-link :to="`/product/${card.id}`" class="slide__image">
-			<img :src="card.nftImage" alt="" class="slide__img" />
+			<img :src="card.nftImage" :alt="card.nftName" class="slide__img" loading="lazy" />
 			<div class="slide__timer">
 				{{ card.timer }}
 			</div>

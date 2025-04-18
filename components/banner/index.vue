@@ -27,7 +27,7 @@
 		</div>
 		<div class="banner__image-container">
 			<div class="banner__image">
-				<img src="/img/large/1.png" alt="" />
+				<img src="/img/large/1.webp" alt="NFT" loading="lazy" />
 			</div>
 		</div>
 	</div>
@@ -152,7 +152,7 @@
 			content: "";
 			position: absolute;
 			inset: 0;
-			background-image: url("/img/large/1.png");
+			background-image: url("/img/large/1.webp");
 			background-size: cover;
 			background-position: center;
 			border-radius: 20px;

@@ -9,7 +9,11 @@ defineProps({
 		<section class="product-detail">
 			<div class="product-detail__wrapper">
 				<div class="product-detail__img">
-					<img :src="product.nftImage" alt="" />
+					<img
+						:src="product.nftImage"
+						:alt="product.nftName"
+						loading="lazy"
+					/>
 				</div>
 				<div class="product-detail__content">
 					<div class="product-detail__content-head">
@@ -28,7 +32,11 @@ defineProps({
 								<div
 									class="product-detail__content-info-user-img"
 								>
-									<img :src="product.creatorAva" alt="" />
+									<img
+										:src="product.creatorAva"
+										:alt="product.creatorName"
+										loading="lazy"
+									/>
 								</div>
 								<div
 									class="product-detail__content-info-user-info"
@@ -51,7 +59,11 @@ defineProps({
 								<div
 									class="product-detail__content-info-user-img"
 								>
-									<img :src="product.ownerAva" alt="" />
+									<img
+										:src="product.ownerAva"
+										:alt="product.ownerName"
+										loading="lazy"
+									/>
 								</div>
 								<div
 									class="product-detail__content-info-user-info"
@@ -262,6 +274,21 @@ defineProps({
 					width: 65px;
 					height: 65px;
 					border-radius: 50%;
+
+					img {
+						width: 65px;
+						height: 65px;
+						border-radius: 50%;
+
+						@media (max-width: 1200px) {
+							width: 47px;
+							height: 47px;
+						}
+						@media (max-width: 950px) {
+							width: 33px;
+							height: 33px;
+						}
+					}
 
 					@media (max-width: 1200px) {
 						width: 47px;

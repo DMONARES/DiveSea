@@ -19,7 +19,6 @@ const items = [
 	{ text: "Join Our Community" },
 ];
 
-
 const bestsellers = computed(() => productsStore.products.slice(0, 6));
 const sales = computed(() => productsStore.products.slice(0, 2));
 </script>
@@ -52,7 +51,11 @@ const sales = computed(() => productsStore.products.slice(0, 2));
 					<div class="unleash__right-mini-check">
 						<IconsDot />
 						<div class="unleash__right-mini-check-image">
-							<img src="/img/mini/1.png" alt="" />
+							<img
+								src="/img/mini/1.webp"
+								alt="NFT"
+								loading="lazy"
+							/>
 							<IconsVerified
 								class="unleash__right-mini-check-image-icon"
 							/>
@@ -70,7 +73,7 @@ const sales = computed(() => productsStore.products.slice(0, 2));
 						</div>
 					</div>
 					<div class="unleash__right-mini-image">
-						<img src="/img/nfts/1.png" alt="" />
+						<img src="/img/nfts/1.webp" alt="NFT" loading="lazy" />
 					</div>
 				</div>
 
@@ -87,8 +90,9 @@ const sales = computed(() => productsStore.products.slice(0, 2));
 							<div class="unleash__right-bestsellers-item-image">
 								<img
 									:src="bestseller.miniImage"
-									alt=""
+									:alt="bestseller.nftName"
 									class="unleash__right-bestsellers-item-image"
+									loading="lazy"
 								/>
 								<span
 									class="unleash__right-bestsellers-item-counter"
@@ -133,7 +137,11 @@ const sales = computed(() => productsStore.products.slice(0, 2));
 						>
 							<div class="recent__left">
 								<div class="recent__img">
-									<img :src="sale.miniImage" alt="" />
+									<img
+										:src="sale.miniImage"
+										:alt="sale.nftName"
+										loading="lazy"
+									/>
 									<span class="recent__img-counter">
 										{{ index + 1 }}
 									</span>

@@ -15,7 +15,7 @@ const windowWidth = ref(0);
 const planetsMini = [
 	{
 		id: 1,
-		img: "/img/planets/1.png",
+		img: "/img/planets/1.webp",
 		angle: miniPlanetAngles[0],
 		name: "Cosmic Voyager",
 		price: "0.45 ETH",
@@ -23,7 +23,7 @@ const planetsMini = [
 	},
 	{
 		id: 2,
-		img: "/img/planets/2.png",
+		img: "/img/planets/2.webp",
 		angle: miniPlanetAngles[1],
 		name: "Nebula Dream",
 		price: "0.32 ETH",
@@ -31,7 +31,7 @@ const planetsMini = [
 	},
 	{
 		id: 3,
-		img: "/img/planets/3.png",
+		img: "/img/planets/3.webp",
 		angle: miniPlanetAngles[2],
 		name: "Quantum Realm",
 		price: "0.56 ETH",
@@ -39,7 +39,7 @@ const planetsMini = [
 	},
 	{
 		id: 4,
-		img: "/img/planets/4.png",
+		img: "/img/planets/4.webp",
 		angle: miniPlanetAngles[3],
 		name: "Celestial Harmony",
 		price: "0.41 ETH",
@@ -50,7 +50,7 @@ const planetsMini = [
 const planetsLarge = [
 	{
 		id: 5,
-		img: "/img/planets/5.png",
+		img: "/img/planets/5.webp",
 		angle: largePlanetAngles[0],
 		name: "Galactic Guardian",
 		price: "0.78 ETH",
@@ -58,7 +58,7 @@ const planetsLarge = [
 	},
 	{
 		id: 6,
-		img: "/img/planets/6.png",
+		img: "/img/planets/6.webp",
 		angle: largePlanetAngles[1],
 		name: "Astral Projection",
 		price: "0.63 ETH",
@@ -66,7 +66,7 @@ const planetsLarge = [
 	},
 	{
 		id: 7,
-		img: "/img/planets/7.png",
+		img: "/img/planets/7.webp",
 		angle: largePlanetAngles[2],
 		name: "Interstellar Voyage",
 		price: "0.89 ETH",
@@ -74,7 +74,7 @@ const planetsLarge = [
 	},
 	{
 		id: 8,
-		img: "/img/planets/8.png",
+		img: "/img/planets/8.webp",
 		angle: largePlanetAngles[3],
 		name: "Cosmic Artifact",
 		price: "0.52 ETH",
@@ -220,7 +220,11 @@ onUnmounted(() => {
 							:to="`#nft-${planet.id}`"
 							class="orbit__planet-link"
 						>
-							<img :src="planet.img" alt="planet" />
+							<img
+								:src="planet.img"
+								alt="planet"
+								loading="lazy"
+							/>
 						</nuxt-link>
 					</div>
 				</div>
@@ -248,7 +252,11 @@ onUnmounted(() => {
 							:to="`#nft-${planet.id}`"
 							class="orbit__planet-link"
 						>
-							<img :src="planet.img" alt="planet" />
+							<img
+								:src="planet.img"
+								alt="planet"
+								loading="lazy"
+							/>
 						</nuxt-link>
 					</div>
 				</div>
@@ -443,8 +451,21 @@ onUnmounted(() => {
 			cursor: pointer;
 			width: 40px;
 			height: 40px;
+			object-fit: contain;
+			border-radius: 50%;
 			position: relative;
 			z-index: 21;
+
+			img {
+				display: block;
+				cursor: pointer;
+				width: 40px;
+				height: 40px;
+				object-fit: contain;
+				border-radius: 50%;
+				position: relative;
+				z-index: 21;
+			}
 
 			@media (max-width: 850px) {
 				width: 30px;

@@ -58,8 +58,9 @@ const limitedItems = computed(() => {
 									>
 										<img
 											:src="item.miniImage"
-											alt=""
+											:alt="item.nftName"
 											class="collection__table-item-user-img"
+											loading="lazy"
 										/>
 										<span
 											class="collection__table-item-user-count"

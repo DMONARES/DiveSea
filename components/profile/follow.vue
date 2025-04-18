@@ -26,7 +26,12 @@ const user = computed(() => {
 
 <template>
 	<div class="profile-follow">
-		<img :src="user.ownerAva" alt="" class="profile-follow__image" />
+		<img
+			:src="user.ownerAva"
+			:alt="user.ownerName"
+			class="profile-follow__image"
+			loading="lazy"
+		/>
 		<div class="profile-follow__content">
 			<div class="profile-follow__content-user">
 				<div class="profile-follow__content-user-name">

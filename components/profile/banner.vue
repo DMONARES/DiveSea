@@ -8,7 +8,7 @@ const product = productsStore.products.find((item) => item.poster);
 
 <template>
 	<div class="profile-banner">
-		<img :src="product.poster" alt="" />
+		<img :src="product.poster" :alt="product.nftName" loading="lazy" />
 	</div>
 </template>
 

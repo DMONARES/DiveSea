@@ -113,7 +113,7 @@ onMounted(() => {
 						:key="index"
 						class="slide"
 					>
-						<img :src="slide" class="slide__img" alt="NFT Image" />
+						<img :src="slide" class="slide__img" alt="NFT Image" loading="lazy" />
 					</SwiperSlide>
 				</Swiper>
 				<UiSwiperNav class="slider__navigation" />
