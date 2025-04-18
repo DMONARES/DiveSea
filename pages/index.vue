@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+useHead(() => ({
+	title: "DeveSea — NFT Marketplace",
+}));
+</script>
 
 <template>
 	<main class="main">

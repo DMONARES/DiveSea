@@ -16,7 +16,7 @@ const cards = computed(() =>
 // Устанавливаем Title для страницы
 const title = computed(() => userUrl.value || route.path.split("/").pop());
 useHead(() => ({
-	title: "Профиль пользователя — " + title.value,
+	title: "DeveSea — User — " + title.value,
 }));
 
 import IconsCollectionTab from "@/components/icons/collection-tab.vue";

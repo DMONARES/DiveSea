@@ -14,7 +14,7 @@ const product = productsStore.products.find(
 
 // Устанавливаем Title для страницы
 useHead(() => ({
-	title: product ? `NFT — ${product.nftName}` : "NFT — Not Found",
+	title: product ? `DeveSea — NFT — ${product.nftName}` : "NFT — Not Found",
 }));
 </script>
 
