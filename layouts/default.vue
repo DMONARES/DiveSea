@@ -33,7 +33,7 @@ const scrollToTop = () => {
 <template>
 	<div class="default-layout">
 		<Header />
-		<main>
+		<main class="main">
 			<slot />
 		</main>
 		<Footer />
@@ -53,6 +53,16 @@ const scrollToTop = () => {
 </template>
 
 <style lang="scss">
+.default-layout {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.main {
+	flex: 1 0 auto;
+}
+
 .scroll-top {
 	position: fixed;
 	bottom: 20px;

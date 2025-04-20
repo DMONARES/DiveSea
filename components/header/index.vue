@@ -9,15 +9,15 @@ const navLinks = [
 	},
 	{
 		name: "Creators",
-		link: "/",
+		link: "/creators",
 	},
 	{
 		name: "Sell",
-		link: "/",
+		link: "/sell",
 	},
 	{
 		name: "Stats",
-		link: "/",
+		link: "/stats",
 	},
 ];
 
