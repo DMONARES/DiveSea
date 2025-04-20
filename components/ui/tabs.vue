@@ -39,7 +39,10 @@ const activeTab = ref(props.tabs[0]?.name || "");
 		<div class="ui-tabs__content">
 			<!-- Используем v-for по tab.name и v-show -->
 			<template v-for="tab in tabs" :key="tab.name">
-				<slot :name="tab.name" v-if="$slots[tab.name] && activeTab === tab.name" />
+				<slot
+					:name="tab.name"
+					v-if="$slots[tab.name] && activeTab === tab.name"
+				/>
 			</template>
 		</div>
 	</div>
@@ -81,6 +84,17 @@ const activeTab = ref(props.tabs[0]?.name || "");
 	&__content {
 		margin-top: 85px;
 		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		justify-items: anchor-center;
+		gap: 30px;
+
+		@media (max-width: 1600px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media (max-width: 950px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
 	}
 }
 </style>

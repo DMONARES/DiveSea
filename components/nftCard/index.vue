@@ -10,7 +10,12 @@ defineProps({
 <template>
 	<div class="slide__wr">
 		<nuxt-link :to="`/product/${card.id}`" class="slide__image">
-			<img :src="card.nftImage" :alt="card.nftName" class="slide__img" loading="lazy" />
+			<img
+				:src="card.nftImage"
+				:alt="card.nftName"
+				class="slide__img"
+				loading="lazy"
+			/>
 			<div class="slide__timer">
 				{{ card.timer }}
 			</div>
@@ -45,6 +50,12 @@ defineProps({
 		background-color: $white;
 		border-radius: 23.48px;
 		box-shadow: 38.82px 11.76px 58.81px 0px rgba(199, 199, 199, 0.6);
+
+		@media (max-width: 1200px) {
+			max-width: 200px;
+			padding: 10px;
+			gap: 12px;
+		}
 	}
 	&__image {
 		width: 253px;
@@ -52,6 +63,11 @@ defineProps({
 		position: relative;
 		overflow: hidden;
 		border-radius: 23.48px;
+
+		@media (max-width: 1200px) {
+			width: 180px;
+			height: 180px;
+		}
 	}
 	&__img {
 		width: 100%;
@@ -73,12 +89,22 @@ defineProps({
 		font-weight: 500;
 		line-height: 150%;
 		letter-spacing: 0.12px;
+
+		@media (max-width: 1200px) {
+			top: 8px;
+			right: 8px;
+			font-size: 10.07px;
+		}
 	}
 	&__title {
 		font-size: 21.17px;
 		font-weight: 600;
 		line-height: 140%;
 		color: $black;
+
+		@media (max-width: 1200px) {
+			font-size: 15.11px;
+		}
 	}
 	&__content {
 		width: 100%;
@@ -92,6 +118,11 @@ defineProps({
 		font-weight: 400;
 		line-height: 150%;
 		letter-spacing: 0.12px;
+
+		@media (max-width: 1200px) {
+			font-size: 10.07px;
+			letter-spacing: 0.08px;
+		}
 	}
 	&__content-cost {
 		display: flex;
@@ -103,6 +134,10 @@ defineProps({
 		font-weight: 500;
 		line-height: 150%;
 		color: $black;
+
+		@media (max-width: 1200px) {
+			font-size: 11.75px;
+		}
 	}
 }
 </style>

@@ -86,9 +86,7 @@ const links = [
 	gap: 30px;
 
 	@media (max-width: 1200px) {
-		max-width: 260px;
 		margin-top: 30px;
-		gap: 80px;
 	}
 
 	&__statistic {
@@ -189,8 +187,6 @@ const links = [
 		display: flex;
 		align-items: center;
 		gap: 65px;
-		&-item {
-		}
 	}
 }
 </style>

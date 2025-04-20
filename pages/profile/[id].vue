@@ -39,10 +39,12 @@ const tabList = [
 				<UiTabs :tabs="tabList">
 					<template #collection>
 						<NftCard
+							v-if="cards.length"
 							v-for="(card, index) in cards"
 							:key="'card - ' + index"
 							:card="card"
 						/>
+						<div class="profile__content-tabs--empty" v-else>This user doesn't have any NFTs in their collection yet</div>
 					</template>
 					<template #activity> йцу </template>
 				</UiTabs>
@@ -59,11 +61,32 @@ const tabList = [
 		gap: 30px;
 		width: 100%;
 
+		@media (max-width: 950px) {
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
 		&-info {
-			width: 100%;
+			display: flex;
+			flex-direction: column;
+			width: calc(50% + 100px);
+
+			@media (max-width: 950px) {
+				width: 100%;
+				align-items: center;
+				justify-content: center;
+			}
 		}
 		&-tabs {
 			width: 100%;
+
+			&--empty {
+				width: 100%;
+				grid-column: span 2;
+				font-size: 24px;
+				font-weight: 700;
+			}
 		}
 	}
 }
@@ -76,7 +99,6 @@ const tabList = [
 	}
 
 	@media (max-width: 850px) {
-		margin-left: 20px;
 		padding: 0 30px;
 	}
 }

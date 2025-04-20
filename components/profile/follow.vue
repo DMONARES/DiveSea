@@ -70,6 +70,11 @@ const user = computed(() => {
 		border-radius: 50%;
 		border: 5px solid $white;
 		overflow: hidden;
+
+		@media (max-width: 1200px) {
+			width: 100px;
+			height: 100px;
+		}
 	}
 	&__content {
 		width: 100%;

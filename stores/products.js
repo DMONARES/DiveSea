@@ -11,7 +11,7 @@ export const useProductsStore = defineStore("products", {
 				creatorName: "Perperzon",
 				ownerAva: "/img/owners/1.webp",
 				ownerName: "Videz",
-				nickname: "asdasd",
+				nickname: "perperzon",
 				nftName: "Sun-Glass",
 				nftDescription:
 					"A collection of 10,000 utility-enabled PFPs that feature a richly diverse and unique pool of rarity-powered traits.",
@@ -76,7 +76,7 @@ export const useProductsStore = defineStore("products", {
 				creatorAva: "/img/creators/7.webp",
 				creatorName: "Cryopixel",
 				ownerAva: "/img/owners/4.webp",
-				ownerName: "MintX",
+				ownerName: "cryopixel",
 				nickname: "cryox",
 				nftName: "Pixel Hunter",
 				nftDescription:
@@ -98,7 +98,7 @@ export const useProductsStore = defineStore("products", {
 				creatorAva: "/img/creators/2.webp",
 				creatorName: "BeatleArt",
 				ownerAva: "/img/owners/5.webp",
-				ownerName: "Harmony",
+				ownerName: "beatle.art",
 				nickname: "beatle_art",
 				nftName: "Color Storm",
 				nftDescription:
@@ -165,7 +165,7 @@ export const useProductsStore = defineStore("products", {
 				creatorName: "LoopLord",
 				ownerAva: "/img/owners/8.webp",
 				ownerName: "DeeBass",
-				nickname: "loop_lord",
+				nickname: "loop.lord",
 				nftName: "Bass Beast",
 				nftDescription:
 					"Sound-powered beasts forged in the digital underground.",
