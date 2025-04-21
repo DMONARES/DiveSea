@@ -1,0 +1,187 @@
+<template>
+	<div
+		class="crypto-input"
+		:class="{
+			'crypto-input--active': cryptoValue,
+			'crypto-input--error': false,
+			'crypto-input--focused': isFocused,
+		}"
+	>
+		<div
+			class="crypto-input__wrapper"
+			@focusin="isFocused = true"
+			@focusout="isFocused = false"
+			@mouseenter="isHovered = true"
+			@mouseleave="isHovered = false"
+		>
+			<div class="crypto-input__select-wrapper">
+				<select
+					v-model="selectedCurrency"
+					class="crypto-input__select"
+					@change="updateUsdValue"
+				>
+					<option
+						v-for="currency in currencies"
+						:key="currency"
+						:value="currency"
+					>
+						{{ currency }}
+					</option>
+				</select>
+			</div>
+			<div class="crypto-input__divider"></div>
+			<div class="crypto-input__field-wrapper">
+				<input
+					type="number"
+					v-model="cryptoValue"
+					class="crypto-input__field"
+					@input="updateUsdValue"
+					placeholder="0.00"
+				/>
+			</div>
+		</div>
+		<p class="crypto-input__usd-value">~{{ animatedUsdValue }} USD</p>
+	</div>
+</template>
+
+<script setup>
+const currencyStore = useCurrencyStore();
+const currencies = ["ETH", "BTC", "SOL"];
+const selectedCurrency = ref("ETH");
+const cryptoValue = ref("");
+const usdValue = ref(0);
+const animatedUsdValue = ref(0);
+let animationFrame = 1;
+const isFocused = ref(false);
+const isHovered = ref(false);
+
+onMounted(() => {
+	currencyStore.fetchRates();
+});
+
+const animateUsdValue = (start, end) => {
+	const duration = 1000;
+	const startTime = performance.now();
+
+	const step = (currentTime) => {
+		const elapsed = currentTime - startTime;
+		const progress = Math.min(elapsed / duration, 1);
+		animatedUsdValue.value = (start + (end - start) * progress).toFixed(2);
+
+		if (progress < 1) {
+			animationFrame = requestAnimationFrame(step);
+		}
+	};
+
+	cancelAnimationFrame(animationFrame);
+	requestAnimationFrame(step);
+};
+
+const updateUsdValue = () => {
+	if (!cryptoValue.value || isNaN(cryptoValue.value)) {
+		animateUsdValue(Number(animatedUsdValue.value), 0);
+		usdValue.value = 0;
+		return;
+	}
+
+	const rate = currencyStore.getRate(selectedCurrency.value);
+	const newUsd = cryptoValue.value * rate;
+	usdValue.value = newUsd.toFixed(2);
+	animateUsdValue(Number(animatedUsdValue.value), newUsd);
+};
+
+watch(() => selectedCurrency.value, updateUsdValue);
+watch(() => cryptoValue.value, updateUsdValue);
+</script>
+
+<style lang="scss" scoped>
+.crypto-input {
+	width: 100%;
+	max-width: 400px;
+	font-family: "Inter", sans-serif;
+
+	&__wrapper {
+		display: flex;
+		width: 100%;
+		border: 1px solid transparent;
+		border-radius: 8px;
+		overflow: hidden;
+		transition: border-color 0.2s ease;
+	}
+
+	&__select-wrapper,
+	&__field-wrapper {
+		display: flex;
+		align-items: center;
+		background-color: #f9fafb;
+	}
+
+	&__select {
+		flex: 0 0 90px;
+		padding: 12px 16px;
+		border: none;
+		background: none;
+		color: #111827;
+		font-size: 16px;
+		font-weight: 500;
+		appearance: none;
+		background-image: url("data:image/svg+xml,%3csvg ... %3e");
+		background-repeat: no-repeat;
+		background-position: right 12px center;
+		background-size: 16px;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&__divider {
+		width: 1px;
+		height: 80%;
+		align-self: center;
+		background-color: #000;
+	}
+
+	&__field {
+		flex: 1;
+		padding: 12px 16px;
+		border: none;
+		background: none;
+		color: #111827;
+		font-size: 16px;
+		font-weight: 500;
+
+		&:focus {
+			outline: none;
+		}
+
+		&::placeholder {
+			color: #9ca3af;
+		}
+	}
+
+	&__usd-value {
+		margin-top: 8px;
+		font-size: 14px;
+		color: #6b7280;
+	}
+
+	&--focused,
+	&:hover {
+		.crypto-input__wrapper {
+			border-color: #000;
+			background-color: #fff;
+		}
+	}
+
+	&--error {
+		.crypto-input__wrapper {
+			border-color: #ef4444;
+		}
+
+		.crypto-input__usd-value {
+			color: #ef4444;
+		}
+	}
+}
+</style>

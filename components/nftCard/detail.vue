@@ -2,6 +2,8 @@
 defineProps({
 	product: Object,
 });
+
+const isOpen = ref(false);
 </script>
 
 <template>
@@ -115,13 +117,18 @@ defineProps({
 							</div>
 						</div>
 						<!-- button -->
-						<UiButton class="product-detail__content-info-button">
+						<UiButton class="product-detail__content-info-button" @click="isOpen = true">
 							<IconsWallet />
 							Place Bid
 						</UiButton>
 					</div>
 				</div>
 			</div>
+			<UiPopup v-if="isOpen" :isOpen="isOpen" @close="isOpen = false">
+				<UiInput/>
+				<UiCryptoInput/>
+				<UiButton>qwe</UiButton>
+			</UiPopup>
 		</section>
 	</client-only>
 </template>
