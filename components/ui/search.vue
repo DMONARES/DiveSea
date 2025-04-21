@@ -1,6 +1,7 @@
 <script setup>
 import { useProductsStore } from "@/stores/products";
 import { useRouter } from "vue-router";
+import { onMounted, onUnmounted } from "vue";
 
 const props = defineProps({
 	modelValue: { type: String, required: true },
@@ -13,7 +14,10 @@ const emit = defineEmits(["update:modelValue", "triggerIcon"]);
 
 const focus = ref(false);
 const inputRef = ref(null);
-const suggestions = ref([]);
+const suggestionsRef = ref(null);
+const productSuggestions = ref([]);
+const userSuggestions = ref([]);
+const showSuggestions = ref(false);
 const store = useProductsStore();
 const router = useRouter();
 
@@ -23,13 +27,162 @@ const focusInput = () => {
 
 const updateValue = (value) => {
 	emit("update:modelValue", value);
-	suggestions.value = store.searchProducts(value).slice(0, 5); // Ограничиваем до 5 предложений
+
+	if (value.trim()) {
+		// Поиск товаров
+		productSuggestions.value = store.searchProducts(value).slice(0, 3);
+
+		// Поиск пользователей
+		// Извлекаем уникальных пользователей из продуктов
+		const allProducts = store.getAllProducts
+			? store.getAllProducts()
+			: store.products || [];
+		const users = new Map();
+		const searchLower = value.toLowerCase();
+
+		// Создаем набор уже добавленных имен пользователей для избежания дубликатов
+		const addedUserNames = new Set();
+
+		allProducts.forEach((product) => {
+			// Проверяем nickname на верхнем уровне
+			if (
+				product.nickname &&
+				product.nickname.toLowerCase().includes(searchLower)
+			) {
+				const userName = product.creatorName || product.ownerName;
+				if (!addedUserNames.has(userName)) {
+					addedUserNames.add(userName);
+					users.set(product.nickname, {
+						id: product.id,
+						name: userName,
+						nickname: product.nickname,
+						avatar: product.creatorAva || product.ownerAva,
+					});
+				}
+			}
+
+			// Проверяем имя создателя
+			if (
+				product.creatorName &&
+				product.creatorName.toLowerCase().includes(searchLower)
+			) {
+				if (!addedUserNames.has(product.creatorName)) {
+					addedUserNames.add(product.creatorName);
+					const userId =
+						product.creatorId || `creator-${product.creatorName}`;
+					users.set(userId, {
+						id: userId,
+						name: product.creatorName,
+						nickname:
+							product.creatorNickname ||
+							product.nickname ||
+							product.creatorName
+								.replace(/\s+/g, "")
+								.toLowerCase(),
+						avatar: product.creatorAva,
+					});
+				}
+			}
+
+			// Проверяем имя владельца
+			if (
+				product.ownerName &&
+				product.ownerName.toLowerCase().includes(searchLower)
+			) {
+				if (!addedUserNames.has(product.ownerName)) {
+					addedUserNames.add(product.ownerName);
+					const userId =
+						product.ownerId || `owner-${product.ownerName}`;
+					users.set(userId, {
+						id: userId,
+						name: product.ownerName,
+						nickname:
+							product.ownerNickname ||
+							product.nickname ||
+							product.ownerName.replace(/\s+/g, "").toLowerCase(),
+						avatar: product.ownerAva,
+					});
+				}
+			}
+		});
+
+		userSuggestions.value = Array.from(users.values()).slice(0, 3);
+
+		// Показываем список, если есть запрос (даже если результаты пустые)
+		showSuggestions.value = true;
+	} else {
+		productSuggestions.value = [];
+		userSuggestions.value = [];
+		showSuggestions.value = false;
+	}
+};
+const selectProductSuggestion = (product) => {
+	showSuggestions.value = false;
+	productSuggestions.value = [];
+	userSuggestions.value = [];
+	router.push(`/product/${product.id}`);
 };
 
-const selectSuggestion = (suggestion) => {
-	suggestions.value = [];
-	router.push(`/product/${suggestion.id}`);
+const selectUserSuggestion = (user) => {
+	showSuggestions.value = false;
+	productSuggestions.value = [];
+	userSuggestions.value = [];
+	router.push(`/profile/${user.id}`);
 };
+
+// Обработка нажатия Enter для перехода по первой ссылке
+const handleKeyDown = (event) => {
+	if (event.key === "Enter" && showSuggestions.value) {
+		event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+		// Проверяем, есть ли результаты поиска
+		if (productSuggestions.value.length > 0) {
+			// Если есть товары, переходим к первому товару
+			selectProductSuggestion(productSuggestions.value[0]);
+		} else if (userSuggestions.value.length > 0) {
+			// Если нет товаров, но есть пользователи, переходим к первому пользователю
+			selectUserSuggestion(userSuggestions.value[0]);
+		}
+	}
+};
+
+// Закрытие списка при клике вне элемента
+const handleClickOutside = (event) => {
+	if (
+		inputRef.value &&
+		!inputRef.value.contains(event.target) &&
+		suggestionsRef.value &&
+		!suggestionsRef.value.contains(event.target)
+	) {
+		showSuggestions.value = false;
+	}
+};
+
+// Показать список при фокусе, если есть предложения
+const handleFocus = () => {
+	focus.value = true;
+	if (
+		productSuggestions.value.length > 0 ||
+		userSuggestions.value.length > 0
+	) {
+		showSuggestions.value = true;
+	}
+};
+
+// Проверка наличия результатов поиска
+const hasResults = computed(() => {
+	return (
+		productSuggestions.value.length > 0 || userSuggestions.value.length > 0
+	);
+});
+
+onMounted(() => {
+	document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+	document.removeEventListener("click", handleClickOutside);
+});
 </script>
 
 <template>
@@ -54,32 +207,96 @@ const selectSuggestion = (suggestion) => {
 				type="search"
 				:value="modelValue"
 				:placeholder="placeholder"
-				@focus="focus = true"
+				@focus="handleFocus"
 				@blur="focus = false"
 				@input="updateValue($event.target.value)"
+				@keydown="handleKeyDown"
 			/>
 		</div>
 
-		<ul v-if="suggestions.length" class="ui-search__suggestions">
-			<li
-				v-for="(suggestion, index) in suggestions"
-				:key="index"
-				class="ui-search__suggestion"
-				@click="selectSuggestion(suggestion)"
+		<transition name="fade">
+			<div
+				v-if="showSuggestions && (hasResults || modelValue)"
+				class="ui-search__suggestions-container"
+				ref="suggestionsRef"
 			>
-				<div class="ui-search__suggestion-image">
-					<img :src="suggestion.nftImage" alt="NFT Image" />
+				<!-- Товары -->
+				<div
+					v-if="productSuggestions.length > 0"
+					class="ui-search__category"
+				>
+					<h3 class="ui-search__category-title">NFT</h3>
+					<ul class="ui-search__suggestions">
+						<li
+							v-for="(product, index) in productSuggestions"
+							:key="`product-${index}`"
+							class="ui-search__suggestion"
+							@click="selectProductSuggestion(product)"
+						>
+							<div class="ui-search__suggestion-image">
+								<img :src="product.nftImage" alt="NFT Image" />
+							</div>
+							<div class="ui-search__suggestion-text">
+								<span class="ui-search__suggestion-name">
+									{{ product.nftName }}
+								</span>
+								<span class="ui-search__suggestion-owner">
+									by {{ product.ownerName }}
+								</span>
+							</div>
+						</li>
+					</ul>
 				</div>
-				<div class="ui-search__suggestion-text">
-					<span class="ui-search__suggestion-name">
-						{{ suggestion.nftName }}
-					</span>
-					<span class="ui-search__suggestion-owner">
-						by {{ suggestion.ownerName }}
-					</span>
+
+				<!-- Пользователи -->
+				<div
+					v-if="userSuggestions.length > 0"
+					class="ui-search__category"
+				>
+					<h3 class="ui-search__category-title">Users</h3>
+					<ul class="ui-search__suggestions">
+						<li
+							v-for="(user, index) in userSuggestions"
+							:key="`user-${index}`"
+							class="ui-search__suggestion"
+							@click="selectUserSuggestion(user)"
+						>
+							<div
+								class="ui-search__suggestion-image ui-search__suggestion-image--user"
+							>
+								<img
+									v-if="user.avatar"
+									:src="user.avatar"
+									alt="User Avatar"
+								/>
+								<div
+									v-else
+									class="ui-search__suggestion-image-placeholder"
+								>
+									{{ user.name.charAt(0) }}
+								</div>
+							</div>
+							<div class="ui-search__suggestion-text">
+								<span class="ui-search__suggestion-name">
+									{{ user.name }}
+								</span>
+								<span class="ui-search__suggestion-owner">
+									@{{ user.nickname }}
+								</span>
+							</div>
+						</li>
+					</ul>
 				</div>
-			</li>
-		</ul>
+
+				<!-- Сообщение, если ничего не найдено -->
+				<div
+					v-if="modelValue && !hasResults"
+					class="ui-search__no-results"
+				>
+					No results found for "{{ modelValue }}"
+				</div>
+			</div>
+		</transition>
 
 		<span v-if="errorText" class="ui-search__error-text">
 			{{ errorText }}
@@ -91,24 +308,37 @@ const selectSuggestion = (suggestion) => {
 $placeholder: #9596a6;
 $inputBg: #efefef;
 $suggestionHoverBg: #f9f9f9;
+$categoryBg: rgba(240, 240, 240, 0.5);
+
+// Анимация появления и исчезновения
+.fade-enter-active,
+.fade-leave-active {
+	transition: all 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
+	transform: translateY(-10px);
+}
 
 .ui-search {
 	width: 350px;
 	max-height: 57px;
+	position: relative;
 
 	@media (max-width: 1200px) {
 		width: 250px;
 		max-height: 40px;
 	}
 	&.active {
-		&__input {
+		.ui-search__input {
 			border-color: $black;
 			background-color: transparent;
 		}
 	}
 
 	&.error {
-		&__input {
+		.ui-search__input {
 			border-color: $red;
 		}
 	}
@@ -181,65 +411,132 @@ $suggestionHoverBg: #f9f9f9;
 		}
 	}
 
-	&__suggestions {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		background: white;
-		border: 1px solid #ccc;
-		border-radius: 5px;
+	&__suggestions-container {
+		margin: 5px 0 0;
+		background: rgba(255, 255, 255, 0.8); // Акриловый эффект
+		backdrop-filter: blur(10px); // Размытие для акрилового эффекта
+		-webkit-backdrop-filter: blur(10px); // Для Safari
+		border: 1px solid rgba(204, 204, 204, 0.5);
+		border-radius: 11px;
 		position: absolute;
 		max-width: 350px;
 		width: 100%;
 		z-index: 10;
-		max-height: 200px;
+		max-height: 400px;
 		overflow-y: auto;
+		overflow-x: hidden;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+	}
+
+	&__category {
+		padding: 0 0 5px;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid rgba(204, 204, 204, 0.3);
+		}
+	}
+
+	&__category-title {
+		margin: 0;
+		padding: 10px 15px;
+		font-size: 14px;
+		font-weight: 600;
+		color: $black;
+		background-color: $categoryBg;
+		border-radius: 11px 11px 0 0;
+	}
+
+	&__suggestions {
+		list-style: none;
+		margin: 0;
+		padding: 0;
 	}
 
 	&__suggestion {
 		display: flex;
 		align-items: center;
-		padding: 10px;
+		padding: 12px 15px;
 		cursor: pointer;
-		transition: background-color 0.3s ease;
+		transition: all 0.2s ease;
+		border-bottom: 1px solid rgba(204, 204, 204, 0.3);
+
+		&:last-child {
+			border-bottom: none;
+		}
 
 		&:hover {
-			background-color: $suggestionHoverBg;
+			background-color: rgba(249, 249, 249, 0.8);
+			transform: translateX(5px);
 		}
 
 		&-image {
-			width: 40px;
-			height: 40px;
-			border-radius: 5px;
-			object-fit: cover;
-			margin-right: 10px;
+			width: 45px;
+			height: 45px;
+			border-radius: 8px;
+			overflow: hidden;
+			margin-right: 15px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #e0e0e0;
+
+			&--user {
+				border-radius: 50%; // Круглая аватарка для пользователей
+			}
 
 			img {
-				width: 100%; /* Убедитесь, что изображение занимает весь контейнер */
-				height: 100%; /* Убедитесь, что изображение занимает весь контейнер */
-				object-fit: cover; /* Сохраняет пропорции изображения */
-				max-width: 40px; /* Ограничение максимальной ширины */
-				max-height: 40px; /* Ограничение максимальной высоты */
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.3s ease;
 			}
+
+			&-placeholder {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 20px;
+				font-weight: bold;
+				color: white;
+				background-color: #6c5ce7;
+				text-transform: uppercase;
+			}
+		}
+
+		&:hover &-image img &:hover &-image img {
+			transform: scale(1.05);
 		}
 
 		&-text {
 			display: flex;
 			flex-direction: column;
+			flex: 1;
+		}
 
-			&-name {
-				font-weight: bold;
-				font-size: 14px;
-				color: $black;
-			}
+		&-name {
+			font-weight: 600;
+			font-size: 14px;
+			color: $black;
+			margin-bottom: 3px;
+		}
 
-			&-owner {
-				font-size: 12px;
-				color: $placeholder;
-			}
+		&-owner {
+			font-size: 12px;
+			color: $placeholder;
 		}
 	}
+
+	&__no-results {
+		padding: 15px;
+		text-align: center;
+		color: $placeholder;
+		font-size: 14px;
+	}
 }
+
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
