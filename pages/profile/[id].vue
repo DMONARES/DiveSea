@@ -13,7 +13,24 @@ const cards = computed(() =>
 	)
 );
 
-const active = productsStore.preducts;
+// Фильтруем активность по nickname
+const userActivity = computed(() =>
+	productsStore.filteredProducts.filter(
+		(item) => String(item.nickname) === String(userUrl.value)
+	)
+);
+
+// Получаем уникальные статусы для фильтра Sales (из всех карточек)
+const statusOptions = computed(() => {
+	const statuses = productsStore.products.map((item) => item.status);
+	return [...new Set(statuses)].filter(Boolean);
+});
+
+// Получаем уникальные блокчейны для фильтра Chains (из всех карточек)
+const chainOptions = computed(() => {
+	const chains = productsStore.products.map((item) => item.chain);
+	return [...new Set(chains)].filter(Boolean);
+});
 
 // Устанавливаем Title для страницы
 const title = computed(() => userUrl.value || route.path.split("/").pop());
@@ -44,17 +61,21 @@ const resetFilters = () => {
 	productsStore.resetFilters();
 };
 
-const toggleCategoryFilter = (category) => {
-	productsStore.toggleCategoryFilter(category);
+const toggleStatusFilter = (status) => {
+	productsStore.toggleStatusFilter(status, userUrl.value);
 };
 
-const toggleCollectionFilter = (collection) => {
-	productsStore.toggleCollectionFilter(collection);
+const toggleChainFilter = (chain) => {
+	productsStore.toggleChainFilter(chain, userUrl.value);
 };
 
 const showAllItems = () => {
 	resetFilters();
 };
+
+onMounted(() => {
+	productsStore.initUserProducts(userUrl.value);
+});
 </script>
 
 <template>
@@ -83,42 +104,44 @@ const showAllItems = () => {
 						<div class="profile__content-activity">
 							<div class="profile__content-activity-filters">
 								<UiButton
-									v-if="productsStore"
 									:transpatent="true"
 									:isFilter="true"
-									:options="productsStore.categories"
+									:options="statusOptions"
 									:selectedOptions="
-										productsStore.selectedCategories
+										productsStore.selectedStatuses
 									"
 									:multiSelect="true"
 									bgColor="#FFF"
 									fontColor="#141416"
-									@toggle="toggleCategoryFilter"
+									@toggle="toggleStatusFilter"
 								>
 									<IconsCard />
 									Sales
 								</UiButton>
 								<UiButton
-									v-if="productsStore"
 									:transpatent="true"
 									:isFilter="true"
-									:options="productsStore.categories"
+									:options="chainOptions"
 									:selectedOptions="
-										productsStore.selectedCategories
+										productsStore.selectedChains
 									"
 									:multiSelect="true"
 									bgColor="#FFF"
 									fontColor="#141416"
-									@toggle="toggleCategoryFilter"
+									@toggle="toggleChainFilter"
 								>
 									<IconsChain />
 									All Chains
-									<IconsArrow/>
+									<IconsArrow />
 								</UiButton>
 							</div>
 							<ul class="profile__content-activity-list">
-								<li class="profile__content-activity-item" v-for="(item, index) in active" :key="'item - ' + index">
-									<NftCardActive/>
+								<li
+									class="profile__content-activity-item"
+									v-for="(item, index) in userActivity"
+									:key="'item - ' + index"
+								>
+									<NftCardActive :item="item" />
 								</li>
 							</ul>
 						</div>
@@ -162,6 +185,28 @@ const showAllItems = () => {
 				grid-column: span 2;
 				font-size: 24px;
 				font-weight: 700;
+			}
+		}
+
+		&-activity {
+			width: 100%;
+			grid-column: span 2;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 60px;
+
+			&-filters {
+				display: flex;
+				align-items: center;
+				gap: 30px;
+			}
+
+			&-list {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 40px;
 			}
 		}
 	}

@@ -20,7 +20,7 @@ const swiperInstancerecommend = ref(null);
 const productsStore = useProductsStore();
 
 onMounted(() => {
-	productsStore.init(); // инициализация, если используешь filteredProducts
+	productsStore.init();
 
 	if (swiperInstancerecommend.value) {
 		const swiper = swiperInstancerecommend.value;
@@ -64,7 +64,6 @@ onMounted(() => {
 			/>
 		</div>
 
-		<!-- Recent Viewed (оставим как есть, если не хочешь переделывать) -->
 		<div v-if="recent" class="recommend__recent recent">
 			<div class="recent__title">Recent Viewed</div>
 			<IconsOptions class="recent__options" />

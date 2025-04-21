@@ -3,7 +3,7 @@ export const useProductsStore = defineStore("products", {
 		products: [
 			{
 				id: "3",
-				timer: "07h 09m 12s",
+				timer: "2025-04-21T18:30:00Z",
 				nftImage: "/img/nfts/1.webp",
 				miniImage: "/img/mini/1.webp",
 				poster: "/img/posters/1.webp",
@@ -21,11 +21,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "8,456",
 				sale: "+23.00%",
 				owners: "2.2K",
+				status: "sale",
+				quantity: 10,
+				chain: "ethereum",
 				items: "500",
 			},
 			{
 				id: "4",
-				timer: "04h 22m 52s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/2.webp",
 				miniImage: "/img/mini/2.webp",
 				poster: "/img/posters/1.webp",
@@ -43,11 +46,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "5,327",
 				sale: "-32.01%",
 				owners: "3.4K",
+				status: "purchase",
+				quantity: 10,
+				chain: "zksync",
 				items: "900",
 			},
 			{
 				id: "5",
-				timer: "10h 15m 30s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/3.webp",
 				miniImage: "/img/mini/3.webp",
 				poster: "/img/posters/1.webp",
@@ -65,11 +71,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "6,980",
 				sale: "+12.45%",
 				owners: "1.9K",
+				status: "listing",
+				quantity: 10,
+				chain: "solana",
 				items: "420",
 			},
 			{
 				id: "6",
-				timer: "02h 44m 10s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/4.webp",
 				miniImage: "/img/mini/4.webp",
 				poster: "/img/posters/1.webp",
@@ -87,11 +96,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "3,102",
 				sale: "-15.80%",
 				owners: "1.2K",
+				status: "bid",
+				quantity: 10,
+				chain: "solana",
 				items: "300",
 			},
 			{
 				id: "7",
-				timer: "11h 09m 44s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/5.webp",
 				miniImage: "/img/mini/5.webp",
 				poster: "/img/posters/1.webp",
@@ -109,11 +121,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "4,562",
 				sale: "+8.30%",
 				owners: "1.7K",
+				status: "transfer",
+				quantity: 10,
+				chain: "ethereum",
 				items: "600",
 			},
 			{
 				id: "8",
-				timer: "01h 33m 18s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/1.webp",
 				miniImage: "/img/mini/2.webp",
 				poster: "/img/posters/1.webp",
@@ -131,11 +146,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "7,220",
 				sale: "+19.70%",
 				owners: "2.9K",
+				status: "mint",
+				quantity: 10,
+				chain: "optimism",
 				items: "750",
 			},
 			{
 				id: "9",
-				timer: "06h 17m 50s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/2.webp",
 				miniImage: "/img/mini/1.webp",
 				poster: "/img/posters/1.webp",
@@ -153,11 +171,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "3,540",
 				sale: "+3.00%",
 				owners: "1.4K",
+				status: "cancel",
+				quantity: 10,
+				chain: "arbitrum",
 				items: "390",
 			},
 			{
 				id: "10",
-				timer: "08h 58m 40s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/3.webp",
 				miniImage: "/img/mini/2.webp",
 				poster: "/img/posters/1.webp",
@@ -175,11 +196,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "2,804",
 				sale: "-10.50%",
 				owners: "950",
+				status: "purchase",
+				quantity: 10,
+				chain: "bnb",
 				items: "200",
 			},
 			{
 				id: "11",
-				timer: "03h 27m 21s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/4.webp",
 				miniImage: "/img/mini/1.webp",
 				poster: "/img/posters/1.webp",
@@ -197,11 +221,14 @@ export const useProductsStore = defineStore("products", {
 				volume: "4,124",
 				sale: "+6.80%",
 				owners: "1.1K",
+				status: "listing",
+				quantity: 10,
+				chain: "polygon",
 				items: "510",
 			},
 			{
 				id: "12",
-				timer: "05h 05m 15s",
+				timer: "2025-04-25T18:30:00Z",
 				nftImage: "/img/nfts/5.webp",
 				miniImage: "/img/mini/2.webp",
 				poster: "/img/posters/1.webp",
@@ -219,6 +246,9 @@ export const useProductsStore = defineStore("products", {
 				volume: "6,113",
 				sale: "+17.10%",
 				owners: "2.3K",
+				status: "sale",
+				quantity: 10,
+				chain: "ethereum",
 				items: "470",
 			},
 		],
@@ -226,6 +256,8 @@ export const useProductsStore = defineStore("products", {
 		collections: ["BAYC", "CryptoPunks", "Azuki"],
 		selectedCategories: [],
 		selectedCollections: [],
+		selectedStatuses: [],
+		selectedChains: [],
 		priceSort: null,
 		filteredProducts: [],
 	}),
@@ -235,8 +267,37 @@ export const useProductsStore = defineStore("products", {
 			return (
 				this.selectedCategories.length > 0 ||
 				this.selectedCollections.length > 0 ||
+				this.selectedStatuses.length > 0 ||
+				this.selectedChains.length > 0 ||
 				this.priceSort !== null
 			);
+		},
+
+		getCountdown: (state) => {
+			return (timer) => {
+				const now = Date.now();
+				const end = new Date(timer).getTime();
+				let diff = end - now;
+
+				if (diff <= 0) return "00h:00m:00s";
+
+				const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+				diff %= 1000 * 60 * 60 * 24;
+
+				const hours = Math.floor(diff / (1000 * 60 * 60));
+				diff %= 1000 * 60 * 60;
+
+				const minutes = Math.floor(diff / (1000 * 60));
+				diff %= 1000 * 60;
+
+				const seconds = Math.floor(diff / 1000);
+
+				const pad = (n) => n.toString().padStart(2, "0");
+
+				return days > 0
+					? `${days}d:${pad(hours)}h:${pad(minutes)}m`
+					: `${pad(hours)}h:${pad(minutes)}m:${pad(seconds)}s`;
+			};
 		},
 	},
 
@@ -261,6 +322,44 @@ export const useProductsStore = defineStore("products", {
 			this.applyFilters();
 		},
 
+		toggleStatusFilter(status, userUrl) {
+			const userProducts = this.products.filter(
+				(product) => String(product.nickname) === String(userUrl)
+			);
+
+			const index = this.selectedStatuses.indexOf(status);
+			if (index === -1) {
+				this.selectedStatuses.push(status);
+			} else {
+				this.selectedStatuses.splice(index, 1);
+			}
+
+			this.filteredProducts = userProducts.filter((product) =>
+				this.selectedStatuses.length > 0
+					? this.selectedStatuses.includes(product.status)
+					: true
+			);
+		},
+
+		toggleChainFilter(chain, userUrl) {
+			const userProducts = this.products.filter(
+				(product) => String(product.nickname) === String(userUrl)
+			);
+
+			const index = this.selectedChains.indexOf(chain);
+			if (index === -1) {
+				this.selectedChains.push(chain);
+			} else {
+				this.selectedChains.splice(index, 1);
+			}
+
+			this.filteredProducts = userProducts.filter((product) =>
+				this.selectedChains.length > 0
+					? this.selectedChains.includes(product.chain)
+					: true
+			);
+		},
+
 		setPriceSort(order) {
 			this.priceSort = order;
 			this.applyFilters();
@@ -281,6 +380,18 @@ export const useProductsStore = defineStore("products", {
 				);
 			}
 
+			if (this.selectedStatuses.length > 0) {
+				result = result.filter((product) =>
+					this.selectedStatuses.includes(product.status)
+				);
+			}
+
+			if (this.selectedChains.length > 0) {
+				result = result.filter((product) =>
+					this.selectedChains.includes(product.chain)
+				);
+			}
+
 			if (this.priceSort) {
 				result.sort((a, b) =>
 					this.priceSort === "asc"
@@ -295,12 +406,20 @@ export const useProductsStore = defineStore("products", {
 		resetFilters() {
 			this.selectedCategories = [];
 			this.selectedCollections = [];
+			this.selectedStatuses = [];
+			this.selectedChains = [];
 			this.priceSort = null;
 			this.applyFilters();
 		},
 
 		init() {
 			this.filteredProducts = [...this.products];
+		},
+
+		initUserProducts(userUrl) {
+			this.filteredProducts = this.products.filter(
+				(product) => String(product.nickname) === String(userUrl)
+			);
 		},
 	},
 });

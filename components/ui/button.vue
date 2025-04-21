@@ -223,6 +223,7 @@ const handleOutsideClick = (event) => {
 	}
 
 	&--filter {
+		min-width: 200px;
 		position: relative;
 	}
 
@@ -271,12 +272,20 @@ const handleOutsideClick = (event) => {
 	z-index: 10;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	max-height: 200px;
-	overflow-y: auto;
+	overflow: hidden;
 
 	&-list {
 		list-style: none;
 		padding: 0;
 		margin: 0;
+		overflow-y: auto; /* Включаем прокрутку */
+		max-height: 200px; /* Ограничиваем высоту списка */
+		scrollbar-width: none; /* Скрываем полосу прокрутки в Firefox */
+		-ms-overflow-style: none; /* Скрываем полосу прокрутки в IE и Edge */
+
+		&::-webkit-scrollbar {
+			display: none; /* Скрываем полосу прокрутки в WebKit-браузерах */
+		}
 	}
 
 	&-item {
@@ -386,5 +395,8 @@ const handleOutsideClick = (event) => {
 	to {
 		stroke-dashoffset: 16;
 	}
+}
+.ui-button__dropdown-list::-webkit-scrollbar {
+	display: none; /* Скрывает scrollbar в WebKit-браузерах */
 }
 </style>
