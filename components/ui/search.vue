@@ -1,4 +1,7 @@
 <script setup>
+import { useProductsStore } from "@/stores/products";
+import { useRouter } from "vue-router";
+
 const props = defineProps({
 	modelValue: { type: String, required: true },
 	placeholder: { type: String, default: "" },
@@ -10,11 +13,23 @@ const emit = defineEmits(["update:modelValue", "triggerIcon"]);
 
 const focus = ref(false);
 const inputRef = ref(null);
+const suggestions = ref([]);
+const store = useProductsStore();
+const router = useRouter();
 
 const focusInput = () => {
 	if (inputRef.value) inputRef.value.focus();
 };
-const updateValue = (value) => emit("update:modelValue", value);
+
+const updateValue = (value) => {
+	emit("update:modelValue", value);
+	suggestions.value = store.searchProducts(value).slice(0, 5); // Ограничиваем до 5 предложений
+};
+
+const selectSuggestion = (suggestion) => {
+	suggestions.value = [];
+	router.push(`/product/${suggestion.id}`);
+};
 </script>
 
 <template>
@@ -45,6 +60,27 @@ const updateValue = (value) => emit("update:modelValue", value);
 			/>
 		</div>
 
+		<ul v-if="suggestions.length" class="ui-search__suggestions">
+			<li
+				v-for="(suggestion, index) in suggestions"
+				:key="index"
+				class="ui-search__suggestion"
+				@click="selectSuggestion(suggestion)"
+			>
+				<div class="ui-search__suggestion-image">
+					<img :src="suggestion.nftImage" alt="NFT Image" />
+				</div>
+				<div class="ui-search__suggestion-text">
+					<span class="ui-search__suggestion-name">
+						{{ suggestion.nftName }}
+					</span>
+					<span class="ui-search__suggestion-owner">
+						by {{ suggestion.ownerName }}
+					</span>
+				</div>
+			</li>
+		</ul>
+
 		<span v-if="errorText" class="ui-search__error-text">
 			{{ errorText }}
 		</span>
@@ -54,6 +90,8 @@ const updateValue = (value) => emit("update:modelValue", value);
 <style lang="scss">
 $placeholder: #9596a6;
 $inputBg: #efefef;
+$suggestionHoverBg: #f9f9f9;
+
 .ui-search {
 	width: 350px;
 	max-height: 57px;
@@ -139,6 +177,65 @@ $inputBg: #efefef;
 			@media (max-width: 1200px) {
 				width: 15px;
 				height: 15px;
+			}
+		}
+	}
+
+	&__suggestions {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		background: white;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		position: absolute;
+		max-width: 350px;
+		width: 100%;
+		z-index: 10;
+		max-height: 200px;
+		overflow-y: auto;
+	}
+
+	&__suggestion {
+		display: flex;
+		align-items: center;
+		padding: 10px;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+
+		&:hover {
+			background-color: $suggestionHoverBg;
+		}
+
+		&-image {
+			width: 40px;
+			height: 40px;
+			border-radius: 5px;
+			object-fit: cover;
+			margin-right: 10px;
+
+			img {
+				width: 100%; /* Убедитесь, что изображение занимает весь контейнер */
+				height: 100%; /* Убедитесь, что изображение занимает весь контейнер */
+				object-fit: cover; /* Сохраняет пропорции изображения */
+				max-width: 40px; /* Ограничение максимальной ширины */
+				max-height: 40px; /* Ограничение максимальной высоты */
+			}
+		}
+
+		&-text {
+			display: flex;
+			flex-direction: column;
+
+			&-name {
+				font-weight: bold;
+				font-size: 14px;
+				color: $black;
+			}
+
+			&-owner {
+				font-size: 12px;
+				color: $placeholder;
 			}
 		}
 	}

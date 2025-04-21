@@ -421,5 +421,16 @@ export const useProductsStore = defineStore("products", {
 				(product) => String(product.nickname) === String(userUrl)
 			);
 		},
+
+		searchProducts(query) {
+			if (!query) return [];
+			const lowerQuery = query.toLowerCase();
+			return this.products.filter(
+				(product) =>
+					product.nftName.toLowerCase().includes(lowerQuery) ||
+					product.creatorName.toLowerCase().includes(lowerQuery) ||
+					product.ownerName.toLowerCase().includes(lowerQuery)
+			);
+		},
 	},
 });
