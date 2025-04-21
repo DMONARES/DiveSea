@@ -13,6 +13,8 @@ const cards = computed(() =>
 	)
 );
 
+const active = productsStore.preducts;
+
 // Устанавливаем Title для страницы
 const title = computed(() => userUrl.value || route.path.split("/").pop());
 useHead(() => ({
@@ -25,10 +27,38 @@ const tabList = [
 	{ name: "collection", label: "Collection", icon: IconsCollectionTab },
 	{ name: "activity", label: "Activity", icon: IconsActivityTab },
 ];
+
+const togglePriceSort = () => {
+	if (priceSortDirection.value === null) {
+		priceSortDirection.value = "asc";
+	} else if (priceSortDirection.value === "asc") {
+		priceSortDirection.value = "desc";
+	} else {
+		priceSortDirection.value = null;
+	}
+	productsStore.setPriceSort(priceSortDirection.value);
+};
+
+const resetFilters = () => {
+	priceSortDirection.value = null;
+	productsStore.resetFilters();
+};
+
+const toggleCategoryFilter = (category) => {
+	productsStore.toggleCategoryFilter(category);
+};
+
+const toggleCollectionFilter = (collection) => {
+	productsStore.toggleCollectionFilter(collection);
+};
+
+const showAllItems = () => {
+	resetFilters();
+};
 </script>
 
 <template>
-	<main class="main profile">
+	<main class="profile">
 		<ProfileBanner class="profile__banner" />
 		<div class="profile__content section">
 			<div class="profile__content-info">
@@ -44,9 +74,55 @@ const tabList = [
 							:key="'card - ' + index"
 							:card="card"
 						/>
-						<div class="profile__content-tabs--empty" v-else>This user doesn't have any NFTs in their collection yet</div>
+						<div class="profile__content-tabs--empty" v-else>
+							This user doesn't have any NFTs in their collection
+							yet
+						</div>
 					</template>
-					<template #activity> йцу </template>
+					<template #activity>
+						<div class="profile__content-activity">
+							<div class="profile__content-activity-filters">
+								<UiButton
+									v-if="productsStore"
+									:transpatent="true"
+									:isFilter="true"
+									:options="productsStore.categories"
+									:selectedOptions="
+										productsStore.selectedCategories
+									"
+									:multiSelect="true"
+									bgColor="#FFF"
+									fontColor="#141416"
+									@toggle="toggleCategoryFilter"
+								>
+									<IconsCard />
+									Sales
+								</UiButton>
+								<UiButton
+									v-if="productsStore"
+									:transpatent="true"
+									:isFilter="true"
+									:options="productsStore.categories"
+									:selectedOptions="
+										productsStore.selectedCategories
+									"
+									:multiSelect="true"
+									bgColor="#FFF"
+									fontColor="#141416"
+									@toggle="toggleCategoryFilter"
+								>
+									<IconsChain />
+									All Chains
+									<IconsArrow/>
+								</UiButton>
+							</div>
+							<ul class="profile__content-activity-list">
+								<li class="profile__content-activity-item" v-for="(item, index) in active" :key="'item - ' + index">
+									<NftCardActive/>
+								</li>
+							</ul>
+						</div>
+					</template>
 				</UiTabs>
 			</div>
 		</div>
