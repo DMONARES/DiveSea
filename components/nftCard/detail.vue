@@ -1,4 +1,9 @@
 <script setup>
+import { useProductsStore } from "@/stores/products";
+
+const productsStore = useProductsStore();
+const popupCards = productsStore.products.slice(0, 3);
+
 defineProps({
 	product: Object,
 });
@@ -117,17 +122,36 @@ const isOpen = ref(false);
 							</div>
 						</div>
 						<!-- button -->
-						<UiButton class="product-detail__content-info-button" @click="isOpen = true">
+						<UiButton
+							class="product-detail__content-info-button"
+							@click="isOpen = true"
+						>
 							<IconsWallet />
 							Place Bid
 						</UiButton>
 					</div>
 				</div>
 			</div>
-			<UiPopup v-if="isOpen" :isOpen="isOpen" @close="isOpen = false">
-				<UiInput/>
-				<UiCryptoInput/>
-				<UiButton>qwe</UiButton>
+			<UiPopup
+				class="product-detail__popup"
+				v-if="isOpen"
+				:isOpen="isOpen"
+				@close="isOpen = false"
+			>
+				<h3 class="product-detail__popup-title">History of Bid</h3>
+				<p class="product-detail__popup-date">Oct 14, 2022</p>
+				<ul class="product-detail__popup-list">
+					<li
+						class="product-detail__popup-item"
+						v-for="(card, index) in popupCards"
+						:key="index"
+					>
+						<NftCardMini :card="card" />
+					</li>
+				</ul>
+				<h3 class="product-detail__popup-title">Your Bid</h3>
+				<UiCryptoInput class="product-detail__popup-input" />
+				<UiButton class="product-detail__popup-button">Submit</UiButton>
 			</UiPopup>
 		</section>
 	</client-only>
@@ -437,6 +461,43 @@ const isOpen = ref(false);
 			&-button {
 				width: 100%;
 			}
+		}
+	}
+	.product-detail__popup {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 12px;
+		&-title {
+			align-self: start;
+			font-size: 20.26px;
+			font-weight: 600;
+			line-height: 29.26px;
+
+			&:not(:first-child) {
+				margin-bottom: 15px;
+			}
+		}
+		&-date {
+			align-self: start;
+			margin-bottom: 10px;
+			font-size: 14.63px;
+			font-weight: 400;
+			line-height: 18.01px;
+			color: $lightGrey;
+		}
+		&-list {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+			gap: 20px;
+			margin-bottom: 40px;
+		}
+		&-input {
+			margin-bottom: 20px;
+		}
+		&-button {
 		}
 	}
 }

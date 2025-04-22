@@ -29,7 +29,6 @@
 					</option>
 				</select>
 			</div>
-			<div class="crypto-input__divider"></div>
 			<div class="crypto-input__field-wrapper">
 				<input
 					type="number"
@@ -104,6 +103,7 @@ watch(() => cryptoValue.value, updateUsdValue);
 		display: flex;
 		width: 100%;
 		border: 1px solid transparent;
+		background-color: #efefef;
 		border-radius: 8px;
 		overflow: hidden;
 		transition: border-color 0.2s ease;
@@ -113,74 +113,63 @@ watch(() => cryptoValue.value, updateUsdValue);
 	&__field-wrapper {
 		display: flex;
 		align-items: center;
-		background-color: #f9fafb;
+		background-color: #efefef;
 	}
 
 	&__select {
 		flex: 0 0 90px;
 		padding: 12px 16px;
 		border: none;
-		background: none;
+		background: #efefef;
 		color: #111827;
 		font-size: 16px;
 		font-weight: 500;
 		appearance: none;
-		background-image: url("data:image/svg+xml,%3csvg ... %3e");
-		background-repeat: no-repeat;
-		background-position: right 12px center;
-		background-size: 16px;
 
 		&:focus {
 			outline: none;
 		}
-	}
-
-	&__divider {
-		width: 1px;
-		height: 80%;
-		align-self: center;
-		background-color: #000;
 	}
 
 	&__field {
 		flex: 1;
 		padding: 12px 16px;
 		border: none;
-		background: none;
-		color: #111827;
+		background: #efefef;
+		color: $black;
 		font-size: 16px;
 		font-weight: 500;
+		border-left: 1px solid $lightGrey;
 
 		&:focus {
 			outline: none;
 		}
 
 		&::placeholder {
-			color: #9ca3af;
+			color: $lightGrey;
 		}
 	}
 
 	&__usd-value {
 		margin-top: 8px;
 		font-size: 14px;
-		color: #6b7280;
+		color: $lightGrey;
 	}
 
 	&--focused,
 	&:hover {
 		.crypto-input__wrapper {
-			border-color: #000;
-			background-color: #fff;
+			border-color: $black;
 		}
 	}
 
 	&--error {
 		.crypto-input__wrapper {
-			border-color: #ef4444;
+			border-color: $red;
 		}
 
 		.crypto-input__usd-value {
-			color: #ef4444;
+			color: $red;
 		}
 	}
 }

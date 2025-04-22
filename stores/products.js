@@ -4,6 +4,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "3",
 				timer: "2025-04-21T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/1.webp",
 				miniImage: "/img/mini/1.webp",
 				poster: "/img/posters/1.webp",
@@ -29,6 +30,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "4",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/2.webp",
 				miniImage: "/img/mini/2.webp",
 				poster: "/img/posters/1.webp",
@@ -54,6 +56,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "5",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/3.webp",
 				miniImage: "/img/mini/3.webp",
 				poster: "/img/posters/1.webp",
@@ -79,6 +82,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "6",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/4.webp",
 				miniImage: "/img/mini/4.webp",
 				poster: "/img/posters/1.webp",
@@ -104,6 +108,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "7",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/5.webp",
 				miniImage: "/img/mini/5.webp",
 				poster: "/img/posters/1.webp",
@@ -129,6 +134,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "8",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/1.webp",
 				miniImage: "/img/mini/2.webp",
 				poster: "/img/posters/1.webp",
@@ -154,6 +160,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "9",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/2.webp",
 				miniImage: "/img/mini/1.webp",
 				poster: "/img/posters/1.webp",
@@ -179,6 +186,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "10",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/3.webp",
 				miniImage: "/img/mini/2.webp",
 				poster: "/img/posters/1.webp",
@@ -204,6 +212,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "11",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/4.webp",
 				miniImage: "/img/mini/1.webp",
 				poster: "/img/posters/1.webp",
@@ -229,6 +238,7 @@ export const useProductsStore = defineStore("products", {
 			{
 				id: "12",
 				timer: "2025-04-25T18:30:00Z",
+				date: "May 17, 2022 at 12:08",
 				nftImage: "/img/nfts/5.webp",
 				miniImage: "/img/mini/2.webp",
 				poster: "/img/posters/1.webp",

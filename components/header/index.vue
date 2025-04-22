@@ -139,7 +139,7 @@ function toggleMenu() {
 	justify-content: space-between;
 	padding: 45px 0;
 	position: relative;
-	z-index: 1001;
+	z-index: 100;
 	background-color: white;
 
 	@media (max-width: 1200px) {

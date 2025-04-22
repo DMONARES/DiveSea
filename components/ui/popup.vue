@@ -2,9 +2,6 @@
 	<div v-if="isOpen" class="popup">
 		<div class="popup__overlay" @click="closePopup"></div>
 		<div class="popup__content">
-			<button class="popup__close" @click="closePopup">
-				<span>×</span>
-			</button>
 			<slot />
 		</div>
 	</div>
@@ -75,40 +72,16 @@ onBeforeUnmount(() => {
 	}
 
 	&__content {
-		position: relative;
-		background: #fff;
-		padding: 30px;
-		border-radius: 16px;
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-		z-index: 1001;
 		max-width: 90%;
 		max-height: 90vh;
+		padding: 30px;
+		position: relative;
+		background: $white;
+		border: 2px solid $black;
+		border-radius: 34px;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+		z-index: 1001;
 		overflow-y: auto;
-	}
-
-	&__close {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		background: none;
-		border: none;
-		width: 30px;
-		height: 30px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		border-radius: 50%;
-		transition: background-color 0.2s ease;
-
-		span {
-			font-size: 24px;
-			line-height: 1;
-		}
-
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.05);
-		}
 	}
 }
 </style>
