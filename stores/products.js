@@ -312,6 +312,16 @@ export const useProductsStore = defineStore("products", {
 	},
 
 	actions: {
+		sortByKey(key, direction) {
+			this.filteredProducts.sort((a, b) => {
+				if (direction === "asc") {
+					return a[key] > b[key] ? 1 : -1;
+				} else {
+					return a[key] < b[key] ? 1 : -1;
+				}
+			});
+		},
+
 		toggleCategoryFilter(category) {
 			const index = this.selectedCategories.indexOf(category);
 			if (index === -1) {

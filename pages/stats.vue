@@ -7,6 +7,7 @@
 			:moreButton="false"
 			:filters="true"
 			:showAll="true"
+			:sortableHeaders ="true"
 			class="section section__collection"
 		/>
 	</main>

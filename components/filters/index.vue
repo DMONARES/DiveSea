@@ -98,7 +98,7 @@ const showAllItems = () => {
 	</div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .filters {
 	&__list {
 		display: flex;

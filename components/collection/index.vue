@@ -5,16 +5,16 @@ import Filters from "~/components/filters";
 const productsStore = useProductsStore();
 
 const titles = [
-	{ title: "Collection" },
-	{ title: "Volume" },
-	{ title: "24h %" },
-	{ title: "Floor Price" },
-	{ title: "Owners" },
-	{ title: "Items" },
+	{ title: "Collection", key: "creatorName" },
+	{ title: "Volume", key: "volume" },
+	{ title: "24h %", key: "sale" },
+	{ title: "Floor Price", key: "price" },
+	{ title: "Owners", key: "owners" },
+	{ title: "Items", key: "items" },
 ];
 
 // Деструктуризация defineProps
-const { title, moreButton, filters, showAll } = defineProps({
+const { title, moreButton, filters, showAll, sortableHeaders } = defineProps({
 	title: {
 		type: String,
 		default: "Top Collection",
@@ -31,12 +31,42 @@ const { title, moreButton, filters, showAll } = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	sortableHeaders: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const limitedItems = computed(() => {
 	return showAll
-		? productsStore.products
-		: productsStore.products.slice(0, 4);
+		? productsStore.filteredProducts
+		: productsStore.filteredProducts.slice(0, 4);
+});
+
+const sortState = reactive({
+	key: null,
+	direction: null, // "asc" или "desc"
+});
+
+const sortByColumn = (key) => {
+	if (sortState.key === key) {
+		if (sortState.direction === "asc") {
+			sortState.direction = "desc";
+		} else if (sortState.direction === "desc") {
+			sortState.key = null;
+			sortState.direction = null; // Отключение сортировки
+		} else {
+			sortState.direction = "asc";
+		}
+	} else {
+		sortState.key = key;
+		sortState.direction = "asc";
+	}
+	productsStore.sortByKey(sortState.key, sortState.direction);
+};
+
+onMounted(() => {
+	productsStore.init();
 });
 </script>
 
@@ -59,9 +89,23 @@ const limitedItems = computed(() => {
 								:class="{
 									'collection-column': index === 0,
 									'mobile-hidden': index > 1,
+									sortable: sortableHeaders,
 								}"
+								@click="
+									sortableHeaders
+										? sortByColumn(title.key)
+										: null
+								"
 							>
 								{{ title.title }}
+								<IconsArrowsDownUp
+									v-if="sortableHeaders"
+									:direction="
+										sortState.key === title.key
+											? sortState.direction
+											: null
+									"
+								/>
 							</th>
 						</tr>
 					</thead>
@@ -598,6 +642,21 @@ $border: #ebe9e9;
 .mobile-hidden {
 	@media (max-width: 850px) {
 		display: none;
+	}
+}
+
+.sortable {
+	cursor: pointer;
+	user-select: none;
+
+	&.asc {
+		color: green;
+	}
+	&.desc {
+		color: red;
+	}
+	&.inactive {
+		color: gray;
 	}
 }
 </style>
