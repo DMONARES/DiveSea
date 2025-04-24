@@ -271,6 +271,7 @@ const socials = [
 			}
 
 			&-link {
+				color: $white;
 				opacity: 0.5;
 				transition: 0.3s ease;
 
@@ -298,5 +299,8 @@ const socials = [
 	@media (max-width: 850px) {
 		display: block;
 	}
+}
+.router-link-active {
+	color: $white;
 }
 </style>
