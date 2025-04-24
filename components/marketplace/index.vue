@@ -1,6 +1,7 @@
 <script setup>
 import { useProductsStore } from "~/stores/products";
 import { useWindowSize } from "@vueuse/core";
+import Filters from "~/components/filters";
 
 const productsStore = useProductsStore();
 const { width: windowWidth } = useWindowSize();
@@ -55,35 +56,6 @@ const visibleCards = computed(() => {
 	}
 });
 
-// Функция для сортировки и фильтров
-const togglePriceSort = () => {
-	if (priceSortDirection.value === null) {
-		priceSortDirection.value = "asc";
-	} else if (priceSortDirection.value === "asc") {
-		priceSortDirection.value = "desc";
-	} else {
-		priceSortDirection.value = null;
-	}
-	productsStore.setPriceSort(priceSortDirection.value);
-};
-
-const resetFilters = () => {
-	priceSortDirection.value = null;
-	productsStore.resetFilters();
-};
-
-const toggleCategoryFilter = (category) => {
-	productsStore.toggleCategoryFilter(category);
-};
-
-const toggleCollectionFilter = (collection) => {
-	productsStore.toggleCollectionFilter(collection);
-};
-
-const showAllItems = () => {
-	resetFilters();
-};
-
 // Lazy loading
 let observer = null;
 const loadMoreRef = ref(null);
@@ -127,74 +99,7 @@ onBeforeUnmount(() => {
 	<section class="marketplace marketplace__container">
 		<h2 class="marketplace__title">{{ title }}</h2>
 		<div class="marketplace__filter">
-			<ul class="marketplace__filter-list">
-				<li>
-					<UiButton
-						v-if="allButton"
-						:transpatent="true"
-						bgColor="#FFF"
-						fontColor="#141416"
-						:isActive="
-							productsStore && !productsStore.hasActiveFilters
-						"
-						@click="showAllItems"
-					>
-						All
-					</UiButton>
-				</li>
-				<li>
-					<UiButton
-						v-if="productsStore"
-						:transpatent="true"
-						:isFilter="true"
-						:options="productsStore.categories"
-						:selectedOptions="productsStore.selectedCategories"
-						:multiSelect="true"
-						bgColor="#FFF"
-						fontColor="#141416"
-						@toggle="toggleCategoryFilter"
-					>
-						<IconsCategory />
-						Category
-					</UiButton>
-				</li>
-				<li>
-					<UiButton
-						v-if="productsStore"
-						:transpatent="true"
-						:isFilter="true"
-						:options="productsStore.collections"
-						:selectedOptions="productsStore.selectedCollections"
-						:multiSelect="true"
-						bgColor="#FFF"
-						fontColor="#141416"
-						@toggle="toggleCollectionFilter"
-					>
-						<IconsCollection />
-						Collection
-					</UiButton>
-				</li>
-				<li>
-					<UiButton
-						v-if="productsStore"
-						:transpatent="true"
-						bgColor="#FFF"
-						fontColor="#141416"
-						@click="togglePriceSort"
-						:isActive="priceSortDirection !== null"
-					>
-						<IconsPrice />
-						Price
-						<IconsArrowMore
-							v-if="priceSortDirection !== null"
-							:class="{
-								'rotate-180': priceSortDirection === 'desc',
-							}"
-						/>
-						<IconsClose v-if="!priceSortDirection" class="close" />
-					</UiButton>
-				</li>
-			</ul>
+			<Filters :allButton="allButton" />
 		</div>
 		<div class="marketplace__content">
 			<NftCard

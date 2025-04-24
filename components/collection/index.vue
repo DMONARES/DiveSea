@@ -1,5 +1,6 @@
 <script setup>
 import { useProductsStore } from "~/stores/products";
+import Filters from "~/components/filters";
 
 const productsStore = useProductsStore();
 
@@ -12,15 +13,30 @@ const titles = [
 	{ title: "Items" },
 ];
 
-const limitedItems = computed(() => {
-	return productsStore.products.slice(0, 4);
-});
-
-defineProps({
+// Деструктуризация defineProps
+const { title, moreButton, filters, showAll } = defineProps({
 	title: {
 		type: String,
 		default: "Top Collection",
 	},
+	moreButton: {
+		type: Boolean,
+		default: true,
+	},
+	filters: {
+		type: Boolean,
+		default: false,
+	},
+	showAll: {
+		type: Boolean,
+		default: false,
+	},
+});
+
+const limitedItems = computed(() => {
+	return showAll
+		? productsStore.products
+		: productsStore.products.slice(0, 4);
 });
 </script>
 
@@ -28,7 +44,9 @@ defineProps({
 	<div>
 		<div class="collection">
 			<h2 class="collection__title">{{ title }}</h2>
-
+			<div class="collection__filters" v-if="filters">
+				<Filters :allButton="false" />
+			</div>
 			<div class="collection__content">
 				<table class="collection__table">
 					<!-- head -->
@@ -155,7 +173,7 @@ defineProps({
 				</table>
 			</div>
 
-			<nuxt-link class="collection__more" to="/">
+			<nuxt-link class="collection__more" to="/stats" v-if="moreButton">
 				Explore All
 				<IconsArrowMore />
 			</nuxt-link>
@@ -200,6 +218,9 @@ $border: #ebe9e9;
 			font-size: 30px;
 			line-height: 44.75px;
 		}
+	}
+	&__filters {
+		margin-bottom: 20px;
 	}
 	&__table {
 		margin-bottom: 85px;

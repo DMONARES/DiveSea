@@ -4,6 +4,9 @@
 	<main>
 		<Collection
 			title="Leaderboard NFTs"
+			:moreButton="false"
+			:filters="true"
+			:showAll="true"
 			class="section section__collection"
 		/>
 	</main>
