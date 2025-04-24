@@ -15,12 +15,19 @@ const titles = [
 const limitedItems = computed(() => {
 	return productsStore.products.slice(0, 4);
 });
+
+defineProps({
+	title: {
+		type: String,
+		default: "Top Collection",
+	},
+});
 </script>
 
 <template>
 	<div>
 		<div class="collection">
-			<h2 class="collection__title">Top Collection</h2>
+			<h2 class="collection__title">{{ title }}</h2>
 
 			<div class="collection__content">
 				<table class="collection__table">
